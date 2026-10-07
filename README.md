@@ -6,7 +6,9 @@ Quarto-website med dataanalyser af Superligaen.
 - `scripts/` – datahentning. **Alle API-kald går gennem `scripts/budget_guard.py`.**
 - `data/raw/` – JSON-svar fra API'erne (cache, aldrig på GitHub)
 - `data/clean/` – rensede tabeller (Parquet/DuckDB, aldrig på GitHub)
-- `posts/` – artikler
+- `posts/` – artikler (én mappe pr. artikel med `index.qmd`, `figurer/` og `deling/`)
+- `scripts/analyse.py` – fælles beregninger (game states, alternativ tabel, scoringstidspunkter, comebacks)
+- `scripts/stil.py` – husstilen for alle grafer (se `stiltest.qmd`)
 - `scripts/holdnavne.csv` – oversætter hver kildes holdnavne til vores egne (hold_id + hold)
 
 ## Datakilder
@@ -23,4 +25,14 @@ Quarto-website med dataanalyser af Superligaen.
     .venv/bin/python scripts/hent_sportmonks.py          # hent nye kampe (spørger om lov)
     .venv/bin/python scripts/rens.py           # rådata -> data/clean (ingen forespørgsler)
     .venv/bin/python scripts/kvalitet.py       # datakvalitetstjek
-    quarto preview              # se websitet lokalt
+    .venv/bin/python scripts/analyse.py        # beregn analysetabeller (an_*) i data/clean
+    quarto preview --profile kladde            # se siden INKL. kladder (kun lokalt, bygger til _kladde/)
+    quarto render                              # byg den offentlige side til docs/ (kladder udelades)
+
+## Nye artikler
+1. Kopiér mappen `posts/2026-10-foeringer-der-forsvinder/` som skabelon.
+2. Behold `jupyter: superliga` og `draft: true` i toppen, indtil artiklen er klar.
+3. Grafer laves med `stil.figur(...)` og gemmes med `stil.gem(...)`.
+
+## Første gang på en ny maskine
+    .venv/bin/python -m ipykernel install --sys-prefix --name superliga   # Python-kerne til Quarto

@@ -1,16 +1,72 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Om siden",
+    "objectID": "om.html",
+    "href": "om.html",
+    "title": "Om",
     "section": "",
-    "text": "En hobbyside med dataanalyser af Superligaen, inspireret af Ben Mayhews Experimental 361.\nData: API-Football og GOAL API. Rådata deles ikke. Siden viser kun egne beregninger og grafer."
+    "text": "Om projektet: hvorfor siden findes, og hvad du gerne vil vise."
+  },
+  {
+    "objectID": "om.html#inspiration",
+    "href": "om.html#inspiration",
+    "title": "Om",
+    "section": "Inspiration",
+    "text": "Inspiration\n\nBen Mayhews Experimental 361 (engelsk fodbold set gennem data)"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Superliga-data",
+    "title": "Dansk fodbold set gennem data",
     "section": "",
-    "text": "Ingen resultater"
+    "text": "Kort introduktion til siden (2–3 sætninger): hvad du vil undersøge, og hvorfor.\n\n\n\n\n\n\n\n\n\nIngen resultater"
+  },
+  {
+    "objectID": "metode.html",
+    "href": "metode.html",
+    "title": "Metode",
+    "section": "",
+    "text": "Indledning: Stikordene herunder skal omformuleres til din egen tekst."
+  },
+  {
+    "objectID": "metode.html#datakilder",
+    "href": "metode.html#datakilder",
+    "title": "Metode",
+    "section": "Datakilder",
+    "text": "Datakilder\n\nSportmonks (football API v3, gratisplan) er hovedkilden.\n\nSuperligaen fra 2020/21 til den igangværende sæson 2026/27.\nKampe, resultater og hændelser: mål (minut, hold, målscorer, assist), kort og udskiftninger.\n\nAPI-Football er reserve og bruges til krydstjek.\n\nGratisplanen dækker kun sæsonerne 2022/23–2024/25.\n\nData hentes sjældent og gemmes lokalt. En færdigspillet kamp hentes aldrig igen.\nRådata deles ikke. Siden viser kun egne beregninger og grafer.\nIngen holdlogoer eller spillerfotos. Hold vises med navn eller fast forkortelse (fx FCK, BIF, AGF)."
+  },
+  {
+    "objectID": "metode.html#fra-rådata-til-tabeller",
+    "href": "metode.html#fra-rådata-til-tabeller",
+    "title": "Metode",
+    "section": "Fra rådata til tabeller",
+    "text": "Fra rådata til tabeller\n\nAlle kilder oversættes til ét fælles format med fire tabeller: kampe, mål, kort og udskiftninger.\n\nEn kolonne angiver datakilden, så flere kilder kan kombineres.\nHoldnavne oversættes via en fast navnetabel, fx “FC Copenhagen” og “FC København” bliver til FCK.\n\nPlayoff-kampe om en europæisk plads indgår ikke i analyserne af ligaen.\nSæsonen opdeles i grundspil (alle møder alle) og slutspil (mesterskabs- og nedrykningsspil). Sammenligninger mellem hold laves helst inden for grundspillet, hvor alle har samme modstandere."
+  },
+  {
+    "objectID": "metode.html#kontrol-af-data",
+    "href": "metode.html#kontrol-af-data",
+    "title": "Metode",
+    "section": "Kontrol af data",
+    "text": "Kontrol af data\n\nMålene skal stemme med resultatet: For hver kamp lægges målene sammen og sammenlignes med det officielle resultat efter 90 minutter.\n\nStatus: 1.206 af 1.206 ligakampe stemmer (1.212 inkl. playoff).\n\nRettelser af kildefejl:\n\n5 kampe i 2024/25 havde mål registreret på det forkerte hold. Holdet udledes i stedet af den løbende stilling (fx 1-0 → 1-1).\nVed forlænget spilletid var kildens “aktuelle stilling” inkonsistent. Stillingen efter 90 minutter tages fra stillingen ved slutfløjt i 2. halvleg, og målene i forlænget spilletid tælles fra hændelserne.\nSelvmål tilskrives det hold, der får målet.\n\nTjek af udskiftninger: Den indskiftede spiller må ikke have hændelser før skiftet.\n\n2 tilfælde af ca. 2.800 er afvigende.\n\nKendte huller: 5 mål mangler navnet på målscoreren (2024/25)."
+  },
+  {
+    "objectID": "metode.html#beregninger",
+    "href": "metode.html#beregninger",
+    "title": "Metode",
+    "section": "Beregninger",
+    "text": "Beregninger\n\nGame states (foran, uafgjort, bagud):\n\nEn kamp regnes som 90 minutter.\nMål i tillægstid placeres på periodens sidste minut (45+2 → 45, 90+4 → 90).\nForlænget spilletid tælles ikke med.\nKontrol: Foran + uafgjort + bagud = 90 minutter i hver kamp, og det ene holds “foran” = det andet holds “bagud”.\n\nDen alternative tabel: Point, hvis kampene var stoppet efter 15, 30, 45, 60 eller 75 minutter. Et mål i minut 15 tæller med ved stop efter 15 minutter.\nScoringstidspunkter: Mål fordelt på 0–15, 16–30, 31–45+, 46–60, 61–75 og 76–90+ minutter.\nComebacks og føringer:\n\nPoint hentet = point i kampe, hvor holdet på et tidspunkt var bagud.\nPoint tabt = 3 minus point i kampe, hvor holdet på et tidspunkt var foran.\n\nPlaceringer: Point → målforskel → scorede mål. Det er en forenkling af de officielle regler for lige placering."
+  },
+  {
+    "objectID": "metode.html#begrænsninger",
+    "href": "metode.html#begrænsninger",
+    "title": "Metode",
+    "section": "Begrænsninger",
+    "text": "Begrænsninger\n\nHændelsernes minut er det minut, kilden angiver. Den faktiske længde af tillægstiden kendes ikke.\nTidlige sæsonudsnit (fx 9 runder) er små stikprøver. Enkelte kampe kan flytte meget.\nGrundspil og slutspil har forskellige modstandere. Tal for “hele sæsonen” blander de to."
+  },
+  {
+    "objectID": "metode.html#kode",
+    "href": "metode.html#kode",
+    "title": "Metode",
+    "section": "Kode",
+    "text": "Kode\n\nAl kode ligger på GitHub: link indsættes.\n\nHentning med indbygget “budgetvagt”, så de gratis API-grænser aldrig overskrides.\nRensning, kvalitetstjek og analyser (scripts/)."
   }
 ]

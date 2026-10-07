@@ -1,25 +1,38 @@
 project:
   type: website
   output-dir: docs          # GitHub Pages: Settings → Pages → "Deploy from branch" → main /docs
+  render:
+    - "*.qmd"
+    - "!README.md"
 
 execute:
-  freeze: auto              # beregninger gemmes, så siden kan bygges uden data/
+  freeze: auto              # beregninger gemmes i _freeze/, så siden kan bygges uden data/
 
 website:
   title: "Superliga-data"
-  description: "Dataanalyser af dansk fodbold"
+  description: "Dansk fodbold set gennem data"
+  site-url: ""              # TODO: indsæt GitHub Pages-adressen, når siden er online
+  favicon: favicon.svg
+  open-graph: true          # pæne forhåndsvisninger, når et link deles
+  twitter-card: true
   navbar:
     left:
       - href: index.qmd
         text: Analyser
-      - href: about.qmd
+      - href: metode.qmd
+        text: Metode
+      - href: om.qmd
         text: Om
+  page-footer:
+    left: "Data: Sportmonks · Superliga Data"
+    right: "Ingen logoer eller spillerfotos. Alle grafer er egne beregninger."
+
+lang: da
 
 format:
   html:
-    theme:
-      light: cosmo
-      dark: darkly
-    css: styles.css
+    theme: [cosmo, styles.scss]   # Bootstrap-tema + vores egne farver og skrift
     toc: true
-    lang: da
+    toc-title: "Indhold"
+    fig-align: left
+    smooth-scroll: true

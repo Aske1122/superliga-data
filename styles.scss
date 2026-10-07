@@ -1,0 +1,46 @@
+/*-- scss:defaults --*/
+// Samme farver og skrifttype som graferne (se scripts/stil.py)
+$body-bg: #FAFAF7;
+$body-color: #1C1C1C;
+$primary: #C8102E;          // dansk rød: accentfarven
+$secondary: #5E5E5E;
+$gray-300: #E4E4E0;
+$link-color: #C8102E;
+$navbar-bg: #FAFAF7;
+$navbar-fg: #1C1C1C;
+$navbar-hl: #C8102E;
+$footer-bg: #FAFAF7;
+$font-family-sans-serif: "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
+$headings-font-weight: 700;
+$border-radius: 0;
+$toc-color: #5E5E5E;
+
+/*-- scss:rules --*/
+// Smal, rolig læsebredde og luft omkring indholdet
+body { font-size: 1.05rem; line-height: 1.65; }
+h1, h2, h3 { letter-spacing: -0.01em; }
+.navbar { border-bottom: 1px solid #E4E4E0; }
+.navbar-brand { font-weight: 700; }
+.nav-footer { border-top: 1px solid #E4E4E0; font-size: 0.8rem; color: #5E5E5E; }
+
+// Titelbanneret: lyst i stedet for farvet
+.quarto-title-banner { background: #FAFAF7; color: #1C1C1C; border-bottom: 3px solid #C8102E; }
+.quarto-title-banner .quarto-categories .quarto-category { border-color: #C8102E; color: #C8102E; }
+
+// Grafer fylder hele tekstbredden og skaleres pænt ned på mobil
+.quarto-figure img, figure img { width: 100%; height: auto; }
+
+// Metodeboks og pladsholdere i artikler
+.metodeboks { background: #F1F1EC; border-left: 4px solid #5E5E5E; padding: 1rem 1.25rem; font-size: 0.92rem; margin-top: 2rem; }
+.pladsholder { border: 2px dashed #C8102E; padding: 0.75rem 1rem; color: #5E5E5E; background: #FFF; margin: 1rem 0; }
+.pladsholder::before { content: "✏️ Din tekst: "; font-weight: 700; color: #C8102E; }
+.stikord { font-size: 0.92rem; color: #5E5E5E; }
+
+// Artikeloversigt på forsiden
+.quarto-listing-default .listing-title { font-weight: 700; }
+.quarto-listing-default .listing-description { color: #5E5E5E; }
+
+@media (max-width: 576px) {
+  body { font-size: 1rem; }
+  .quarto-title-banner h1.title { font-size: 1.7rem; }
+}

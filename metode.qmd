@@ -1,0 +1,70 @@
+---
+title: "Metode"
+subtitle: "Hvor data kommer fra, og hvordan de kontrolleres"
+---
+
+::: {.pladsholder}
+Indledning: Stikordene herunder skal omformuleres til din egen tekst.
+:::
+
+## Datakilder
+
+- **Sportmonks** (football API v3, gratisplan) er hovedkilden.
+  - Superligaen fra 2020/21 til den igangværende sæson 2026/27.
+  - Kampe, resultater og hændelser: mål (minut, hold, målscorer, assist), kort og udskiftninger.
+- **API-Football** er reserve og bruges til krydstjek.
+  - Gratisplanen dækker kun sæsonerne 2022/23–2024/25.
+- Data hentes sjældent og gemmes lokalt. En færdigspillet kamp hentes aldrig igen.
+- Rådata deles ikke. Siden viser kun egne beregninger og grafer.
+- Ingen holdlogoer eller spillerfotos. Hold vises med navn eller fast forkortelse (fx FCK, BIF, AGF).
+
+## Fra rådata til tabeller
+
+- Alle kilder oversættes til ét fælles format med fire tabeller: kampe, mål, kort og udskiftninger.
+  - En kolonne angiver datakilden, så flere kilder kan kombineres.
+  - Holdnavne oversættes via en fast navnetabel, fx "FC Copenhagen" og "FC København" bliver til FCK.
+- Playoff-kampe om en europæisk plads indgår ikke i analyserne af ligaen.
+- Sæsonen opdeles i **grundspil** (alle møder alle) og **slutspil** (mesterskabs- og nedrykningsspil).
+  Sammenligninger mellem hold laves helst inden for grundspillet, hvor alle har samme modstandere.
+
+## Kontrol af data
+
+- **Målene skal stemme med resultatet:** For hver kamp lægges målene sammen og sammenlignes med det officielle resultat efter 90 minutter.
+  - Status: 1.206 af 1.206 ligakampe stemmer (1.212 inkl. playoff).
+- **Rettelser af kildefejl:**
+  - 5 kampe i 2024/25 havde mål registreret på det forkerte hold.
+    Holdet udledes i stedet af den løbende stilling (fx 1-0 → 1-1).
+  - Ved forlænget spilletid var kildens "aktuelle stilling" inkonsistent.
+    Stillingen efter 90 minutter tages fra stillingen ved slutfløjt i 2. halvleg, og målene i forlænget spilletid tælles fra hændelserne.
+  - Selvmål tilskrives det hold, der får målet.
+- **Tjek af udskiftninger:** Den indskiftede spiller må ikke have hændelser før skiftet.
+  - 2 tilfælde af ca. 2.800 er afvigende.
+- **Kendte huller:** 5 mål mangler navnet på målscoreren (2024/25).
+
+## Beregninger
+
+- **Game states** (foran, uafgjort, bagud):
+  - En kamp regnes som 90 minutter.
+  - Mål i tillægstid placeres på periodens sidste minut (45+2 → 45, 90+4 → 90).
+  - Forlænget spilletid tælles ikke med.
+  - Kontrol: Foran + uafgjort + bagud = 90 minutter i hver kamp, og det ene holds "foran" = det andet holds "bagud".
+- **Den alternative tabel:** Point, hvis kampene var stoppet efter 15, 30, 45, 60 eller 75 minutter.
+  Et mål i minut 15 tæller med ved stop efter 15 minutter.
+- **Scoringstidspunkter:** Mål fordelt på 0–15, 16–30, 31–45+, 46–60, 61–75 og 76–90+ minutter.
+- **Comebacks og føringer:**
+  - Point hentet = point i kampe, hvor holdet på et tidspunkt var bagud.
+  - Point tabt = 3 minus point i kampe, hvor holdet på et tidspunkt var foran.
+- **Placeringer:** Point → målforskel → scorede mål.
+  Det er en forenkling af de officielle regler for lige placering.
+
+## Begrænsninger
+
+- Hændelsernes minut er det minut, kilden angiver. Den faktiske længde af tillægstiden kendes ikke.
+- Tidlige sæsonudsnit (fx 9 runder) er små stikprøver. Enkelte kampe kan flytte meget.
+- Grundspil og slutspil har forskellige modstandere. Tal for "hele sæsonen" blander de to.
+
+## Kode
+
+- Al kode ligger på GitHub: *link indsættes*.
+  - Hentning med indbygget "budgetvagt", så de gratis API-grænser aldrig overskrides.
+  - Rensning, kvalitetstjek og analyser (`scripts/`).

@@ -1,7 +1,0 @@
----
-title: "Om siden"
----
-
-En hobbyside med dataanalyser af Superligaen, inspireret af Ben Mayhews Experimental 361.
-
-Data: API-Football og GOAL API. Rådata deles ikke. Siden viser kun egne beregninger og grafer.

@@ -1,0 +1,7 @@
+# Kladde-profil: viser kladder (draft: true) fuldt ud, men KUN lokalt.
+# Bruges med:  quarto preview --profile kladde
+# Bygger til _kladde/ (står i .gitignore), så kladder aldrig havner i docs/ eller online.
+project:
+  output-dir: _kladde
+website:
+  draft-mode: visible

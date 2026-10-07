@@ -17,3 +17,9 @@ __pycache__/
 .DS_Store
 
 **/*.quarto_ipynb
+
+# Lokal forhåndsvisning af kladder (quarto preview --profile kladde)
+/_kladde/
+
+# Lokale værktøjsindstillinger
+.claude/

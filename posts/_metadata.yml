@@ -1,3 +1,7 @@
 # Gælder for alle artikler i posts/
-freeze: true
+# OBS: 'jupyter: superliga' skal stå i HVER artikels egen forside-metadata (virker ikke herfra).
+freeze: auto              # beregninger køres igen, når en artikel ændres (kræver data/ lokalt)
 title-block-banner: true
+execute:
+  echo: false             # vis ikke koden i artiklerne
+  warning: false

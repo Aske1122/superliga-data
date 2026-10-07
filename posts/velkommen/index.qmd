@@ -1,8 +1,0 @@
----
-title: "Velkommen"
-date: "2026-10-07"
-categories: [nyt]
-draft: true
----
-
-Pladsholder, så forsiden har noget at vise. Slet den, når den første rigtige analyse er klar.

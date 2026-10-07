@@ -1,0 +1,16 @@
+---
+title: "Om"
+toc: false
+---
+
+::: {.pladsholder}
+Om projektet: hvorfor siden findes, og hvad du gerne vil vise.
+:::
+
+::: {.pladsholder}
+Om dig: hvem du er, og hvordan man kontakter dig.
+:::
+
+## Inspiration
+
+- Ben Mayhews *Experimental 361* (engelsk fodbold set gennem data)
