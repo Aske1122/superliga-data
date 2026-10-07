@@ -1,0 +1,29 @@
+kilde,kilde_navn,hold_id,hold
+sportmonks,AGF,AGF,AGF
+sportmonks,Aalborg BK,AAB,AaB
+sportmonks,Brøndby IF,BIF,Brøndby IF
+sportmonks,FC København,FCK,FC København
+sportmonks,FC Midtjylland,FCM,FC Midtjylland
+sportmonks,Fredericia,FCF,FC Fredericia
+sportmonks,Horsens,ACH,AC Horsens
+sportmonks,Hvidovre,HIF,Hvidovre IF
+sportmonks,Lyngby Boldklub,LBK,Lyngby BK
+sportmonks,Nordsjælland,FCN,FC Nordsjælland
+sportmonks,Odense BK,OB,OB
+sportmonks,Randers FC,RFC,Randers FC
+sportmonks,Silkeborg IF,SIF,Silkeborg IF
+sportmonks,Sønderjyske Fodbold,SJF,Sønderjyske
+sportmonks,Vejle Boldklub,VB,Vejle BK
+sportmonks,Viborg FF,VFF,Viborg FF
+api_football,Aarhus,AGF,AGF
+api_football,Aalborg,AAB,AaB
+api_football,Brondby,BIF,Brøndby IF
+api_football,FC Copenhagen,FCK,FC København
+api_football,FC Midtjylland,FCM,FC Midtjylland
+api_football,FC Nordsjaelland,FCN,FC Nordsjælland
+api_football,Lyngby,LBK,Lyngby BK
+api_football,Randers FC,RFC,Randers FC
+api_football,Silkeborg,SIF,Silkeborg IF
+api_football,Sonderjyske,SJF,Sønderjyske
+api_football,Vejle,VB,Vejle BK
+api_football,Viborg,VFF,Viborg FF

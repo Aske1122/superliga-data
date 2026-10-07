@@ -115,7 +115,7 @@ def _append_log(entry: dict) -> None:
 def cache_path(api: str, endpoint: str, params: dict | None) -> Path:
     """Fast filnavn for et kald, så samme kald altid rammer samme cachefil."""
     params = params or {}
-    slug = re.sub(r"[^a-zA-Z0-9]+", "_", endpoint).strip("_") or "root"
+    slug = (re.sub(r"[^a-zA-Z0-9]+", "_", endpoint).strip("_") or "root")[:60]  # hash'en sikrer entydighed
     param_str = "&".join(f"{k}={params[k]}" for k in sorted(params))
     readable = re.sub(r"[^a-zA-Z0-9=&-]+", "_", param_str)[:80]
     digest = hashlib.sha1(f"{endpoint}?{param_str}".encode()).hexdigest()[:8]
