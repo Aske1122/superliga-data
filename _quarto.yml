@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: docs          # GitHub Pages: Settings → Pages → "Deploy from branch" → main /docs
+
+execute:
+  freeze: auto              # beregninger gemmes, så siden kan bygges uden data/
+
+website:
+  title: "Superliga-data"
+  description: "Dataanalyser af dansk fodbold"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Analyser
+      - href: about.qmd
+        text: Om
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    toc: true
+    lang: da

@@ -1,0 +1,19 @@
+# Hemmeligheder: API-nøgler må aldrig på GitHub
+.env
+
+# Rådata og rensede data: GOAL API's vilkår forbyder videredistribution
+data/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Quarto (docs/ er det færdige website og SKAL med på GitHub)
+/.quarto/
+/_site/
+
+.DS_Store
+
+**/*.quarto_ipynb

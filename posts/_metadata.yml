@@ -1,0 +1,3 @@
+# Gælder for alle artikler i posts/
+freeze: true
+title-block-banner: true

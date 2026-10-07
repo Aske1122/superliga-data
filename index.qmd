@@ -1,0 +1,11 @@
+---
+title: "Superliga-data"
+subtitle: "Dataanalyser af dansk fodbold"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+page-layout: full
+title-block-banner: true
+---
