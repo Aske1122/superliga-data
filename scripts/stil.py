@@ -98,6 +98,7 @@ def anvend() -> None:
         "axes.titlesize": 10,
         "legend.frameon": False,
         "svg.fonttype": "path",      # tekst gemmes som former, så SVG ser ens ud overalt
+        "svg.hashsalt": "superliga-data",   # faste ID'er: samme data giver præcis samme fil
         "axes.formatter.use_locale": False,
     })
 
@@ -194,8 +195,10 @@ def gem(fig, navn: str, mappe: str | Path, mobil: bool = False) -> dict[str, Pat
     stier = {"svg": mappe / "figurer" / f"{navn}.svg", "png": mappe / "deling" / f"{navn}.png"}
     for sti in stier.values():
         sti.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(stier["svg"], transparent=True)   # gennemsigtig: passer til sidens baggrund
-    fig.savefig(stier["png"], dpi=FORMATER["mobil" if mobil else "bred"]["dpi"])   # præcis 1200x675 / 1080x1350
+    # Ingen dato i filerne: så ændres de kun, når grafen faktisk ændrer sig (ingen tomme commits)
+    fig.savefig(stier["svg"], transparent=True, metadata={"Date": None})   # gennemsigtig baggrund
+    fig.savefig(stier["png"], dpi=FORMATER["mobil" if mobil else "bred"]["dpi"],   # præcis 1200x675 / 1080x1350
+                metadata={"Software": None})
     return stier
 
 
