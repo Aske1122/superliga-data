@@ -110,7 +110,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs _freeze tal posts index.qmd
-          if git diff --cached --quiet; then
+          # RSS-feed og sitemap får et nyt tidsstempel ved hver bygning. Er de det ENESTE,
+          # der er ændret, er der intet nyt at publicere.
+          AENDRET=$(git diff --cached --name-only | grep -vE '^docs/(index|sitemap)\.xml$' || true)
+          if [ -z "$AENDRET" ]; then
+            git reset -q && git checkout -q -- docs/index.xml docs/sitemap.xml
             echo "Ingen ændringer, intet at publicere."
           else
             git commit -m "Automatisk opdatering efter runde $RUNDE"
