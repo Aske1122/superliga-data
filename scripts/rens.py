@@ -96,6 +96,7 @@ def fra_sportmonks(holdnavne: dict) -> dict[str, list[dict]]:
             "kilde_kamp_id": str(fx["id"]),
             "saeson": fx["_saeson"],
             "fase": FASER.get(fx["_fase"], "playoff"),
+            "kilde_runde_id": fx.get("round_id"),
             "kickoff_utc": pd.Timestamp(fx["starting_at"], tz="UTC"),
             "hjemme_id": side_til_hold["home"]["hold_id"],
             "hjemmehold": side_til_hold["home"]["hold"],
@@ -170,6 +171,29 @@ def fra_sportmonks(holdnavne: dict) -> dict[str, list[dict]]:
     return {"kampe": kampe, "maal": maal, "kort": kort, "udskiftninger": skift}
 
 
+def tilfoej_runde(kampe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Rundenummer pr. kamp (1, 2, 3 ...), som Superligaen tæller dem.
+    Kildens runder sorteres efter deres første kampdato inden for hver fase, så en udsat kamp
+    stadig hører til sin oprindelige runde. Slutspillets runder fortsætter efter grundspillet
+    (fx 23–32), og playoff om Europa er runden efter.
+    """
+    kampe = kampe.copy()
+    kampe["kilde_runde_id"] = kampe.kilde_runde_id.fillna(-1).astype(int)   # playoff har intet runde-ID i kilden
+    start = kampe.groupby(["saeson", "fase", "kilde_runde_id"]).kickoff_utc.min().rename("start").reset_index()
+    start["nr"] = start.groupby(["saeson", "fase"]).start.rank(method="dense").astype(int)
+    grund = start[start.fase == "grundspil"].groupby("saeson").nr.max().rename("grund_runder")
+    start = start.merge(grund, on="saeson", how="left")
+    slut = start[start.fase.isin(["mesterskabsspil", "nedrykningsspil"])].groupby("saeson").nr.max().rename("slut_runder")
+    start = start.merge(slut, on="saeson", how="left").fillna({"slut_runder": 0})
+    start["runde"] = start.nr
+    start.loc[start.fase.isin(["mesterskabsspil", "nedrykningsspil"]), "runde"] = start.nr + start.grund_runder
+    start.loc[start.fase == "playoff", "runde"] = start.grund_runder + start.slut_runder + 1
+    kampe = kampe.merge(start[["saeson", "fase", "kilde_runde_id", "runde"]], on=["saeson", "fase", "kilde_runde_id"])
+    kampe["runde"] = kampe.runde.astype(int)
+    return kampe
+
+
 def main() -> None:
     holdnavne = laes_holdnavne()
     tabeller = fra_sportmonks(holdnavne)
@@ -181,6 +205,14 @@ def main() -> None:
     con = duckdb.connect(str(db_path))
     for navn, rows in tabeller.items():
         df = pd.DataFrame(rows)
+        if navn == "kampe":
+            df = tilfoej_runde(df)
+            # Kontrol: ingen hold må spille to gange i samme runde
+            dobbelt = (pd.concat([df[["saeson", "runde", "hjemme_id"]].rename(columns={"hjemme_id": "h"}),
+                                  df[["saeson", "runde", "ude_id"]].rename(columns={"ude_id": "h"})])
+                       .duplicated().sum())
+            if dobbelt:
+                print(f"ADVARSEL: {dobbelt} tilfælde, hvor et hold spiller to gange i samme runde")
         if navn == "kampe":  # heltal, der kan være tomme (kun kampe med straffesparkskonkurrence)
             df[["straffe_hjemme", "straffe_ude"]] = df[["straffe_hjemme", "straffe_ude"]].astype("Int64")
         df.to_parquet(CLEAN / f"{navn}.parquet", index=False)

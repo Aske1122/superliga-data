@@ -435,3 +435,6 @@ body:has(.tophistorie) .forside-tal { display: none; }
 @media (max-width: 767.98px) {
   .forside #quarto-content { display: block; padding: 0 1.1rem; }
 }
+
+// Artiklens datagrænse ("Data: ... til og med runde 9"): diskret, lige under bylinen
+main.content p.data-til { font-size: $s; color: $graa; margin: -1.25rem 0 2rem; }

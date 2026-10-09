@@ -88,6 +88,10 @@ cp .env.example .env                                  # indsæt SPORTMONKS_API_K
 quarto render                                        # byg siden til docs/
 ```
 
+**Nye artikler fryses:** sæt `data-saeson` og `data-til-runde` i artiklens forside-metadata, og brug
+`analyse.kamp_hold(til=analyse.data_til_fra_artikel())`. Så bygger artiklens tal og grafer altid kun på data til og
+med den runde, også efter automatiske opdateringer.
+
 Se siden lokalt med `quarto preview`. Kladder vises kun med `quarto preview --profile kladde`.
 
 ## Mappestruktur

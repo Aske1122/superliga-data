@@ -168,6 +168,13 @@
     "text": "Kontrol af data\n\nMålene skal stemme med resultatet: For hver kamp lægges målene sammen og sammenlignes med det officielle resultat efter 90 minutter.\n\nStatus: 1.206 af 1.206 ligakampe stemmer (1.212 inkl. playoff).\n\nRettelser af kildefejl:\n\n5 kampe i 2024/25 havde mål registreret på det forkerte hold. Holdet udledes i stedet af den løbende stilling (fx 1-0 → 1-1).\nVed forlænget spilletid var kildens “aktuelle stilling” inkonsistent. Stillingen efter 90 minutter tages fra stillingen ved slutfløjt i 2. halvleg, og målene i forlænget spilletid tælles fra hændelserne.\nSelvmål tilskrives det hold, der får målet.\n\nTjek af udskiftninger: Den indskiftede spiller må ikke have hændelser før skiftet.\n\n2 tilfælde af ca. 2.800 er afvigende.\n\nKendte huller: 5 mål mangler navnet på målscoreren (2024/25)."
   },
   {
+    "objectID": "metode.html#krydstjek-mod-api-football",
+    "href": "metode.html#krydstjek-mod-api-football",
+    "title": "Metode",
+    "section": "Krydstjek mod API-Football",
+    "text": "Krydstjek mod API-Football\n\nData fra Sportmonks er sammenlignet med en uafhængig kilde, API-Football, for sæsonerne 2022/23–2024/25 (oktober 2026).\nResultater: Alle 576 ligakampe er parret. Stillingen efter 90 minutter og ved pausen er ens i 576 af 576 kampe.\nMål med minut og hold: Kontrolleret for 25 kampe, dels de 5 kampe, hvor kildefejl er rettet, dels 20 tilfældigt udvalgte. Alle 25 er ens.\n\nDet bekræfter, at rettelserne af kildefejlene (mål på forkert hold) giver det rigtige resultat.\n\nAfgrænsning: Gratisplanen hos API-Football kræver ét kald pr. kamp for hændelser, så hændelserne er kontrolleret ved stikprøve, ikke for alle kampe. Den igangværende sæson er ikke med i gratisplanen."
+  },
+  {
     "objectID": "metode.html#beregninger",
     "href": "metode.html#beregninger",
     "title": "Metode",

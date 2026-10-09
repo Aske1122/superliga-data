@@ -50,11 +50,34 @@ def _hent(sql: str) -> pd.DataFrame:
         return con.sql(sql).df()
 
 
-def laes_kampe() -> pd.DataFrame:
-    """Ligakampe (playoff udeladt) med en ekstra kolonne 'fase_gruppe'."""
+def laes_kampe(til: tuple[str, int] | None = None) -> pd.DataFrame:
+    """
+    Ligakampe (playoff udeladt) med en ekstra kolonne 'fase_gruppe'.
+    til=("2026/27", 9) giver kun data til og med runde 9 i 2026/27 (og alle tidligere sæsoner).
+    Bruges til at fryse artikler: deres tal ændrer sig ikke, når nye runder kommer ind.
+    """
     kampe = _hent("SELECT * FROM kampe WHERE fase <> 'playoff'")
+    if til is not None:
+        saeson, runde = til
+        kampe = kampe[(kampe.saeson < saeson) | ((kampe.saeson == saeson) & (kampe.runde <= runde))]
     kampe["fase_gruppe"] = kampe["fase"].map(FASE_GRUPPE)
-    return kampe
+    return kampe.reset_index(drop=True)
+
+
+def data_til_fra_artikel(qmd: str | Path = "index.qmd") -> tuple[str, int]:
+    """
+    Læs artiklens fastfrosne datagrænse fra dens forside-metadata:
+        data-saeson: "2026/27"
+        data-til-runde: 9
+    Kodecellerne kører i artiklens mappe, så standardstien er artiklens egen index.qmd.
+    """
+    import re
+    hoved = Path(qmd).read_text(encoding="utf-8").split("---")[1]
+    saeson = re.search(r'^data-saeson:\s*"?([0-9]{4}/[0-9]{2})"?', hoved, re.M)
+    runde = re.search(r"^data-til-runde:\s*([0-9]+)", hoved, re.M)
+    if not (saeson and runde):
+        raise ValueError(f"{qmd} mangler 'data-saeson' og/eller 'data-til-runde' i forside-metadata")
+    return saeson.group(1), int(runde.group(1))
 
 
 def laes_maal() -> pd.DataFrame:
@@ -89,15 +112,16 @@ def _forloeb(kamp_maal: pd.DataFrame, side: str) -> list[tuple[int, int, int]]:
     return forloeb
 
 
-def kamp_hold() -> pd.DataFrame:
+def kamp_hold(til: tuple[str, int] | None = None) -> pd.DataFrame:
     """
     Grundtabellen, som alle analyser bygger på. For hvert hold i hver kamp:
       - minutter foran / uafgjort / bagud (summer altid til 90)
       - mål og point efter 90 minutter, og point hvis kampen var stoppet efter 15, 30, ... 75
       - mål for/imod i hvert 15-minutters interval
       - om holdet var bagud / foran på et tidspunkt, og om det scorede først
+    til=("2026/27", 9): kun data til og med runde 9 i 2026/27 (se laes_kampe).
     """
-    kampe = laes_kampe()
+    kampe = laes_kampe(til)
     maal = laes_maal()
     maal_pr_kamp = dict(tuple(maal.groupby("kamp_id")))
     tom = maal.iloc[0:0]
@@ -126,7 +150,7 @@ def kamp_hold() -> pd.DataFrame:
 
             maal_for, maal_imod = stilling_ved(KAMPLAENGDE)
             row = {
-                "kamp_id": k.kamp_id, "saeson": k.saeson, "fase": k.fase, "fase_gruppe": k.fase_gruppe,
+                "kamp_id": k.kamp_id, "saeson": k.saeson, "runde": k.runde, "fase": k.fase, "fase_gruppe": k.fase_gruppe,
                 "kickoff_utc": k.kickoff_utc, "hold_id": hold_id, "modstander_id": modstander, "side": side,
                 "min_foran": minutter["foran"], "min_uafgjort": minutter["uafgjort"], "min_bagud": minutter["bagud"],
                 "maal_for": maal_for, "maal_imod": maal_imod, "point": _point(maal_for, maal_imod),

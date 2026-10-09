@@ -3,6 +3,8 @@ title: "Silkeborgs forsvundne føringer"
 subtitle: "Hvem holder fast i føringen, og hvem slipper den?"
 description: "Point tabt fra føring og hentet fra bagud i Superligaen 2026/27."
 date: "2026-10-08"
+data-saeson: "2026/27"      # artiklens data er FROSSET: kun data til og med denne sæson og runde
+data-til-runde: 9
 categories: [Comebacks og føringer, 2026/27]   # første kategori vises som rubrik over titlen
 jupyter: superliga        # projektets egen Python-kerne (.venv)
 draft: true                # KLADDE: vises ikke, når siden bygges med quarto render
@@ -23,11 +25,14 @@ import stil      # husstilen for grafer
 import matplotlib.pyplot as plt
 import numpy as np
 
-SAESON = "2026/27"
-UNDERTITEL_PERIODE = "Superligaen 2026/27, runde 1–9"
+# Artiklen er frosset: alle tal og grafer bygger kun på data til og med den runde,
+# der står i forside-metadata (data-saeson / data-til-runde). Nye runder ændrer intet her.
+DATA_TIL = analyse.data_til_fra_artikel("index.qmd")         # fx ("2026/27", 9)
+SAESON, RUNDE = DATA_TIL
+UNDERTITEL_PERIODE = f"Superligaen {SAESON}, runde 1–{RUNDE}"
 MAPPE = "posts/2026-10-foeringer-der-forsvinder"   # her gemmes graferne (relativt til projektmappen)
 
-kh = analyse.kamp_hold()                                       # én række pr. hold pr. kamp
+kh = analyse.kamp_hold(til=DATA_TIL)                          # én række pr. hold pr. kamp, til og med runden
 cb = analyse.comebacks(kh)                                     # D) comebacks og føringer
 alt = analyse.alternativ_tabel(kh)                             # B) den alternative tabel
 cb = cb[(cb.saeson == SAESON) & (cb.fase_gruppe == "hele_saesonen")]
@@ -40,6 +45,16 @@ def begge(tegn, navn: str) -> None:
         fig = tegn(mobil)
         stil.gem(fig, navn, MAPPE, mobil=mobil)
         plt.close(fig)
+```
+
+```{python}
+#| output: asis
+# --- Diskret linje: hvilke data artiklen bygger på ---
+MAANEDER = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august",
+            "september", "oktober", "november", "december"]
+sidste = analyse.laes_kampe(til=DATA_TIL).query("saeson == @SAESON").kickoff_utc.max()
+print(f'<p class="data-til">Data: Superligaen {SAESON} til og med runde {RUNDE} '
+      f'(seneste kamp {sidste.day}. {MAANEDER[sidste.month - 1]} {sidste.year})</p>')
 ```
 
 ::: {.note-til-mig}

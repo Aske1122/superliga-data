@@ -1,6 +1,6 @@
 # Status
 
-*Opdateret 9. oktober 2026.*
+*Opdateret 9. oktober 2026 (eftermiddag).*
 
 ## Webadresser
 
@@ -23,6 +23,8 @@
 | **Datapakke** | `./mandag.sh` henter data og laver og åbner pakken. Eksempel: `data/datapakker/2026-27-runde-09/`. |
 | **Besøgstal** | GoatCounter-scriptet ligger på siden og tæller kun på den offentlige adresse. Kontoen mangler (se nedenfor). |
 | **Licenser** | Kode: MIT. Tekster og grafer: CC BY 4.0. Skrifter: OFL. |
+| **Krydstjek** | 576 af 576 ligakampe (2022/23–2024/25) har samme resultat og pausestilling som hos API-Football. 25 af 25 kampe har samme mål med minut og hold, inklusive de 5 kampe med rettede kildefejl. Beskrevet på metodesiden. |
+| **Frosne artikler** | En artikel angiver `data-saeson` og `data-til-runde`, og dens tal bygger kun på data til og med den runde. Silkeborg-artiklen er frosset til runde 9. |
 | **Artikel** | "Silkeborgs forsvundne føringer" er en kladde med 3 grafer, stikord og metodenoter. Din tekst mangler. |
 
 ## Sådan virker automatikken
@@ -64,8 +66,8 @@ Scriptet ligger allerede på siden, så tallene begynder at komme, så snart kon
 - [ ] **LinkedIn og X:** ingen links på siden endnu.
 - [ ] **Budgetvagten** tæller hver for sig lokalt og i GitHub Action. Ingen risiko med de nuværende mængder (cirka 1 kald pr. kørsel), men de kender ikke hinandens forbrug.
 - [ ] **Datapakken** sendes ikke automatisk. Den kan senere laves som en planlagt opgave, der sender den til dig.
-- [ ] **GitHub Actions** advarer om Node 20 og om ubuntu-latest → Ubuntu 26 fra 19. oktober. Begge virker stadig, men handlingerne bør opdateres til nyere versioner med tiden.
+- [ ] **CSS-hash:** Når siden er bygget på din Mac og derefter i GitHub Action, får CSS-filen et nyt navn (Quarto ordner reglerne lidt forskelligt). Det giver én ekstra automatisk commit og er harmløst.
 - [ ] **Tillægstid:** den faktiske længde kendes ikke. Kampene regnes som 90 minutter (se metodesiden).
 - [ ] **Dommere og tilskuere** (idé 8 og 9 i `IDEBANK.md`) kræver nye data fra Sportmonks.
-- [ ] **Krydstjek mod API-Football** (2022/23–2024/25) er ikke kørt endnu. Det koster cirka 30 kald og kræver din godkendelse.
+- [ ] **Målscorere:** De 5 mål uden navn på målscoreren (2024/25) kan udfyldes fra API-Footballs data, som allerede ligger i cachen. Det kræver ingen nye kald.
 - [ ] **GOAL API** gav kun tomme svar ("warming"). Det er ikke testet igen, fordi Sportmonks dækker behovet.

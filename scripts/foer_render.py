@@ -40,6 +40,9 @@ def laesetid(qmd: str) -> int:
 
 for qmd in sorted((ROOT / "posts").glob("*/index.qmd")):
     tekst = qmd.read_text(encoding="utf-8")
+    # Advarsel, hvis en artikel ikke er frosset til en bestemt runde
+    if not re.search(r"^data-til-runde:", tekst.split("---")[1], re.M):
+        print(f"  ADVARSEL: {qmd.parent.name} mangler 'data-til-runde' (artiklen er ikke frosset)")
     minutter = laesetid(tekst)
     hoved, rest = tekst.split("---", 2)[1], tekst.split("---", 2)[2]
     ny = re.sub(r"^laesetid: .*\n", "", hoved, flags=re.M)
