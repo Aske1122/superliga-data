@@ -341,20 +341,22 @@ main table > :not(caption) > * > * { box-shadow: none !important; background: tr
   color: var(--signatur-daempet);
 }
 
-// --- Datastrip under menuen (forsiden) ---
-.datastrip {
-  background: var(--signatur);
-  color: var(--signatur-daempet);
-  font-size: $s;
-  border-top: 1px solid rgba(244, 241, 232, 0.12);
-  margin: 0 calc(50% - 50vw) !important;   // fuld bredde, selvom indholdet er centreret
+// --- Pointer-linje under menuen (forsiden): på cremefarven, diskret ---
+.datapointer {
+  max-width: 1240px;
+  margin: 0 auto !important;
+  padding: 0.85rem 0 0.9rem;
+  border-bottom: 1px solid $streg;
+  font-size: $s !important;
+  line-height: 1.6 !important;
+  color: $graa;
+  strong { color: $blaek; font-weight: $fed; }
+  hyphens: none !important; -webkit-hyphens: none !important;   // ingen orddeling i holdnavne
+  .runde { color: var(--signatur); font-weight: $fed; margin-right: 0.6rem; font-variant-numeric: tabular-nums; }
+  .skil { margin: 0 0.5rem; color: $graa-lys; }
+  a { color: $roed; text-decoration: none; white-space: nowrap; }
+  a:hover { text-decoration: underline; }
 }
-body.forside { overflow-x: clip; }          // undgå vandret scroll fra fuld-bredde-båndet
-.forside #quarto-content > main { padding-top: 0; }
-.datastrip p { margin: 0; max-width: 1240px; margin: 0 auto; padding: 0.55rem 1.5rem 0.65rem; font-size: $s !important; color: var(--signatur-daempet); font-variant-numeric: tabular-nums; }
-.datastrip strong { color: var(--signatur-tekst); font-weight: $fed; }
-.datastrip .skil { margin: 0 0.5rem; opacity: 0.5; }
-@media (max-width: 767.98px) { .datastrip p { padding: 0.5rem 1.1rem; line-height: 1.6; } }
 
 // Forsidens intro under datastrip
 .forside-intro { margin: 2.75rem 0 1.5rem; }
@@ -401,4 +403,35 @@ picture.graf, picture.graf img { display: block; width: 100%; height: auto; }
 // Mobil: kampurets minuttal står fast i højre side (ellers dækker det menupunkterne)
 @media (max-width: 767.98px) {
   .kampur-minut { left: auto; right: 0.6rem; transform: none; }
+}
+
+// =============================================================================
+// 9. SUPERLIGAEN I TAL + FORSIDENS TAL-SEKTION
+// =============================================================================
+.tal-status { font-size: $s !important; color: $graa; margin: 0 0 0.25rem; }
+.tal-saesoner { font-size: $s !important; color: $graa; margin: 0 0 2rem; }
+.tal-saesoner strong { color: $blaek; }
+.tabel-rul { overflow-x: auto; margin: 1rem 0 2rem; }
+.alt-tabel { min-width: 30rem; }
+.alt-tabel th, .alt-tabel td { text-align: right; padding: 0.35rem 0.45rem; }
+.alt-tabel th.hold, .alt-tabel td.hold { text-align: left; white-space: nowrap; }
+.alt-tabel td.point { font-weight: $fed; color: $blaek; }
+.alt-tabel td:nth-last-child(2), .alt-tabel th:nth-last-child(2) { font-weight: $fed; color: $blaek; }   // 90' = rigtig placering
+
+// Forsiden: tal-sektionen vises kun, så længe der ikke er udgivne artikler
+.forside-tal { margin-top: 1rem; }
+.forside-tal .forside-graf { max-width: 960px; margin: 1.5rem 0 2.5rem; }
+body:has(.tophistorie) .forside-tal { display: none; }
+.forside .listing-no-matching { display: none !important; }
+.alt-tabel .kort { display: none; }
+@media (max-width: 600px) {
+  .alt-tabel { min-width: 0; }
+  .alt-tabel .lang { display: none; }
+  .alt-tabel .kort { display: inline; }
+  .alt-tabel th, .alt-tabel td { padding: 0.35rem 0.3rem; }
+}
+
+// Mobil: forsiden bruger hele bredden (Quartos gitter + egen margen gjorde den for smal)
+@media (max-width: 767.98px) {
+  .forside #quarto-content { display: block; padding: 0 1.1rem; }
 }

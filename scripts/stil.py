@@ -199,15 +199,15 @@ def gem(fig, navn: str, mappe: str | Path, mobil: bool = False) -> dict[str, Pat
     return stier
 
 
-def billede(navn: str, alt: str) -> str:
+def billede(navn: str, alt: str, mappe: str = "figurer") -> str:
     """
     HTML til en graf i en artikel: telefonen får mobilversionen, større skærme den brede.
     Brug i en kodecelle med '#| output: asis':  print(stil.billede("navn", "beskrivelse"))
     """
     alt = alt.replace('"', "&quot;")
     return (f'<picture class="graf">'
-            f'<source media="(max-width: 600px)" srcset="figurer/{navn}-mobil.svg">'
-            f'<img src="figurer/{navn}.svg" alt="{alt}" class="img-fluid" loading="lazy"></picture>')
+            f'<source media="(max-width: 600px)" srcset="{mappe}/{navn}-mobil.svg">'
+            f'<img src="{mappe}/{navn}.svg" alt="{alt}" class="img-fluid" loading="lazy"></picture>')
 
 
 # ---------------------------------------------------------------------------

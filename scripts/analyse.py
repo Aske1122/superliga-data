@@ -304,6 +304,8 @@ def main() -> None:
     fejl = kontroller(kh)
     print(f"Grundtabel: {len(kh)} rækker ({kh.kamp_id.nunique()} kampe)")
     print(f"Kontrol: {len(fejl)} rækker fejler" + ("" if fejl.empty else f"\n{fejl[['kamp_id','tjek']]}"))
+    if not fejl.empty:
+        raise SystemExit("ANALYSEKONTROL FEJLER: game states eller resultater stemmer ikke. Siden opdateres ikke.")
 
     tabeller = {
         "an_kamp_hold": kh,

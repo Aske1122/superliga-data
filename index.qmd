@@ -1,12 +1,13 @@
 ---
-pagetitle: "Superliga Data · Dansk fodbold set gennem data"
+pagetitle: "Dansk fodbold set gennem data"
 description: "Analyser af Superligaen: game states, den alternative tabel, comebacks og scoringstidspunkter."
 page-layout: full
 body-classes: forside
-jupyter: superliga          # projektets egen Python-kerne (.venv), bruges til datastrip
+jupyter: superliga          # projektets egen Python-kerne (.venv)
 execute:
   echo: false
 listing:
+  id: artikler
   contents: posts
   sort: "date desc"
   template: _skabeloner/forside.ejs
@@ -15,33 +16,39 @@ listing:
   feed: true                         # RSS-feed (index.xml), så man kan følge siden
 ---
 
-::: {.datastrip}
 ```{python}
-# --- Datastrip: tal fra seneste runde, beregnet fra vores egne data (ingen API-kald) ---
+#| output: asis
+# --- Pointer fra seneste runde: beregnes automatisk fra vores egne data (ingen API-kald) ---
 import sys
-from datetime import date
 from pathlib import Path
 sys.path.insert(0, str(Path("scripts").resolve()))
-import analyse
-from IPython.display import HTML
+import analyse, stil, talgrafer
 
-MAANEDER = ["jan.", "feb.", "mar.", "apr.", "maj", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "dec."]
-def dato(d) -> str:
-    return f"{d.day}. {MAANEDER[d.month - 1]}"
+kh = analyse.kamp_hold()
+saeson = kh.saeson.max()
+runde = talgrafer.runde(kh, saeson)
 
-kampe = analyse.laes_kampe()
-saeson = kampe.saeson.max()                                     # igangværende sæson
-k = kampe[kampe.saeson == saeson]
-runde = int(analyse.kamp_hold().query("saeson == @saeson").groupby("hold_id").size().max())
-maal = int((k.hjemme_maal + k.ude_maal).sum())
-seneste = k.kickoff_utc.max()
-opdateret = date.fromtimestamp((analyse.CLEAN / "kampe.parquet").stat().st_mtime)
+# 1) Førende hold og afstand til nummer 2
+st = analyse.stilling(kh, saeson)
+nr1, nr2 = st.iloc[0], st.iloc[1]
+afstand = int(nr1.point - nr2.point)
+foerer = (f"<strong>{nr1.hold}</strong> fører med {nr1.point} point, "
+          + (f"{afstand} foran {nr2.hold}" if afstand else f"lige med {nr2.hold}"))
+
+# 2) Flest point smidt fra føring i sæsonen
+cb = analyse.comebacks(kh).query("saeson == @saeson and fase_gruppe == 'hele_saesonen'")
+mest = cb[cb.point_tabt == cb.point_tabt.max()]
+smidt = f"<strong>{' og '.join(mest.hold)}</strong> har smidt flest point fra føring ({int(mest.point_tabt.iloc[0])})"
+
+# 3) Rundens målrigeste kamp (seneste runde = de seneste 6 kampe)
+kampe = analyse.laes_kampe().query("saeson == @saeson").sort_values("kickoff_utc").tail(6)
+k = kampe.assign(maal=kampe.hjemme_maal + kampe.ude_maal).sort_values("maal", ascending=False).iloc[0]
+maalrig = f"Rundens målrigeste kamp: <strong>{k.hjemmehold}–{k.udehold} {k.hjemme_maal}-{k.ude_maal}</strong>"
+
 skil = '<span class="skil">·</span>'
-
-HTML(f'<p>Superligaen {saeson}{skil}<strong>Runde {runde}</strong>{skil}<strong>{len(k)}</strong> kampe'
-     f'{skil}<strong>{maal}</strong> mål{skil}seneste kamp {dato(seneste)}{skil}data opdateret {dato(opdateret)}</p>')
+print(f'<p class="datapointer"><span class="runde">Runde {runde}</span>{foerer}{skil}{smidt}{skil}{maalrig}'
+      f'{skil}<a href="tal/index.html">Superligaen i tal →</a></p>')
 ```
-:::
 
 ```{=html}
 <div class="forside-intro">
@@ -49,3 +56,20 @@ HTML(f'<p>Superligaen {saeson}{skil}<strong>Runde {runde}</strong>{skil}<strong>
   <p>Dansk fodbold set gennem data.</p>
 </div>
 ```
+
+::: {#artikler}
+:::
+
+::: {.forside-tal}
+```{python}
+#| output: asis
+# --- Indtil der er udgivne artikler: to grafer fra "Superligaen i tal" (skjules af CSS, når der er artikler) ---
+print(f'<h2 class="sektion-overskrift">Superligaen i tal</h2>')
+print(f'<p class="tal-status">Sæson {saeson} · opdateret efter runde {runde} · '
+      f'<a href="tal/index.html">Alle tal og tidligere sæsoner →</a></p>')
+for navn, alt in [("gamestates", "Andel af spilletiden foran, uafgjort og bagud for hvert hold."),
+                  ("comebacks", "Point hentet fra bagud og tabt fra føring for hvert hold.")]:
+    print('<div class="forside-graf">' + stil.billede(f"{talgrafer.slug(saeson)}-{navn}", alt,
+                                                      mappe="tal/figurer") + "</div>")
+```
+:::

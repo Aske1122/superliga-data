@@ -1,0 +1,12 @@
+---
+title: "Superligaen i tal 2024/25"
+jupyter: superliga
+execute:
+  echo: false
+---
+
+```{python}
+SAESON = "2024/25"
+```
+
+{{< include _indhold.qmd >}}

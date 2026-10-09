@@ -5,8 +5,15 @@ Viser pr. sæson: antal kampe, og hvor mange kampe der har problemer med hændel
 Gemmer en liste over kampe med problemer i data/clean/kvalitet_kampe.csv.
 
 Kør:  .venv/bin/python scripts/kvalitet.py
+
+Afslutter med fejlkode 1 (stopper den automatiske opdatering), hvis:
+  - målene fra hændelserne ikke stemmer med resultatet i en kamp
+  - en kamp ikke har nogen hændelser
+  - en afsluttet sæson ikke har det forventede antal kampe
+Kendte mangler (fx mål uden navn på målscoreren) giver kun en advarsel.
 """
 
+import sys
 from pathlib import Path
 
 import duckdb
@@ -85,3 +92,25 @@ problemer.to_csv(CLEAN / "kvalitet_kampe.csv", index=False)
 print(f"\n{len(problemer)} kampe med mindst ét problem er gemt i data/clean/kvalitet_kampe.csv")
 if len(problemer):
     print(problemer.drop(columns=["kamp_id"]).to_string(index=False))
+
+
+# --- Afgørelse: skal den automatiske opdatering stoppes? ---
+oversigt = con.sql(f"""
+    SELECT saeson, count(*) AS kampe,
+           count(*) FILTER (WHERE maal_passer_ikke) AS maal_passer_ikke,
+           count(*) FILTER (WHERE udskiftninger = 0 AND kort = 0 AND maal_fra_haendelser = '0-0') AS uden_haendelser
+    FROM pr_kamp GROUP BY saeson ORDER BY saeson
+""").df()
+nyeste = oversigt.saeson.max()
+fejl = []
+for r in oversigt.itertuples():
+    if r.maal_passer_ikke:
+        fejl.append(f"{r.saeson}: {r.maal_passer_ikke} kampe, hvor målene ikke stemmer med resultatet")
+    if r.uden_haendelser:
+        fejl.append(f"{r.saeson}: {r.uden_haendelser} kampe uden hændelser")
+    if r.saeson != nyeste and r.kampe != FORVENTET_PR_SAESON:
+        fejl.append(f"{r.saeson}: {r.kampe} kampe (forventet {FORVENTET_PR_SAESON})")
+if fejl:
+    print("\nDATAKVALITET FEJLER:\n  " + "\n  ".join(fejl))
+    sys.exit(1)
+print("\nDatakvalitet: OK")

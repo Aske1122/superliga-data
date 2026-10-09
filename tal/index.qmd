@@ -1,0 +1,12 @@
+---
+title: "Superligaen i tal"
+jupyter: superliga          # projektets egen Python-kerne (.venv)
+execute:
+  echo: false
+---
+
+```{python}
+SAESON = None               # None = den igangværende sæson (findes automatisk)
+```
+
+{{< include _indhold.qmd >}}

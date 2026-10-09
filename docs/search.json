@@ -1,10 +1,143 @@
 [
   {
-    "objectID": "tal.html",
-    "href": "tal.html",
+    "objectID": "tal/index.html",
+    "href": "tal/index.html",
     "title": "Superligaen i tal",
     "section": "",
-    "text": "Siden er under opbygning."
+    "text": "Sæson 2026/27 · opdateret efter runde 9\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/index.html#game-states",
+    "href": "tal/index.html#game-states",
+    "title": "Superligaen i tal",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/index.html#den-alternative-tabel",
+    "href": "tal/index.html#den-alternative-tabel",
+    "title": "Superligaen i tal",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nFC KøbenhavnFCK\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n24\n\n\n\n\nFC MidtjyllandFCM\n\n\n2\n\n\n2\n\n\n2\n\n\n2\n\n\n2\n\n\n2\n\n\n19\n\n\n\n\nViborg FFVFF\n\n\n6\n\n\n5\n\n\n4\n\n\n3\n\n\n3\n\n\n3\n\n\n17\n\n\n\n\nFC NordsjællandFCN\n\n\n7\n\n\n8\n\n\n5\n\n\n7\n\n\n5\n\n\n4\n\n\n17\n\n\n\n\nBrøndby IFBIF\n\n\n10\n\n\n7\n\n\n10\n\n\n5\n\n\n4\n\n\n5\n\n\n13\n\n\n\n\nAC HorsensACH\n\n\n11\n\n\n10\n\n\n9\n\n\n9\n\n\n9\n\n\n6\n\n\n11\n\n\n\n\nSilkeborg IFSIF\n\n\n4\n\n\n3\n\n\n3\n\n\n4\n\n\n6\n\n\n7\n\n\n10\n\n\n\n\nRanders FCRFC\n\n\n3\n\n\n4\n\n\n8\n\n\n6\n\n\n7\n\n\n8\n\n\n10\n\n\n\n\nOBOB\n\n\n9\n\n\n6\n\n\n7\n\n\n11\n\n\n12\n\n\n9\n\n\n9\n\n\n\n\nLyngby BKLBK\n\n\n8\n\n\n11\n\n\n6\n\n\n8\n\n\n8\n\n\n10\n\n\n7\n\n\n\n\nAGFAGF\n\n\n12\n\n\n12\n\n\n11\n\n\n10\n\n\n10\n\n\n11\n\n\n5\n\n\n\n\nSønderjyskeSJF\n\n\n5\n\n\n9\n\n\n12\n\n\n12\n\n\n11\n\n\n12\n\n\n5"
+  },
+  {
+    "objectID": "tal/index.html#comebacks-og-føringer",
+    "href": "tal/index.html#comebacks-og-føringer",
+    "title": "Superligaen i tal",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/index.html#scoringstidspunkter",
+    "href": "tal/index.html#scoringstidspunkter",
+    "title": "Superligaen i tal",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
+  },
+  {
+    "objectID": "tal/2024-25.html",
+    "href": "tal/2024-25.html",
+    "title": "Superligaen i tal 2024/25",
+    "section": "",
+    "text": "Sæson 2024/25 · afsluttet\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/2024-25.html#game-states",
+    "href": "tal/2024-25.html#game-states",
+    "title": "Superligaen i tal 2024/25",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/2024-25.html#den-alternative-tabel",
+    "href": "tal/2024-25.html#den-alternative-tabel",
+    "title": "Superligaen i tal 2024/25",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nFC København\n\n\n1\n\n\n1\n\n\n1\n\n\n2\n\n\n1\n\n\n1\n\n\n63\n\n\n\n\nFC Midtjylland\n\n\n6\n\n\n5\n\n\n2\n\n\n3\n\n\n3\n\n\n2\n\n\n62\n\n\n\n\nBrøndby IF\n\n\n2\n\n\n4\n\n\n4\n\n\n4\n\n\n4\n\n\n3\n\n\n51\n\n\n\n\nRanders FC\n\n\n4\n\n\n6\n\n\n3\n\n\n1\n\n\n2\n\n\n4\n\n\n48\n\n\n\n\nFC Nordsjælland\n\n\n3\n\n\n2\n\n\n5\n\n\n5\n\n\n5\n\n\n5\n\n\n46\n\n\n\n\nAGF\n\n\n5\n\n\n3\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n40\n\n\n\n\nSilkeborg IF\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n49\n\n\n\n\nViborg FF\n\n\n9\n\n\n8\n\n\n9\n\n\n8\n\n\n8\n\n\n8\n\n\n47\n\n\n\n\nSønderjyske\n\n\n8\n\n\n9\n\n\n8\n\n\n9\n\n\n9\n\n\n9\n\n\n37\n\n\n\n\nVejle BK\n\n\n11\n\n\n10\n\n\n10\n\n\n10\n\n\n10\n\n\n10\n\n\n28\n\n\n\n\nLyngby BK\n\n\n12\n\n\n11\n\n\n11\n\n\n12\n\n\n12\n\n\n11\n\n\n27\n\n\n\n\nAaB\n\n\n10\n\n\n12\n\n\n12\n\n\n11\n\n\n11\n\n\n12\n\n\n24"
+  },
+  {
+    "objectID": "tal/2024-25.html#comebacks-og-føringer",
+    "href": "tal/2024-25.html#comebacks-og-føringer",
+    "title": "Superligaen i tal 2024/25",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/2024-25.html#scoringstidspunkter",
+    "href": "tal/2024-25.html#scoringstidspunkter",
+    "title": "Superligaen i tal 2024/25",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
+  },
+  {
+    "objectID": "tal/2022-23.html",
+    "href": "tal/2022-23.html",
+    "title": "Superligaen i tal 2022/23",
+    "section": "",
+    "text": "Sæson 2022/23 · afsluttet\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/2022-23.html#game-states",
+    "href": "tal/2022-23.html#game-states",
+    "title": "Superligaen i tal 2022/23",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/2022-23.html#den-alternative-tabel",
+    "href": "tal/2022-23.html#den-alternative-tabel",
+    "title": "Superligaen i tal 2022/23",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nFC København\n\n\n2\n\n\n3\n\n\n3\n\n\n4\n\n\n3\n\n\n1\n\n\n59\n\n\n\n\nFC Nordsjælland\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n2\n\n\n55\n\n\n\n\nAGF\n\n\n4\n\n\n2\n\n\n2\n\n\n2\n\n\n2\n\n\n3\n\n\n51\n\n\n\n\nViborg FF\n\n\n3\n\n\n5\n\n\n5\n\n\n5\n\n\n5\n\n\n4\n\n\n51\n\n\n\n\nBrøndby IF\n\n\n5\n\n\n4\n\n\n4\n\n\n3\n\n\n4\n\n\n5\n\n\n44\n\n\n\n\nRanders FC\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n41\n\n\n\n\nFC Midtjylland\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n51\n\n\n\n\nOB\n\n\n8\n\n\n9\n\n\n8\n\n\n8\n\n\n8\n\n\n8\n\n\n46\n\n\n\n\nSilkeborg IF\n\n\n10\n\n\n8\n\n\n9\n\n\n9\n\n\n9\n\n\n9\n\n\n41\n\n\n\n\nLyngby BK\n\n\n11\n\n\n11\n\n\n11\n\n\n10\n\n\n10\n\n\n10\n\n\n28\n\n\n\n\nAC Horsens\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n11\n\n\n28\n\n\n\n\nAaB\n\n\n9\n\n\n10\n\n\n10\n\n\n11\n\n\n11\n\n\n12\n\n\n27"
+  },
+  {
+    "objectID": "tal/2022-23.html#comebacks-og-føringer",
+    "href": "tal/2022-23.html#comebacks-og-føringer",
+    "title": "Superligaen i tal 2022/23",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/2022-23.html#scoringstidspunkter",
+    "href": "tal/2022-23.html#scoringstidspunkter",
+    "title": "Superligaen i tal 2022/23",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
+  },
+  {
+    "objectID": "tal/2020-21.html",
+    "href": "tal/2020-21.html",
+    "title": "Superligaen i tal 2020/21",
+    "section": "",
+    "text": "Sæson 2020/21 · afsluttet\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/2020-21.html#game-states",
+    "href": "tal/2020-21.html#game-states",
+    "title": "Superligaen i tal 2020/21",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/2020-21.html#den-alternative-tabel",
+    "href": "tal/2020-21.html#den-alternative-tabel",
+    "title": "Superligaen i tal 2020/21",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nBrøndby IF\n\n\n3\n\n\n2\n\n\n1\n\n\n2\n\n\n1\n\n\n1\n\n\n61\n\n\n\n\nFC Midtjylland\n\n\n5\n\n\n3\n\n\n3\n\n\n4\n\n\n2\n\n\n2\n\n\n60\n\n\n\n\nFC København\n\n\n1\n\n\n1\n\n\n2\n\n\n1\n\n\n3\n\n\n3\n\n\n55\n\n\n\n\nAGF\n\n\n4\n\n\n5\n\n\n4\n\n\n3\n\n\n4\n\n\n4\n\n\n48\n\n\n\n\nFC Nordsjælland\n\n\n2\n\n\n4\n\n\n5\n\n\n5\n\n\n6\n\n\n5\n\n\n43\n\n\n\n\nRanders FC\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n5\n\n\n6\n\n\n40\n\n\n\n\nAaB\n\n\n8\n\n\n8\n\n\n9\n\n\n9\n\n\n8\n\n\n7\n\n\n46\n\n\n\n\nSønderjyske\n\n\n10\n\n\n10\n\n\n8\n\n\n7\n\n\n7\n\n\n8\n\n\n44\n\n\n\n\nOB\n\n\n7\n\n\n7\n\n\n7\n\n\n8\n\n\n9\n\n\n9\n\n\n43\n\n\n\n\nVejle BK\n\n\n12\n\n\n11\n\n\n10\n\n\n10\n\n\n10\n\n\n10\n\n\n38\n\n\n\n\nLyngby BK\n\n\n11\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n11\n\n\n26\n\n\n\n\nAC Horsens\n\n\n9\n\n\n9\n\n\n11\n\n\n11\n\n\n11\n\n\n12\n\n\n24"
+  },
+  {
+    "objectID": "tal/2020-21.html#comebacks-og-føringer",
+    "href": "tal/2020-21.html#comebacks-og-føringer",
+    "title": "Superligaen i tal 2020/21",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/2020-21.html#scoringstidspunkter",
+    "href": "tal/2020-21.html#scoringstidspunkter",
+    "title": "Superligaen i tal 2020/21",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
   },
   {
     "objectID": "metode.html",
@@ -74,6 +207,111 @@
     "href": "index.html",
     "title": "Superliga Data",
     "section": "",
-    "text": "Superligaen 2026/27·Runde 9·54 kampe·160 mål·seneste kamp 20. sep.·data opdateret 7. okt.\n\n\n\n\n  \n  Dansk fodbold set gennem data.\n\n\n\n\n\n\n\n\n\nDen første artikel er på vej.\n\nIngen resultater"
+    "text": "Runde 9FC København fører med 24 point, 5 foran FC Midtjylland·Silkeborg IF har smidt flest point fra føring (12)·Rundens målrigeste kamp: Sønderjyske–Randers FC 4-2·Superligaen i tal →\n\n\n  \n  Dansk fodbold set gennem data.\n\n\n\n\n\n\nIngen resultater\n\n\n\nSuperligaen i tal\n\n\nSæson 2026/27 · opdateret efter runde 9 · Alle tal og tidligere sæsoner →"
+  },
+  {
+    "objectID": "tal/2021-22.html",
+    "href": "tal/2021-22.html",
+    "title": "Superligaen i tal 2021/22",
+    "section": "",
+    "text": "Sæson 2021/22 · afsluttet\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/2021-22.html#game-states",
+    "href": "tal/2021-22.html#game-states",
+    "title": "Superligaen i tal 2021/22",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/2021-22.html#den-alternative-tabel",
+    "href": "tal/2021-22.html#den-alternative-tabel",
+    "title": "Superligaen i tal 2021/22",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nFC København\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n68\n\n\n\n\nFC Midtjylland\n\n\n2\n\n\n3\n\n\n2\n\n\n2\n\n\n2\n\n\n2\n\n\n65\n\n\n\n\nSilkeborg IF\n\n\n6\n\n\n6\n\n\n5\n\n\n3\n\n\n3\n\n\n3\n\n\n49\n\n\n\n\nBrøndby IF\n\n\n3\n\n\n2\n\n\n4\n\n\n4\n\n\n5\n\n\n4\n\n\n48\n\n\n\n\nAaB\n\n\n4\n\n\n4\n\n\n3\n\n\n5\n\n\n4\n\n\n5\n\n\n45\n\n\n\n\nRanders FC\n\n\n5\n\n\n5\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n43\n\n\n\n\nViborg FF\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n7\n\n\n44\n\n\n\n\nOB\n\n\n10\n\n\n9\n\n\n9\n\n\n8\n\n\n8\n\n\n8\n\n\n38\n\n\n\n\nFC Nordsjælland\n\n\n9\n\n\n8\n\n\n8\n\n\n10\n\n\n10\n\n\n9\n\n\n36\n\n\n\n\nAGF\n\n\n12\n\n\n10\n\n\n10\n\n\n9\n\n\n9\n\n\n10\n\n\n30\n\n\n\n\nVejle BK\n\n\n11\n\n\n12\n\n\n12\n\n\n11\n\n\n11\n\n\n11\n\n\n29\n\n\n\n\nSønderjyske\n\n\n8\n\n\n11\n\n\n11\n\n\n12\n\n\n12\n\n\n12\n\n\n23"
+  },
+  {
+    "objectID": "tal/2021-22.html#comebacks-og-føringer",
+    "href": "tal/2021-22.html#comebacks-og-føringer",
+    "title": "Superligaen i tal 2021/22",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/2021-22.html#scoringstidspunkter",
+    "href": "tal/2021-22.html#scoringstidspunkter",
+    "title": "Superligaen i tal 2021/22",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
+  },
+  {
+    "objectID": "tal/2023-24.html",
+    "href": "tal/2023-24.html",
+    "title": "Superligaen i tal 2023/24",
+    "section": "",
+    "text": "Sæson 2023/24 · afsluttet\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/2023-24.html#game-states",
+    "href": "tal/2023-24.html#game-states",
+    "title": "Superligaen i tal 2023/24",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/2023-24.html#den-alternative-tabel",
+    "href": "tal/2023-24.html#den-alternative-tabel",
+    "title": "Superligaen i tal 2023/24",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nFC Midtjylland\n\n\n6\n\n\n4\n\n\n4\n\n\n2\n\n\n2\n\n\n1\n\n\n63\n\n\n\n\nBrøndby IF\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n2\n\n\n62\n\n\n\n\nFC København\n\n\n2\n\n\n3\n\n\n2\n\n\n3\n\n\n4\n\n\n3\n\n\n59\n\n\n\n\nFC Nordsjælland\n\n\n3\n\n\n2\n\n\n3\n\n\n4\n\n\n3\n\n\n4\n\n\n58\n\n\n\n\nAGF\n\n\n5\n\n\n5\n\n\n5\n\n\n5\n\n\n5\n\n\n5\n\n\n44\n\n\n\n\nSilkeborg IF\n\n\n4\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n36\n\n\n\n\nRanders FC\n\n\n8\n\n\n8\n\n\n8\n\n\n7\n\n\n8\n\n\n7\n\n\n41\n\n\n\n\nViborg FF\n\n\n10\n\n\n10\n\n\n11\n\n\n11\n\n\n11\n\n\n8\n\n\n40\n\n\n\n\nVejle BK\n\n\n9\n\n\n9\n\n\n10\n\n\n10\n\n\n9\n\n\n9\n\n\n36\n\n\n\n\nLyngby BK\n\n\n11\n\n\n11\n\n\n9\n\n\n8\n\n\n10\n\n\n10\n\n\n36\n\n\n\n\nOB\n\n\n7\n\n\n7\n\n\n7\n\n\n9\n\n\n7\n\n\n11\n\n\n32\n\n\n\n\nHvidovre IF\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n20"
+  },
+  {
+    "objectID": "tal/2023-24.html#comebacks-og-føringer",
+    "href": "tal/2023-24.html#comebacks-og-føringer",
+    "title": "Superligaen i tal 2023/24",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/2023-24.html#scoringstidspunkter",
+    "href": "tal/2023-24.html#scoringstidspunkter",
+    "title": "Superligaen i tal 2023/24",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
+  },
+  {
+    "objectID": "tal/2025-26.html",
+    "href": "tal/2025-26.html",
+    "title": "Superligaen i tal 2025/26",
+    "section": "",
+    "text": "Sæson 2025/26 · afsluttet\nSæson: 2026/27 · 2025/26 · 2024/25 · 2023/24 · 2022/23 · 2021/22 · 2020/21"
+  },
+  {
+    "objectID": "tal/2025-26.html#game-states",
+    "href": "tal/2025-26.html#game-states",
+    "title": "Superligaen i tal 2025/26",
+    "section": "Game states",
+    "text": "Game states\n\n\nGame states: Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se metoden."
+  },
+  {
+    "objectID": "tal/2025-26.html#den-alternative-tabel",
+    "href": "tal/2025-26.html#den-alternative-tabel",
+    "title": "Superligaen i tal 2025/26",
+    "section": "Den alternative tabel",
+    "text": "Den alternative tabel\n\n\nDen alternative tabel: Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90’). Ved stop sorteres efter point; ved 90’ også efter målforskel og scorede mål. Hold musen over et tal for at se point.\n\n\n\n\n\nHold\n\n\n15’\n\n\n30’\n\n\n45’\n\n\n60’\n\n\n75’\n\n\n90’\n\n\nPoint\n\n\n\n\n\n\nAGF\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n1\n\n\n67\n\n\n\n\nFC Midtjylland\n\n\n2\n\n\n3\n\n\n3\n\n\n2\n\n\n2\n\n\n2\n\n\n60\n\n\n\n\nFC Nordsjælland\n\n\n5\n\n\n5\n\n\n4\n\n\n3\n\n\n3\n\n\n3\n\n\n50\n\n\n\n\nBrøndby IF\n\n\n4\n\n\n2\n\n\n2\n\n\n4\n\n\n4\n\n\n4\n\n\n45\n\n\n\n\nViborg FF\n\n\n6\n\n\n4\n\n\n5\n\n\n5\n\n\n5\n\n\n5\n\n\n44\n\n\n\n\nSønderjyske\n\n\n3\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n6\n\n\n44\n\n\n\n\nFC København\n\n\n7\n\n\n7\n\n\n8\n\n\n7\n\n\n7\n\n\n7\n\n\n51\n\n\n\n\nOB\n\n\n8\n\n\n8\n\n\n7\n\n\n8\n\n\n8\n\n\n8\n\n\n41\n\n\n\n\nSilkeborg IF\n\n\n10\n\n\n10\n\n\n9\n\n\n10\n\n\n11\n\n\n9\n\n\n36\n\n\n\n\nRanders FC\n\n\n12\n\n\n11\n\n\n11\n\n\n9\n\n\n9\n\n\n10\n\n\n35\n\n\n\n\nFC Fredericia\n\n\n11\n\n\n9\n\n\n10\n\n\n11\n\n\n10\n\n\n11\n\n\n34\n\n\n\n\nVejle BK\n\n\n9\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n12\n\n\n24"
+  },
+  {
+    "objectID": "tal/2025-26.html#comebacks-og-føringer",
+    "href": "tal/2025-26.html#comebacks-og-føringer",
+    "title": "Superligaen i tal 2025/26",
+    "section": "Comebacks og føringer",
+    "text": "Comebacks og føringer\n\n\nPoint hentet fra bagud: point i kampe, hvor holdet på et tidspunkt var bagud. Point tabt fra føring: 3 minus point i kampe, hvor holdet på et tidspunkt var foran."
+  },
+  {
+    "objectID": "tal/2025-26.html#scoringstidspunkter",
+    "href": "tal/2025-26.html#scoringstidspunkter",
+    "title": "Superligaen i tal 2025/26",
+    "section": "Scoringstidspunkter",
+    "text": "Scoringstidspunkter\n\n\nIntervaller: 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt."
   }
 ]

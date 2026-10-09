@@ -1,0 +1,3 @@
+# Gælder for alle sider under "Superligaen i tal"
+resources:
+  - figurer/*.svg            # både bred og mobil version af graferne kommer med

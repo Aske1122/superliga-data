@@ -1,0 +1,127 @@
+# Automatisk dataopdatering efter hver spillerunde.
+#
+# Hvad den gør:
+#   1. Henter krypterede rådata fra GitHub Actions' cache (så kun nye kampe hentes).
+#   2. Henter nye kampe fra Sportmonks via budgetvagten (højst 12 kald pr. kørsel).
+#   3. Renser data, kører datakvalitetstjek og analysekontrol. Fejler et tjek, stopper kørslen
+#      HER, siden opdateres ikke, og der oprettes et issue (du får en notifikation).
+#   4. Bygger siden og publicerer den (commit til main -> GitHub Pages).
+#
+# Rådata er aldrig offentlige: data/ committes ikke, og cachen er krypteret med DATA_CACHE_KEY.
+# Hemmeligheder (Settings -> Secrets and variables -> Actions): SPORTMONKS_API_KEY, DATA_CACHE_KEY.
+name: Opdater data
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"     # mandag kl. 06 dansk sommertid (kl. 05 om vinteren)
+    - cron: "0 4 * * 4"     # torsdag kl. 06 dansk sommertid (kl. 05 om vinteren)
+  workflow_dispatch:        # manuel kørsel fra fanen "Actions"
+
+permissions:
+  contents: write           # commit af den opdaterede side
+  issues: write             # issue ved fejl
+
+concurrency:
+  group: opdater-data
+  cancel-in-progress: false
+
+jobs:
+  opdater:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      SPORTMONKS_API_KEY: ${{ secrets.SPORTMONKS_API_KEY }}
+      DATA_CACHE_KEY: ${{ secrets.DATA_CACHE_KEY }}
+    steps:
+      - name: Hent koden
+        uses: actions/checkout@v4
+
+      - name: Tjek at hemmelighederne findes (viser dem aldrig)
+        run: |
+          [ -n "$SPORTMONKS_API_KEY" ] || { echo "::error::Hemmeligheden SPORTMONKS_API_KEY mangler"; exit 1; }
+          [ -n "$DATA_CACHE_KEY" ] || { echo "::error::Hemmeligheden DATA_CACHE_KEY mangler"; exit 1; }
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Installer pakker (i .venv, som lokalt)
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -q -r requirements.txt
+          .venv/bin/python -m ipykernel install --sys-prefix --name superliga
+
+      - name: Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.10.19
+
+      - name: Hent krypteret data-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data.tar.enc
+          key: data-${{ github.run_id }}
+          restore-keys: data-
+
+      - name: Dekrypter data
+        run: |
+          if [ -f data.tar.enc ]; then
+            openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:DATA_CACHE_KEY -in data.tar.enc | tar -xz
+            rm data.tar.enc
+            echo "Data hentet fra cachen."
+          else
+            echo "Ingen cache endnu: alle sæsoner hentes (ca. 10 kald)."
+          fi
+
+      - name: Hent nye kampe (budgetvagt)
+        id: hent
+        run: .venv/bin/python scripts/hent_sportmonks.py --ja --maks 12
+
+      - name: Gem krypteret data-cache
+        if: always() && steps.hent.outcome == 'success'
+        run: tar -cz data | openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:DATA_CACHE_KEY -out data.tar.enc
+
+      - name: Upload krypteret data-cache
+        if: always() && steps.hent.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: data.tar.enc
+          key: data-${{ github.run_id }}
+
+      - name: Rens data
+        run: .venv/bin/python scripts/rens.py
+
+      - name: Datakvalitetstjek (stopper ved fejl)
+        run: .venv/bin/python scripts/kvalitet.py
+
+      - name: Analyser og kontrol (stopper ved fejl)
+        run: .venv/bin/python scripts/analyse.py
+
+      - name: Byg siden
+        run: |
+          quarto render tal/index.qmd   # igangværende sæson regnes altid igen
+          quarto render index.qmd       # forsidens pointer og grafer
+          quarto render                 # resten (artikler bruger deres gemte resultater)
+
+      - name: Publicér (commit og push, kun hvis noget er ændret)
+        run: |
+          RUNDE=$(.venv/bin/python -c "import sys; sys.path.insert(0,'scripts'); import analyse, talgrafer; kh=analyse.kamp_hold(); print(talgrafer.runde(kh, kh.saeson.max()))")
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs _freeze tal posts index.qmd
+          if git diff --cached --quiet; then
+            echo "Ingen ændringer, intet at publicere."
+          else
+            git commit -m "Automatisk opdatering efter runde $RUNDE"
+            git push
+          fi
+
+      - name: Opret issue ved fejl
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Automatisk dataopdatering fejlede ($(date -u +%Y-%m-%d))" \
+            --body "Kørslen stoppede, og siden er **ikke** opdateret. Se loggen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

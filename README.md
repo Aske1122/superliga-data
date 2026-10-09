@@ -100,6 +100,12 @@ _partials/      kompakt menu, kampur-læsebjælke og rubrik (lille, ren JavaScri
 data/           rådata og rensede tabeller (ikke i repoet)
 ```
 
+## Licens
+
+- **Kode:** [MIT](LICENSE). Brug den frit, men bevar copyright-linjen.
+- **Tekster og grafer:** [CC BY 4.0](LICENSE-INDHOLD.md). Del og genbrug med kreditering til *Superliga Data*.
+- **Rådata** fra Sportmonks er ikke omfattet og deles ikke.
+
 ## Krediteringer
 
 - Data: Sportmonks. API-Football til krydstjek.

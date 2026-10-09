@@ -33,7 +33,7 @@ website:
     right:
       - href: arkiv.qmd
         text: Arkiv
-      - href: tal.qmd
+      - href: tal/index.qmd
         text: Superligaen i tal
       - href: metode.qmd
         text: Metode
@@ -52,7 +52,7 @@ website:
       ::: {.fod-kolonne}
       **Metode**<br>
       [Metode og data](/metode.qmd)<br>
-      [Superligaen i tal](/tal.qmd)
+      [Superligaen i tal](/tal/index.qmd)
       :::
       ::: {.fod-kolonne}
       **Kontakt**<br>
@@ -60,8 +60,8 @@ website:
       [RSS](/index.xml)
       :::
     right: |
-      Data: Sportmonks. Skrift: Inter og Newsreader (SIL OFL 1.1).<br>
-      Design inspireret af Tufte CSS (MIT). Bygget med Quarto.
+      Kode: [MIT](https://github.com/Aske1122/superliga-data/blob/main/LICENSE) · Tekst og grafer: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da)<br>
+      Data: Sportmonks. Skrift: Inter og Newsreader (SIL OFL 1.1). Design inspireret af Tufte CSS (MIT). Bygget med Quarto.
 
 lang: da
 

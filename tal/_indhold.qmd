@@ -1,0 +1,82 @@
+<!--
+  Fælles indhold for alle sider under "Superligaen i tal".
+  Hver side (tal/index.qmd for den igangværende sæson, tal/<sæson>.qmd for tidligere sæsoner)
+  sætter variablen SAESON i en kodecelle og inkluderer derefter denne fil.
+  Kun tal og grafer, ingen fortolkende tekst.
+-->
+
+```{python}
+# --- Opsætning: data, sæson og navigation mellem sæsoner (ingen API-kald) ---
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path("../scripts").resolve()))
+import analyse, stil, talgrafer
+
+kh = analyse.kamp_hold()
+saesoner = sorted(kh.saeson.unique(), reverse=True)
+igangvaerende = saesoner[0]
+saeson = SAESON or igangvaerende
+er_igang = saeson == igangvaerende
+navne = talgrafer.tegn_alle(kh, saeson, er_igang)          # tegner og gemmer alle grafer (bred + mobil)
+
+def side(s: str) -> str:
+    """Link til en sæsonside: den igangværende er tal/index, de øvrige tal/<sæson>."""
+    return "index.html" if s == igangvaerende else f"{talgrafer.slug(s)}.html"
+```
+
+```{python}
+#| output: asis
+# --- Status og sæsonvalg øverst ---
+status = (f"Sæson {saeson} · opdateret efter runde {talgrafer.runde(kh, saeson)}" if er_igang
+          else f"Sæson {saeson} · afsluttet")
+links = " · ".join(f"<strong>{s}</strong>" if s == saeson else f'<a href="{side(s)}">{s}</a>' for s in saesoner)
+print(f'<p class="tal-status">{status}</p>\n<p class="tal-saesoner">Sæson: {links}</p>')
+```
+
+## Game states
+
+::: {.column-margin}
+**Game states:** Hvor stor en del af de 90 minutter holdet har været foran, uafgjort og bagud. Mål i tillægstid tæller på periodens sidste minut. Se [metoden](../metode.qmd).
+:::
+
+```{python}
+#| output: asis
+print("::: {.column-page-right}\n" + stil.billede(navne["gamestates"],
+      f"Andel af spilletiden foran, uafgjort og bagud for hvert hold, Superligaen {saeson}.") + "\n:::")
+```
+
+## Den alternative tabel
+
+::: {.column-margin}
+**Den alternative tabel:** Placering, hvis alle kampe var stoppet efter 15, 30, 45, 60 eller 75 minutter, og den rigtige placering (90'). Ved stop sorteres efter point; ved 90' også efter målforskel og scorede mål. Hold musen over et tal for at se point.
+:::
+
+```{python}
+#| output: asis
+print(talgrafer.tabel_alternativ(kh, saeson))
+```
+
+## Comebacks og føringer
+
+::: {.column-margin}
+**Point hentet fra bagud:** point i kampe, hvor holdet på et tidspunkt var bagud. **Point tabt fra føring:** 3 minus point i kampe, hvor holdet på et tidspunkt var foran.
+:::
+
+```{python}
+#| output: asis
+print("::: {.column-page-right}\n" + stil.billede(navne["comebacks"],
+      f"Point hentet fra bagud og tabt fra føring for hvert hold, Superligaen {saeson}.") + "\n:::")
+```
+
+## Scoringstidspunkter
+
+::: {.column-margin}
+**Intervaller:** 0–15, 16–30, 31–45+ (inkl. tillægstid i 1. halvleg), 46–60, 61–75 og 76–90+ (inkl. tillægstid). Tal i parentes er mål i alt.
+:::
+
+```{python}
+#| output: asis
+for n, tekst in [("scoret", "Mål scoret"), ("indkasseret", "Mål indkasseret")]:
+    print("::: {.column-page-right}\n" + stil.billede(navne[n],
+          f"{tekst} pr. 15-minutters interval for hvert hold, Superligaen {saeson}.") + "\n:::\n")
+```

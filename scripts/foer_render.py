@@ -5,6 +5,9 @@ Beregner læsetiden for hver artikel ud fra artiklens egen tekst og skriver den 
 forside-metadata som 'laesetid: N'. Det tal bruges BÅDE i artikellisterne (rubrikken "7'")
 og øverst i selve artiklen, så de altid er ens.
 
+Laver også en side pr. tidligere sæson under "Superligaen i tal" (tal/<sæson>.qmd),
+så der automatisk kommer en arkivside, når en ny sæson starter.
+
 Tæller kun brødtekst: kode, metadata, grafer, margennoter og noter til forfatteren
 (stikord, pladsholdere) tælles ikke med. Ca. 200 ord i minuttet.
 """
@@ -46,3 +49,20 @@ for qmd in sorted((ROOT / "posts").glob("*/index.qmd")):
     if ny != hoved:
         qmd.write_text("---" + ny + "---" + rest, encoding="utf-8")
         print(f"  læsetid: {qmd.parent.name} = {minutter} min")
+
+
+# --- Sider pr. tidligere sæson under "Superligaen i tal" ---
+import duckdb
+
+db = ROOT / "data" / "clean" / "superliga.duckdb"
+if db.exists():                                     # uden data (fx på en ny maskine) springes det over
+    with duckdb.connect(str(db), read_only=True) as con:
+        saesoner = [r[0] for r in con.sql(
+            "SELECT DISTINCT saeson FROM kampe WHERE fase <> 'playoff' ORDER BY saeson DESC").fetchall()]
+    for saeson in saesoner[1:]:                     # den nyeste er tal/index.qmd
+        sti = ROOT / "tal" / f"{saeson.replace('/', '-')}.qmd"
+        indhold = (f'---\ntitle: "Superligaen i tal {saeson}"\njupyter: superliga\nexecute:\n  echo: false\n---\n\n'
+                   f'```{{python}}\nSAESON = "{saeson}"\n```\n\n{{{{< include _indhold.qmd >}}}}\n')
+        if not sti.exists() or sti.read_text(encoding="utf-8") != indhold:
+            sti.write_text(indhold, encoding="utf-8")
+            print(f"  sæsonside: {sti.relative_to(ROOT)}")
