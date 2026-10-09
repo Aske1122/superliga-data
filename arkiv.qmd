@@ -1,0 +1,12 @@
+---
+title: "Arkiv"
+subtitle: "Alle artikler, nyeste først."
+listing:
+  contents: posts
+  sort: "date desc"
+  template: _skabeloner/liste.ejs
+  date-format: "D. MMM YYYY"   # hårdt mellemrum efter punktum (se index.qmd)
+  categories: true                  # filtrér på kategori i margenen
+  sort-ui: false
+  filter-ui: false
+---

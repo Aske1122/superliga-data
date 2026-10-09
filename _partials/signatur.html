@@ -1,0 +1,84 @@
+<!--
+  Sidens signatur-detaljer (ren JavaScript, ingen biblioteker):
+  1. Menulinjen bliver smallere, når man ruller ned (klassen .kompakt).
+  2. Kampur-læsebjælke på artikelsider: løber fra 0' til 90', mens man læser.
+  3. Rubrik i artiklens top: læsetid i kampminutter + kategori (samme som i listerne).
+  Bløde overgange styres i styles.scss og slås fra ved "reducer bevægelse".
+-->
+<script>
+(function () {
+  const header = document.getElementById("quarto-header");
+  if (!header) return;
+
+  // Quarto skjuler normalt menuen, når man ruller ned. Vi holder den synlig i stedet.
+  header.classList.remove("headroom");
+
+  // --- 1. Kompakt menu efter de første 40 pixels ---
+  const opdaterMenu = () => header.classList.toggle("kompakt", window.scrollY > 40);
+
+  // Indholdet skal starte lige under den fulde menu. Måles igen, når skrifterne er indlæst
+  // (overskriftsskriften gør menuen en anelse højere) og når vinduet ændrer størrelse.
+  const saetAfstand = () => {
+    if (!header.classList.contains("kompakt")) document.body.style.paddingTop = header.offsetHeight + "px";
+  };
+  saetAfstand();
+  if (document.fonts) document.fonts.ready.then(saetAfstand);
+  window.addEventListener("load", saetAfstand);
+  window.addEventListener("resize", saetAfstand);
+
+  // --- 2. Kampur-læsebjælke (kun på artikelsider) ---
+  let bjaelke = null, minutTal = null;
+  const artikel = document.body.classList.contains("artikelside") ? document.querySelector("main.content") : null;
+  if (artikel) {
+    const kampur = document.createElement("div");
+    kampur.className = "kampur";
+    kampur.setAttribute("role", "progressbar");
+    kampur.setAttribute("aria-label", "Læst af artiklen, i kampminutter");
+    kampur.setAttribute("aria-valuemin", "0");
+    kampur.setAttribute("aria-valuemax", "90");
+    kampur.innerHTML = '<div class="kampur-fyld"></div><span class="kampur-minut">0\'</span>';
+    header.appendChild(kampur);
+    bjaelke = kampur;
+    minutTal = kampur.querySelector(".kampur-minut");
+  }
+  const opdaterKampur = () => {
+    if (!bjaelke) return;
+    // 90' = når bunden af artiklen når bunden af skærmen
+    const slut = artikel.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
+    const andel = slut > 0 ? Math.min(1, Math.max(0, window.scrollY / slut)) : 1;
+    const minut = Math.round(andel * 90);
+    bjaelke.style.setProperty("--andel", andel);
+    bjaelke.setAttribute("aria-valuenow", String(minut));
+    minutTal.textContent = minut + "'";
+  };
+
+  // Opdatér højst én gang pr. skærmbillede (glat og billigt)
+  let venter = false;
+  const vedScroll = () => {
+    if (venter) return;
+    venter = true;
+    requestAnimationFrame(() => { opdaterMenu(); opdaterKampur(); venter = false; });
+  };
+  window.addEventListener("scroll", vedScroll, { passive: true });
+  window.addEventListener("resize", vedScroll);
+  vedScroll();
+
+  // --- 3. Rubrik i artiklens top: læsetid som kampminut + kategori ---
+  const kategori = document.querySelector("#title-block-header .quarto-category");
+  if (kategori && artikel) {
+    // Læsetiden står som klassen "laesetid-N" på <body> (beregnet af scripts/foer_render.py)
+    const klasse = [...document.body.classList].find((k) => k.startsWith("laesetid-"));
+    const minutter = klasse ? klasse.split("-")[1] : "";
+    const tekst = kategori.textContent.trim();
+    kategori.innerHTML = '<span class="rubrik" data-farve="' + rubrikFarve(tekst) + '">' +
+      (minutter ? '<span class="rubrik-minut">' + minutter + "'</span>" : "") +
+      '<span class="rubrik-tekst">' + tekst + "</span></span>";
+  }
+  // Samme farvevalg som i listeskabelonerne (_skabeloner/*.ejs): fast farve pr. kategori
+  function rubrikFarve(t) {
+    let h = 0;
+    for (const c of t) h = (h * 31 + c.charCodeAt(0)) % 997;
+    return h % 4;
+  }
+})();
+</script>

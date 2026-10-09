@@ -273,6 +273,29 @@ def comebacks(kh: pd.DataFrame) -> pd.DataFrame:
     return c
 
 
+def stilling(kh: pd.DataFrame, saeson: str, form_antal: int = 5) -> pd.DataFrame:
+    """
+    Den aktuelle stilling for én sæson (hele sæsonen), til forsidens overblik:
+    placering, kampe, V/U/T, mål, målforskel, point, form (seneste kampe) og andel af tiden
+    foran / uafgjort / bagud.
+    """
+    d = kh[kh.saeson == saeson].sort_values("kickoff_utc")
+    tabel = alternativ_tabel(d)
+    tabel = tabel[tabel.fase_gruppe == "hele_saesonen"].copy()
+    gs = game_states(d)
+    gs = gs[gs.fase_gruppe == "hele_saesonen"][["hold_id", "pct_foran", "pct_uafgjort", "pct_bagud"]]
+
+    res = d.assign(r=np.select([d.point == 3, d.point == 1], ["V", "U"], "T"))
+    vut = res.groupby("hold_id").r.value_counts().unstack(fill_value=0).reindex(columns=["V", "U", "T"], fill_value=0)
+    form = res.groupby("hold_id").r.apply(lambda s: "".join(s.tail(form_antal))).rename("form")
+
+    ud = (tabel.merge(gs, on="hold_id").merge(vut, left_on="hold_id", right_index=True)
+          .merge(form, left_on="hold_id", right_index=True))
+    kol = ["plac_90", "hold_id", "hold", "kampe", "V", "U", "T", "maal_for", "maal_imod", "maalforskel",
+           "point_90", "form", "pct_foran", "pct_uafgjort", "pct_bagud"]
+    return ud[kol].rename(columns={"plac_90": "plac", "point_90": "point"}).sort_values("plac")
+
+
 # ---------------------------------------------------------------------------
 # 5. Kør alt og gem
 # ---------------------------------------------------------------------------

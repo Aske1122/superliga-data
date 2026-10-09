@@ -68,3 +68,12 @@ Indledning: Stikordene herunder skal omformuleres til din egen tekst.
 - Al kode ligger på GitHub: *link indsættes*.
   - Hentning med indbygget "budgetvagt", så de gratis API-grænser aldrig overskrides.
   - Rensning, kvalitetstjek og analyser (`scripts/`).
+
+## Krediteringer og licenser
+
+- Data: [Sportmonks](https://www.sportmonks.com/) (football API v3). [API-Football](https://www.api-football.com/) bruges til krydstjek.
+- Skrifter, alle under [SIL Open Font License 1.1](https://openfontlicense.org/) og lagt lokalt på siden:
+  - [Inter](https://rsms.me/inter/) (brødtekst og grafer)
+  - [Newsreader](https://github.com/productiontype/Newsreader) (overskrifter)
+- Design inspireret af [Tufte CSS](https://edwardtufte.github.io/tufte-css/) (MIT-licens). Ingen kode er kopieret.
+- Bygget med [Quarto](https://quarto.org/).

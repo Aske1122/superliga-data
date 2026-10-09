@@ -4,35 +4,72 @@ project:
   render:
     - "*.qmd"
     - "!README.md"
+    - "!STATUS.md"
+  resources:
+    - /fonts/*-OFL.txt      # skrifternes licenser følger med (krav i SIL OFL 1.1)
+  pre-render: scripts/foer_render.py     # beregner artiklernes læsetid
+  post-render: scripts/efter_render.py   # fjerner kladdernes billeder fra docs/
 
 execute:
   freeze: auto              # beregninger gemmes i _freeze/, så siden kan bygges uden data/
 
 website:
-  title: "Superliga-data"
+  title: "Superliga Data"
   description: "Dansk fodbold set gennem data"
-  site-url: ""              # TODO: indsæt GitHub Pages-adressen, når siden er online
+  site-url: ""              # TODO (fase B): GitHub Pages-adressen
   favicon: favicon.svg
-  open-graph: true          # pæne forhåndsvisninger, når et link deles
+  open-graph: true
   twitter-card: true
+  search: false             # ingen søgeikon i menuen
   navbar:
-    left:
-      - href: index.qmd
-        text: Analyser
+    title: "Superliga Data"
+    collapse: false         # ingen hamburger-ikon: menuen ombrydes i stedet på mobil
+    right:
+      - href: arkiv.qmd
+        text: Arkiv
+      - href: tal.qmd
+        text: Superligaen i tal
       - href: metode.qmd
         text: Metode
       - href: om.qmd
         text: Om
   page-footer:
-    left: "Data: Sportmonks · Superliga Data"
-    right: "Ingen logoer eller spillerfotos. Alle grafer er egne beregninger."
+    left: |
+      **Superliga Data**<br>
+      Dansk fodbold set gennem data.
+    center: |
+      ::: {.fod-kolonne}
+      **Om**<br>
+      [Om siden](/om.qmd)<br>
+      [Arkiv](/arkiv.qmd)
+      :::
+      ::: {.fod-kolonne}
+      **Metode**<br>
+      [Metode og data](/metode.qmd)<br>
+      [Superligaen i tal](/tal.qmd)
+      :::
+      ::: {.fod-kolonne}
+      **Kontakt**<br>
+      [GitHub](https://github.com/Aske1122)
+      :::
+    right: |
+      Data: Sportmonks. Skrift: Inter og Newsreader (SIL OFL 1.1).<br>
+      Design inspireret af Tufte CSS (MIT). Bygget med Quarto.
 
 lang: da
 
 format:
   html:
-    theme: [cosmo, styles.scss]   # Bootstrap-tema + vores egne farver og skrift
-    toc: true
-    toc-title: "Indhold"
+    theme: [default, styles.scss] # neutralt grundtema, overskrevet af vores eget design
+    include-after-body: _partials/signatur.html   # kompakt menu, kampur-læsebjælke, rubrik
+    toc: false                   # margen bruges til noter, ikke indholdsfortegnelse
+    reference-location: margin   # fodnoter vises som margennoter
+    citation-location: margin
+    cap-location: margin
     fig-align: left
     smooth-scroll: true
+    title-block-banner: false
+    grid:
+      body-width: 680px          # tekstkolonne (650–700 px)
+      margin-width: 280px        # margennoter
+      gutter-width: 2.5rem

@@ -1,24 +1,10 @@
 [
   {
-    "objectID": "om.html",
-    "href": "om.html",
-    "title": "Om",
+    "objectID": "tal.html",
+    "href": "tal.html",
+    "title": "Superligaen i tal",
     "section": "",
-    "text": "Om projektet: hvorfor siden findes, og hvad du gerne vil vise."
-  },
-  {
-    "objectID": "om.html#inspiration",
-    "href": "om.html#inspiration",
-    "title": "Om",
-    "section": "Inspiration",
-    "text": "Inspiration\n\nBen Mayhews Experimental 361 (engelsk fodbold set gennem data)"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Dansk fodbold set gennem data",
-    "section": "",
-    "text": "Kort introduktion til siden (2–3 sætninger): hvad du vil undersøge, og hvorfor.\n\n\n\n\n\n\n\n\n\nIngen resultater"
+    "text": "Siden er under opbygning."
   },
   {
     "objectID": "metode.html",
@@ -68,5 +54,26 @@
     "title": "Metode",
     "section": "Kode",
     "text": "Kode\n\nAl kode ligger på GitHub: link indsættes.\n\nHentning med indbygget “budgetvagt”, så de gratis API-grænser aldrig overskrides.\nRensning, kvalitetstjek og analyser (scripts/)."
+  },
+  {
+    "objectID": "metode.html#krediteringer-og-licenser",
+    "href": "metode.html#krediteringer-og-licenser",
+    "title": "Metode",
+    "section": "Krediteringer og licenser",
+    "text": "Krediteringer og licenser\n\nData: Sportmonks (football API v3). API-Football bruges til krydstjek.\nSkrifter, alle under SIL Open Font License 1.1 og lagt lokalt på siden:\n\nInter (brødtekst og grafer)\nNewsreader (overskrifter)\n\nDesign inspireret af Tufte CSS (MIT-licens). Ingen kode er kopieret.\nBygget med Quarto."
+  },
+  {
+    "objectID": "arkiv.html",
+    "href": "arkiv.html",
+    "title": "Arkiv",
+    "section": "",
+    "text": "Ingen resultater"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Superliga Data",
+    "section": "",
+    "text": "Superligaen 2026/27·Runde 9·54 kampe·160 mål·seneste kamp 20. sep.·data opdateret 7. okt.\n\n\n\n\n  \n  Dansk fodbold set gennem data.\n\n\n\n\n\n\n\n\n\nDen første artikel er på vej.\n\nIngen resultater"
   }
 ]

@@ -1,0 +1,43 @@
+```{=html}
+<%
+// Forside: nyeste artikel stort (rubrik, overskrift, resumé, hovedgraf), derunder "Nyeste artikler".
+// Rubrikken er artiklens første kategori. metadataAttrs(item) skal stå på hvert element.
+const rubrik = (item) => (item.categories && item.categories.length) ? item.categories[0] : "";
+const rubrikFarve = (t) => { let h = 0; for (const c of t) h = (h * 31 + c.charCodeAt(0)) % 997; return h % 4; };
+const minutter = (item) => item.laesetid ? item.laesetid + "'" : "";   // fra scripts/foer_render.py
+const rubrikHTML = (item) => rubrik(item) ? `<div class="rubrik" data-farve="${rubrikFarve(rubrik(item))}"><span class="rubrik-minut">${minutter(item)}</span><span class="rubrik-tekst">${rubrik(item)}</span></div>` : "";
+const [foerste, ...resten] = items;
+%>
+<div class="list">
+<% if (foerste) { %>
+  <a class="tophistorie" href="<%- foerste.path %>" <%= metadataAttrs(foerste) %>>
+    <div class="tophistorie-tekst">
+      <%= rubrikHTML(foerste) %>
+      <h2 class="tophistorie-titel"><%= foerste.title %></h2>
+      <p class="tophistorie-resume"><%= foerste.description || foerste.subtitle || "" %></p>
+      <div class="artikel-dato"><%= foerste.date || "" %></div>
+    </div>
+    <% if (foerste.image) { %>
+    <div class="tophistorie-billede"><img src="<%- foerste.image %>" alt="" loading="lazy"></div>
+    <% } %>
+  </a>
+<% } %>
+<% if (resten.length) { %>
+  <h2 class="sektion-overskrift">Nyeste artikler</h2>
+  <div class="artikel-liste">
+  <% for (const item of resten) { %>
+    <a class="artikel<%= item.image ? '' : ' uden-billede' %>" href="<%- item.path %>" <%= metadataAttrs(item) %>>
+      <div class="artikel-dato"><%= item.date || "" %></div>
+      <div>
+        <%= rubrikHTML(item) %>
+        <h3 class="artikel-titel"><%= item.title %></h3>
+        <p class="artikel-resume"><%= item.description || item.subtitle || "" %></p>
+      </div>
+      <% if (item.image) { %><div class="artikel-billede"><img src="<%- item.image %>" alt="" loading="lazy"></div><% } %>
+    </a>
+  <% } %>
+  </div>
+<% } %>
+<% if (!foerste) { %><p class="listing-no-matching">Den første artikel er på vej.</p><% } %>
+</div>
+```

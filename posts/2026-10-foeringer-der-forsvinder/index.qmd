@@ -1,12 +1,14 @@
 ---
 title: "Silkeborgs forsvundne føringer"
-subtitle: "ARBEJDSTITEL · Hvem holder fast i føringen, og hvem slipper den?"
+subtitle: "Hvem holder fast i føringen, og hvem slipper den?"
 description: "Point tabt fra føring og hentet fra bagud i Superligaen 2026/27."
 date: "2026-10-08"
-categories: [2026/27, comebacks, game states]
+categories: [Comebacks og føringer, 2026/27]   # første kategori vises som rubrik over titlen
 jupyter: superliga        # projektets egen Python-kerne (.venv)
 draft: true                # KLADDE: vises ikke, når siden bygges med quarto render
-# image: deling/point-fra-foering.png   # SLÅ TIL ved udgivelse: forhåndsbillede, når artiklen deles
+image: deling/point-fra-foering.png   # listebillede + delingskort (scripts/efter_render.py holder kladders billeder ude af docs/)
+laesetid: 1               # beregnes automatisk (scripts/foer_render.py)
+body-classes: artikelside laesetid-1
 ---
 
 ```{python}
@@ -30,64 +32,73 @@ cb = analyse.comebacks(kh)                                     # D) comebacks og
 alt = analyse.alternativ_tabel(kh)                             # B) den alternative tabel
 cb = cb[(cb.saeson == SAESON) & (cb.fase_gruppe == "hele_saesonen")]
 alt = alt[(alt.saeson == SAESON) & (alt.fase_gruppe == "hele_saesonen")]
+
+
+def begge(tegn, navn: str) -> None:
+    """Tegn en graf i både bred version (computer) og mobilversion (telefon), og gem begge."""
+    for mobil in (False, True):
+        fig = tegn(mobil)
+        stil.gem(fig, navn, MAPPE, mobil=mobil)
+        plt.close(fig)
 ```
 
-::: {.callout-note collapse="true"}
-## Redaktionelle noter (slettes før udgivelse)
+::: {.note-til-mig}
+Note til dig (slettes før udgivelse). Arbejdstitel: Silkeborgs forsvundne føringer. Alternativer: "Ved pausen er Silkeborg et tophold" · "FCK lukker kampene, Silkeborg åbner dem igen" · "12 point sluppet: hvorfor holder Silkeborgs føringer ikke?" Data til og med 20. september 2026 (9 runder, 54 kampe).
+:::
 
-**Arbejdstitel:** Silkeborgs forsvundne føringer
-
-**Alternative titler:**
-
-1. Ved pausen er Silkeborg et tophold
-2. FCK lukker kampene, Silkeborg åbner dem igen
-3. 12 point sluppet: hvorfor holder Silkeborgs føringer ikke?
-
-**Data til og med:** 20. september 2026 (9 runder, 54 kampe).
+::: {.column-margin}
+**Data og periode.** Sportmonks, kampe og hændelser. Superligaen 2026/27, runde 1–9 (24. juli – 20. september 2026), 54 kampe. Egne beregninger. Se også [metodesiden](../../metode.qmd).
 :::
 
 ::: {.pladsholder}
-Indledning: Sæt scenen. Hvad er historien, og hvorfor er den interessant lige nu?
+Indledning: sæt scenen. Hvad er historien, og hvorfor er den interessant lige nu?
 :::
 
 ## Point tabt og point hentet
 
 ```{python}
+#| output: asis
 # --- Graf 1: point tabt fra føring (venstre) og point hentet fra bagud (højre) ---
-d = cb.assign(netto=cb.point_hentet - cb.point_tabt).sort_values(["netto", "point_hentet"])
-fig, ax = stil.figur(
-    "Silkeborg har smidt 12 point fra føring",
-    f"Point tabt fra føringspositioner og hentet fra bagud · {UNDERTITEL_PERIODE}",
-    venstre=0.2,
-)
-stil.farvenoegle(fig, [("Point hentet fra bagud", stil.FORAN), ("Point tabt fra føring", stil.BAGUD)])
-y = np.arange(len(d))
-ax.barh(y, d.point_hentet, color=stil.FORAN, height=0.65)
-ax.barh(y, -d.point_tabt, color=stil.BAGUD, height=0.65)
-ax.axvline(0, color=stil.GRAA_MOERK, linewidth=0.8)
-for yi, (h, t) in enumerate(zip(d.point_hentet, d.point_tabt)):
-    # Tallene skrives for enden af søjlerne
-    if h:
-        ax.text(h + 0.3, yi, f"+{h:.0f}", va="center", fontsize=8.5, color=stil.FORAN)
-    if t:
-        ax.text(-t - 0.3, yi, f"−{t:.0f}", va="center", ha="right", fontsize=8.5, color=stil.BAGUD)
-ax.set_yticks(y, d.hold)
-# Fremhæv de to hold, historien handler om
-for lbl in ax.get_yticklabels():
-    if lbl.get_text() in ("Silkeborg IF", "FC København"):
-        lbl.set_fontweight("bold")
-ax.set_xlim(-14, 11)
-ax.xaxis.set_major_formatter(lambda x, _: f"{abs(x):.0f}")
-ax.set_xlabel("Point")
-stil.gitter(ax)
-stil.gem(fig, "point-fra-foering", MAPPE)
-plt.close(fig)
+def graf_point(mobil: bool):
+    d = cb.assign(netto=cb.point_hentet - cb.point_tabt).sort_values(["netto", "point_hentet"])
+    fig, ax = stil.figur("Silkeborg har smidt 12 point fra føring",
+                         f"Point tabt fra føringspositioner og hentet fra bagud · {UNDERTITEL_PERIODE}",
+                         mobil=mobil, venstre=0.38 if mobil else 0.2)
+    stil.farvenoegle(fig, [("Point hentet fra bagud", stil.FORAN), ("Point tabt fra føring", stil.BAGUD)])
+    y = np.arange(len(d))
+    ax.barh(y, d.point_hentet, color=stil.FORAN, height=0.65)
+    ax.barh(y, -d.point_tabt, color=stil.BAGUD, height=0.65)
+    ax.axvline(0, color=stil.GRAA_MOERK, linewidth=0.8)
+    for yi, (h, t) in enumerate(zip(d.point_hentet, d.point_tabt)):
+        # Tallene skrives for enden af søjlerne
+        if h:
+            ax.text(h + 0.3, yi, f"+{h:.0f}", va="center", fontsize=8.5, color=stil.FORAN)
+        if t:
+            ax.text(-t - 0.3, yi, f"−{t:.0f}", va="center", ha="right", fontsize=8.5, color=stil.BAGUD)
+    ax.set_yticks(y, d.hold)
+    for lbl in ax.get_yticklabels():                       # fremhæv de to hold, historien handler om
+        if lbl.get_text() in ("Silkeborg IF", "FC København"):
+            lbl.set_fontweight("semibold")
+    ax.set_xlim(-16.5 if mobil else -14.5, 11.5)
+    ax.xaxis.set_major_formatter(lambda x, _: f"{abs(x):.0f}")
+    ax.set_xlabel("Point")
+    stil.gitter(ax)
+    return fig
+
+begge(graf_point, "point-fra-foering")
+print("::: {.column-page-right}\n" + stil.billede("point-fra-foering",
+      "Søjlediagram: point tabt fra føring og point hentet fra bagud for hvert hold i Superligaen 2026/27. "
+      "Silkeborg har tabt 12 point fra føring, FC København 0.") + "\n:::")
 ```
 
-![](figurer/point-fra-foering.svg){fig-alt="Søjlediagram: point tabt fra føring og point hentet fra bagud for hvert hold i Superligaen 2026/27. Silkeborg har tabt 12 point fra føring, FC København 0."}
+::: {.column-margin}
+**Point tabt fra føring:** For hver kamp, hvor holdet på et tidspunkt var foran, tælles 3 minus de opnåede point.
+
+**Point hentet fra bagud:** Point i kampe, hvor holdet på et tidspunkt var bagud.
+:::
 
 ::: {.stikord}
-**Stikord: det viser tallene**
+**Stikord** (fakta til din tekst)
 
 - Silkeborg har tabt 12 point i kampe, hvor holdet var foran. Det er flest i ligaen; nummer to er Lyngby med 9.
   - 1,33 point tabt pr. kamp mod et ligasnit på 0,46.
@@ -106,43 +117,49 @@ Dit afsnit om graf 1.
 ## Pauseføringer, der ikke holdt
 
 ```{python}
+#| output: asis
 # --- Graf 2: hvad skete der i kampe, hvor holdet førte ved pausen? ---
 pf = kh[(kh.saeson == SAESON) & (kh.point_45 == 3)]
 pf = (pf.groupby("hold").point.value_counts().unstack(fill_value=0)
         .reindex(columns=[3, 1, 0], fill_value=0))
 pf.columns = ["Vandt", "Uafgjort", "Tabte"]
 pf = pf.assign(i_alt=pf.sum(axis=1)).sort_values(["i_alt", "Vandt"])
+liga_pct = 100 * (kh[kh.point_45 == 3].point == 3).mean()   # ligasnit, alle sæsoner
 
-# Ligasnit: andel af pauseføringer, der blev til sejr (alle sæsoner)
-alle = kh[kh.point_45 == 3]
-liga_pct = 100 * (alle.point == 3).mean()
+def graf_pause(mobil: bool):
+    reference = f"I alle sæsoner siden 2020/21 er {stil.pct(liga_pct)} af pauseføringerne blevet til sejr"
+    undertitel = f"Kampe, hvor holdet førte ved pausen, fordelt på slutresultatet · {UNDERTITEL_PERIODE}"
+    if mobil:
+        undertitel += f". {reference}."                       # på mobil står referencen i undertitlen
+    fig, ax = stil.figur("Fem pauseføringer, én sejr", undertitel, mobil=mobil, venstre=0.38 if mobil else 0.2)
+    stil.farvenoegle(fig, [("Vandt", stil.FORAN), ("Uafgjort", stil.UAFGJORT), ("Tabte", stil.BAGUD)])
+    venstre = np.zeros(len(pf))
+    for kol, farve in [("Vandt", stil.FORAN), ("Uafgjort", stil.UAFGJORT), ("Tabte", stil.BAGUD)]:
+        ax.barh(pf.index, pf[kol], left=venstre, color=farve, height=0.65, edgecolor=stil.BAGGRUND, linewidth=1.5)
+        venstre += pf[kol].to_numpy()
+    for lbl in ax.get_yticklabels():
+        if lbl.get_text() == "Silkeborg IF":
+            lbl.set_fontweight("semibold")
+    ax.set_xlabel("Antal kampe")
+    ax.xaxis.set_major_locator(plt.MultipleLocator(1))
+    if not mobil:
+        ax.text(0.99, 0.02, reference.replace(" er ", " er\n", 1), transform=ax.transAxes,
+                ha="right", va="bottom", fontsize=9, color=stil.GRAA_MOERK)
+    stil.gitter(ax)
+    return fig
 
-fig, ax = stil.figur(
-    "Fem pauseføringer, én sejr",
-    f"Kampe, hvor holdet førte ved pausen, fordelt på slutresultatet · {UNDERTITEL_PERIODE}",
-    venstre=0.2,
-)
-stil.farvenoegle(fig, [("Vandt", stil.FORAN), ("Uafgjort", stil.UAFGJORT), ("Tabte", stil.BAGUD)])
-venstre = np.zeros(len(pf))
-for kol, farve in [("Vandt", stil.FORAN), ("Uafgjort", stil.UAFGJORT), ("Tabte", stil.BAGUD)]:
-    ax.barh(pf.index, pf[kol], left=venstre, color=farve, height=0.65, edgecolor=stil.BAGGRUND, linewidth=1.5)
-    venstre += pf[kol].to_numpy()
-for lbl in ax.get_yticklabels():
-    if lbl.get_text() == "Silkeborg IF":
-        lbl.set_fontweight("bold")
-ax.set_xlabel("Antal kampe")
-ax.xaxis.set_major_locator(plt.MultipleLocator(1))
-ax.text(0.99, 0.02, f"I alle sæsoner siden 2020/21 er {stil.pct(liga_pct)}\naf pauseføringerne blevet til sejr",
-        transform=ax.transAxes, ha="right", va="bottom", fontsize=9, color=stil.GRAA_MOERK)
-stil.gitter(ax)
-stil.gem(fig, "pausefoeringer", MAPPE)
-plt.close(fig)
+begge(graf_pause, "pausefoeringer")
+print("::: {.column-page-right}\n" + stil.billede("pausefoeringer",
+      "Søjlediagram: kampe, hvor holdet førte ved pausen, fordelt på sejr, uafgjort og nederlag. "
+      "Silkeborg førte ved pausen 5 gange og vandt én.") + "\n:::")
 ```
 
-![](figurer/pausefoeringer.svg){fig-alt="Søjlediagram: kampe, hvor holdet førte ved pausen, fordelt på sejr, uafgjort og nederlag. Silkeborg førte ved pausen 5 gange og vandt én."}
+::: {.column-margin}
+**Pausestilling:** Mål til og med 45. minut, inklusive tillægstid i 1. halvleg.
+:::
 
 ::: {.stikord}
-**Stikord: det viser tallene**
+**Stikord** (fakta til din tekst)
 
 - Silkeborg har ført ved pausen 5 gange: 1 sejr (4-0 mod Lyngby), 3 uafgjorte (FCM, AGF, Viborg) og 1 nederlag (1-3 mod Brøndby).
 - I hele ligaen i 2026/27 er 26 af 35 pauseføringer blevet til sejr (74 %), 7 til uafgjort og 2 til nederlag.
@@ -157,59 +174,58 @@ Dit afsnit om graf 2.
 ## Hvis kampene sluttede ved pausen
 
 ```{python}
+#| output: asis
 # --- Graf 3: placering ved pausen (venstre) og rigtig placering (højre) ---
-d = alt.sort_values("plac_45")
-fig, ax = stil.figur(
-    "Ved pausen ville Silkeborg ligge nummer tre",
-    f"Placering hvis kampene var stoppet efter 45 minutter (point i parentes) · {UNDERTITEL_PERIODE}",
-    venstre=0.22,
-)
-fig.subplots_adjust(right=0.78, top=0.80)
-FREMHAEV = {"SIF": stil.ACCENT}
-for r in d.itertuples():
-    farve = FREMHAEV.get(r.hold_id, stil.GRAA)
-    tyk = 2.4 if r.hold_id in FREMHAEV else 1.2
-    ax.plot([0, 1], [r.plac_45, r.plac_90], color=farve, linewidth=tyk, marker="o", markersize=4,
-            zorder=3 if r.hold_id in FREMHAEV else 2)
-    vaegt = "bold" if r.hold_id in FREMHAEV else "normal"
-    ax.text(-0.04, r.plac_45, f"{r.hold} ({r.point_45:.0f})", ha="right", va="center", fontsize=8.5,
-            color=farve if r.hold_id in FREMHAEV else stil.TEKST, fontweight=vaegt)
-    ax.text(1.04, r.plac_90, f"{r.plac_90:.0f}. {r.hold} ({r.point_90:.0f})", ha="left", va="center", fontsize=8.5,
-            color=farve if r.hold_id in FREMHAEV else stil.TEKST, fontweight=vaegt)
-ax.set_ylim(12.6, -0.4)         # nummer 1 øverst, med plads til overskrifterne
-ax.set_xlim(0, 1)
-for x, tekst, ha in [(-0.04, "Ved pausen", "right"), (1.04, "Rigtig stilling", "left")]:
-    ax.text(x, -0.3, tekst, ha=ha, va="center", fontsize=9.5, fontweight="bold", color=stil.GRAA_MOERK)
-ax.set_xticks([])
-ax.set_yticks([])
-stil.gem(fig, "pausetabel", MAPPE)
-plt.close(fig)
+def graf_pausetabel(mobil: bool):
+    d = alt.sort_values("plac_45")
+    fig, ax = stil.figur("Ved pausen ville Silkeborg ligge nummer tre",
+                         f"Placering hvis kampene var stoppet efter 45 minutter (point i parentes) · {UNDERTITEL_PERIODE}",
+                         mobil=mobil, venstre=0.24 if mobil else 0.22)
+    fig.subplots_adjust(right=0.76 if mobil else 0.78)
+    FREMHAEV = {"SIF": stil.ACCENT}
+    navn = (lambda r: r.hold_id) if mobil else (lambda r: r.hold)   # forkortelser på mobil (fx SIF)
+    for r in d.itertuples():
+        farve = FREMHAEV.get(r.hold_id, stil.GRAA)
+        fremhaevet = r.hold_id in FREMHAEV
+        ax.plot([0, 1], [r.plac_45, r.plac_90], color=farve, linewidth=2.4 if fremhaevet else 1.2,
+                marker="o", markersize=4, zorder=3 if fremhaevet else 2)
+        tekst_farve = farve if fremhaevet else stil.TEKST
+        vaegt = "semibold" if fremhaevet else "normal"
+        ax.text(-0.04, r.plac_45, f"{navn(r)} ({r.point_45:.0f})", ha="right", va="center", fontsize=8.5,
+                color=tekst_farve, fontweight=vaegt)
+        ax.text(1.04, r.plac_90, f"{r.plac_90:.0f}. {navn(r)} ({r.point_90:.0f})", ha="left", va="center",
+                fontsize=8.5, color=tekst_farve, fontweight=vaegt)
+    ax.set_ylim(12.6, -0.4)         # nummer 1 øverst, med plads til overskrifterne
+    ax.set_xlim(0, 1)
+    for x, tekst, ha in [(-0.04, "Ved pausen", "right"), (1.04, "Rigtig stilling", "left")]:
+        ax.text(x, -0.3, tekst, ha=ha, va="center", fontsize=9, fontweight="semibold", color=stil.GRAA_MOERK)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    return fig
+
+begge(graf_pausetabel, "pausetabel")
+print("::: {.column-page-right}\n" + stil.billede("pausetabel",
+      "Hældningsdiagram: placering i Superligaen 2026/27, hvis kampene var stoppet ved pausen, sammenlignet "
+      "med den rigtige placering. Silkeborg falder fra 3. til 7. plads.") + "\n:::")
 ```
 
-![](figurer/pausetabel.svg){fig-alt="Hældningsdiagram: placering i Superligaen 2026/27, hvis kampene var stoppet ved pausen, sammenlignet med den rigtige placering. Silkeborg falder fra 3. til 7. plads."}
+::: {.column-margin}
+**Placering ved pausen:** Sorteret alene efter point. Ved pointlighed er rækkefølgen tilfældig.
+:::
 
 ::: {.stikord}
-**Stikord: det viser tallene**
+**Stikord** (fakta til din tekst)
 
 - Ved pausen: Silkeborg 18 point, lige med FCM, som får 2.-pladsen. Rigtig stilling: 7.-plads med 10 point, altså 8 point mindre.
 - De største fald ud over Silkeborg: Lyngby fra 6. til 10. plads (11 → 7 point).
 - De største stigninger: Brøndby fra 10. til 5. plads (9 → 13 point) og AC Horsens fra 9. til 6. plads (9 → 11 point).
 - FCK fører både ved pausen (19 point) og i den rigtige tabel (24 point). Holdet har hentet 5 point efter pausen.
-- Placeringen ved pausen er sorteret alene efter point. Ved pointlighed er rækkefølgen tilfældig, se metodeboksen.
 :::
 
 ::: {.pladsholder}
 Afslutning: Hvad betyder det? Er det held, form eller et mønster? Hvad skal man holde øje med i de næste runder?
 :::
 
-::: {.metodeboks}
-**Metode**
-
-- **Data:** Sportmonks (kampe og hændelser). Egne beregninger.
-- **Periode:** Superligaen 2026/27, runde 1–9 (24. juli – 20. september 2026), 54 kampe.
-- **Point tabt fra føring:** For hver kamp, hvor holdet på et tidspunkt var foran: 3 minus de opnåede point. Det lægges sammen for alle kampe.
-- **Point hentet fra bagud:** Point i kampe, hvor holdet på et tidspunkt var bagud.
-- **Pausestilling:** Mål til og med 45. minut, inklusive tillægstid i 1. halvleg.
-- **Begrænsninger:** 9 kampe er en lille stikprøve, så enkelte kampe flytter meget. Modstanderne er ikke ens for alle hold endnu. Placeringen ved pausen bruger kun point.
-- Se også [metodesiden](../../metode.qmd).
+::: {.column-margin}
+**Begrænsninger.** 9 kampe er en lille stikprøve, så enkelte kampe flytter meget. Holdene har ikke mødt de samme modstandere endnu.
 :::

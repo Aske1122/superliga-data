@@ -1,18 +1,49 @@
 ---
-title: "Dansk fodbold set gennem data"
-subtitle: "Analyser af Superligaen, én graf ad gangen"
+pagetitle: "Superliga Data · Dansk fodbold set gennem data"
+page-layout: full
+body-classes: forside
+jupyter: superliga          # projektets egen Python-kerne (.venv), bruges til datastrip
+execute:
+  echo: false
 listing:
   contents: posts
   sort: "date desc"
-  type: default
-  categories: true
-  fields: [date, title, description, categories, reading-time]
-  date-format: "D.\u00A0MMMM YYYY"   # hårdt mellemrum efter punktum, ellers bliver "8." til en nummereret liste
-page-layout: full
-title-block-banner: true
-toc: false
+  template: _skabeloner/forside.ejs
+  date-format: "D. MMM YYYY"   # hårdt mellemrum efter punktum, ellers bliver "8." til en nummereret liste
+  max-items: 15
 ---
 
-::: {.pladsholder}
-Kort introduktion til siden (2–3 sætninger): hvad du vil undersøge, og hvorfor.
+::: {.datastrip}
+```{python}
+# --- Datastrip: tal fra seneste runde, beregnet fra vores egne data (ingen API-kald) ---
+import sys
+from datetime import date
+from pathlib import Path
+sys.path.insert(0, str(Path("scripts").resolve()))
+import analyse
+from IPython.display import HTML
+
+MAANEDER = ["jan.", "feb.", "mar.", "apr.", "maj", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "dec."]
+def dato(d) -> str:
+    return f"{d.day}. {MAANEDER[d.month - 1]}"
+
+kampe = analyse.laes_kampe()
+saeson = kampe.saeson.max()                                     # igangværende sæson
+k = kampe[kampe.saeson == saeson]
+runde = int(analyse.kamp_hold().query("saeson == @saeson").groupby("hold_id").size().max())
+maal = int((k.hjemme_maal + k.ude_maal).sum())
+seneste = k.kickoff_utc.max()
+opdateret = date.fromtimestamp((analyse.CLEAN / "kampe.parquet").stat().st_mtime)
+skil = '<span class="skil">·</span>'
+
+HTML(f'<p>Superligaen {saeson}{skil}<strong>Runde {runde}</strong>{skil}<strong>{len(k)}</strong> kampe'
+     f'{skil}<strong>{maal}</strong> mål{skil}seneste kamp {dato(seneste)}{skil}data opdateret {dato(opdateret)}</p>')
+```
 :::
+
+```{=html}
+<div class="forside-intro">
+  <h1 class="visually-hidden">Superliga Data</h1>
+  <p>Dansk fodbold set gennem data.</p>
+</div>
+```

@@ -59,7 +59,8 @@ plt.close(fig)
 
 - Titlen er pointen, ikke bare emnet: "FCK har været foran i over halvdelen af tiden", ikke "Game states 2026/27".
 - Undertitlen siger, hvad der måles, og hvilken periode det dækker.
-- Accentfarven bruges kun til det, grafen handler om. Alt andet er gråt.
+- Accentfarven (dansk rød) bruges kun til at fremhæve det, grafen handler om. Alt andet er gråt.
+- Kun to vægte (normal og halvfed) og skriften Inter, som på hjemmesiden.
 - Foran er altid blå, uafgjort grå og bagud orange.
 - Hold vises med navn eller forkortelse fra `holdnavne.csv`, aldrig med logoer.
 - Hver graf gemmes som SVG til siden og som PNG på 1200×675 pixels til deling (`stil.gem`).

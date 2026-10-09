@@ -23,3 +23,9 @@ __pycache__/
 
 # Lokale værktøjsindstillinger
 .claude/
+
+# Skærmbilleder af andres sider (kun til egen inspiration)
+/skaermbilleder/inspiration/
+
+# Skærmbilleder til gennemsyn (kun lokalt)
+/skaermbilleder/

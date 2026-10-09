@@ -75,7 +75,6 @@ Flere detaljer står i `IDEBANK.md`.
 - [ ] Skal graferne også findes i en højere mobilversion (fx 1080×1350 til Instagram eller LinkedIn på mobil)? På smalle skærme bliver teksten i 16:9-grafer lille.
 - [ ] Skrifttype: er Avenir Next okay, eller skal vi lægge Inter direkte på siden?
 - [ ] GitHub-link på metodesiden og `site-url` i `_quarto.yml`, når repoet er online.
-- [ ] Forfatternavnet "forfatteren" står i kildelinjen og i artiklerne. Ret det i `scripts/stil.py` og `posts/_metadata.yml`, hvis det skal være anderledes.
 - [ ] Bliver GitHub-repoet **offentligt**, kan kladder læses i kildekoden (`posts/.../index.qmd` og `_freeze/`), selvom de ikke vises på siden. Skal ufærdige artikler holdes i en separat gren eller et privat repo?
 - [ ] Retest af GOAL API (1–2 forespørgsler), som vi aftalte til i dag. Jeg har ikke gjort det, fordi denne omgang ikke måtte sende forespørgsler.
 

@@ -36,3 +36,10 @@ Quarto-website med dataanalyser af Superligaen.
 
 ## Første gang på en ny maskine
     .venv/bin/python -m ipykernel install --sys-prefix --name superliga   # Python-kerne til Quarto
+
+## Design
+- `styles.scss` – hele sidens design (farver, skrifter, forside, kort, artikler). Farverne står øverst.
+- `_skabeloner/forside.ejs` og `_skabeloner/arkiv.ejs` – hvordan artikelkortene ser ud.
+- `_partials/skrifter.html` – skrifttyperne Oswald, Inter og Source Serif 4.
+  **Før siden går online:** de hentes i dag fra Google Fonts. Af hensyn til GDPR bør filerne ligge lokalt i projektet.
+- `scripts/efter_render.py` – kører efter `quarto render` og fjerner kladdernes billeder fra `docs/`.

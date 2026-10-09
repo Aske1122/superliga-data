@@ -1,7 +1,10 @@
 # Gælder for alle artikler i posts/
 # OBS: 'jupyter: superliga' skal stå i HVER artikels egen forside-metadata (virker ikke herfra).
 freeze: auto              # beregninger køres igen, når en artikel ændres (kræver data/ lokalt)
-title-block-banner: true
+title-block-banner: false
 execute:
   echo: false             # vis ikke koden i artiklerne
   warning: false
+body-classes: artikelside  # aktiverer kampur-læsebjælken (_partials/signatur.html)
+resources:
+  - figurer/*.svg            # både bred og mobil version af graferne kommer med

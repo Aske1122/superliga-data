@@ -1,46 +1,404 @@
 /*-- scss:defaults --*/
-// Samme farver og skrifttype som graferne (se scripts/stil.py)
-$body-bg: #FAFAF7;
-$body-color: #1C1C1C;
-$primary: #C8102E;          // dansk rød: accentfarven
-$secondary: #5E5E5E;
-$gray-300: #E4E4E0;
-$link-color: #C8102E;
-$navbar-bg: #FAFAF7;
-$navbar-fg: #1C1C1C;
-$navbar-hl: #C8102E;
-$footer-bg: #FAFAF7;
-$font-family-sans-serif: "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
-$headings-font-weight: 700;
+// =============================================================================
+// DESIGNSYSTEM
+// Tufte-principper (luft, smal tekstkolonne, margennoter, grafer i centrum)
+// + avis-inspiration: stærk, sort overskriftsskrift og en lille rubrik over titlen.
+//
+// REGLER: rød KUN på links og små detaljer (rubrikker). Ingen kasser, rammer,
+//         skygger, gradienter eller ikoner. Versaler kun i rubrikker.
+// =============================================================================
+
+// --- Farver (graferne bruger samme værdier: scripts/stil.py) ---
+$papir: #FCFBF7;        // cremehvid baggrund
+$blaek: #161616;        // tekst og overskrifter
+$graa: #6F6A63;         // sekundær tekst: datoer, resuméer, noter (varm grå)
+$graa-lys: #A29E95;     // pladsholdere til egen tekst
+$streg: #E2DED4;        // de få tynde skillelinjer
+$roed: #C8102E;         // accent: links og rubrikker
+
+// --- Skriftstørrelser og vægte ---
+$s: 0.8125rem;          // lille: datoer, noter, rubrikker (13 px)
+$m: 1.0625rem;          // normal: brødtekst (17 px)
+$l: 1.6rem;             // stor: mellemrubrikker, titler i lister (≈26 px)
+$xl: clamp(2.3rem, 5vw, 3.6rem); // display: artikeltitler og tophistorie
+$normal: 400;
+$fed: 600;
+
+$inter: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+// --- Bootstrap-grundlag ---
+$body-bg: $papir;
+$body-color: $blaek;
+$link-color: $roed;
+$font-family-sans-serif: $inter;
+$font-size-base: $m;
+$font-weight-base: $normal;
+$headings-font-weight: $fed;
+$headings-color: $blaek;
+$line-height-base: 1.65;
+$navbar-bg: $papir;
+$navbar-fg: $blaek;
+$navbar-hl: $roed;
+$footer-bg: $papir;
+$footer-fg: $graa;
 $border-radius: 0;
-$toc-color: #5E5E5E;
 
 /*-- scss:rules --*/
-// Smal, rolig læsebredde og luft omkring indholdet
-body { font-size: 1.05rem; line-height: 1.65; }
-h1, h2, h3 { letter-spacing: -0.01em; }
-.navbar { border-bottom: 1px solid #E4E4E0; }
-.navbar-brand { font-weight: 700; }
-.nav-footer { border-top: 1px solid #E4E4E0; font-size: 0.8rem; color: #5E5E5E; }
 
-// Titelbanneret: lyst i stedet for farvet
-.quarto-title-banner { background: #FAFAF7; color: #1C1C1C; border-bottom: 3px solid #C8102E; }
-.quarto-title-banner .quarto-categories .quarto-category { border-color: #C8102E; color: #C8102E; }
+// =============================================================================
+// 1. SKRIFTER: alle ligger lokalt i /fonts (SIL OFL 1.1). Ingen data til Google.
+// =============================================================================
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/Inter-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("fonts/Inter-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("fonts/Inter-Italic.woff2") format("woff2"); }
+// Overskriftsskrift: Newsreader (variabel skrift: alle vægte i én fil).
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap;
+  src: url("fonts/Newsreader.woff2") format("woff2"); }
 
-// Grafer fylder hele tekstbredden og skaleres pænt ned på mobil
-.quarto-figure img, figure img { width: 100%; height: auto; }
+// Overskriftsskrift og baggrund samlet ét sted.
+:root {
+  --papir: #{$papir};
+  --overskrift: "Newsreader", Georgia, "Times New Roman", serif;
+  --overskrift-vaegt: 600;
+  --overskrift-afstand: -0.015em;
+}
 
-// Metodeboks og pladsholdere i artikler
-.metodeboks { background: #F1F1EC; border-left: 4px solid #5E5E5E; padding: 1rem 1.25rem; font-size: 0.92rem; margin-top: 2rem; }
-.pladsholder { border: 2px dashed #C8102E; padding: 0.75rem 1rem; color: #5E5E5E; background: #FFF; margin: 1rem 0; }
-.pladsholder::before { content: "✏️ Din tekst: "; font-weight: 700; color: #C8102E; }
-.stikord { font-size: 0.92rem; color: #5E5E5E; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: $inter;
+  font-size: $m;
+  font-weight: $normal;
+  color: $blaek;
+  background: var(--papir);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 { color: $blaek; }
+strong, b { font-weight: $fed; }
 
-// Artikeloversigt på forsiden
-.quarto-listing-default .listing-title { font-weight: 700; }
-.quarto-listing-default .listing-description { color: #5E5E5E; }
+// Dansk orddeling (sidens sprog er sat til lang="da" i _quarto.yml)
+main p, main li, .tophistorie-resume, .artikel-resume {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;   // del kun lange ord, og ikke for tæt på enderne
+}
+// Store overskrifter: kun manuelle delestreger (skriv &shy; i titlen, fx "for&shy;svundne"),
+// fordi automatisk orddeling giver forkerte brud i store skriftstørrelser.
+.title, .tophistorie-titel, .artikel-titel, main h2, main h3 { hyphens: manual; -webkit-hyphens: manual; }
 
-@media (max-width: 576px) {
-  body { font-size: 1rem; }
-  .quarto-title-banner h1.title { font-size: 1.7rem; }
+// Overskriftsskriften bruges til alle store overskrifter
+.title, main h2, main h3, .tophistorie-titel, .artikel-titel, .sektion-overskrift {
+  font-family: var(--overskrift);
+  font-weight: var(--overskrift-vaegt);
+  letter-spacing: var(--overskrift-afstand);
+  color: $blaek;
+}
+
+// Rubrik: lille kategori over overskriften (her er versaler tilladt)
+.rubrik, .quarto-title .quarto-categories .quarto-category:first-child {
+  font-family: $inter;
+  font-size: $s;
+  font-weight: $fed;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $roed;
+}
+
+// Links: rød, diskret understregning
+a { color: $roed; text-decoration: none; }
+main a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba($roed, 0.35); }
+main a:hover { text-decoration-color: $roed; }
+
+// =============================================================================
+// 2. MENU: sidens navn til venstre, punkter til højre, ingen ikoner
+// =============================================================================
+#quarto-header {
+  background: var(--papir);
+  .navbar { background: var(--papir) !important; border-bottom: 1px solid $streg; padding: 1.1rem 0; }
+  .navbar-container { max-width: 1240px; margin: 0 auto; padding: 0 1.5rem; flex-wrap: wrap; }
+  .navbar-brand { padding: 0; margin: 0; }
+  .navbar-title { font-family: var(--overskrift); font-size: 1.35rem; font-weight: var(--overskrift-vaegt); letter-spacing: var(--overskrift-afstand); color: $blaek; }
+  .navbar-collapse { flex-grow: 0; }
+  .navbar-nav { gap: 1.5rem; }
+  .nav-link { font-size: $m; font-weight: $fed; color: $blaek !important; padding: 0 !important; }
+  .nav-link:hover, .nav-link.active { color: $roed !important; }
+  .quarto-navbar-tools, #quarto-search { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  #quarto-header {
+    .navbar { padding: 0.9rem 0 0.8rem; }
+    .navbar-container { padding: 0 1.1rem; flex-direction: column; align-items: flex-start; }
+    .navbar-collapse { display: block !important; width: 100%; margin-top: 0.45rem; }
+    .navbar-nav { flex-direction: row; flex-wrap: wrap; gap: 0.25rem 1.1rem; margin-left: 0 !important; margin-right: auto !important; }
+    .nav-link { font-size: $s; }
+  }
+}
+
+// =============================================================================
+// 3. SIDETITEL: rubrik · stor overskrift · underrubrik · byline
+// =============================================================================
+#title-block-header {
+  margin: 3.5rem 0 2.5rem;
+  .quarto-title { display: flex; flex-direction: column; }
+  .title { font-size: $xl; line-height: 1.06; margin: 0; }
+  .subtitle { font-family: $inter; font-size: 1.2rem; font-weight: $normal; color: $graa; margin: 1rem 0 0; line-height: 1.5; }
+  .description { display: none; }               // resuméet bruges kun i lister og delingskort
+  // Første kategori vises som rubrik OVER titlen; de øvrige skjules (bruges kun i arkivets filter)
+  .quarto-categories { order: -1; margin: 0 0 0.9rem; display: flex; }
+  .quarto-category { border: none; padding: 0; background: none; opacity: 1; }
+  .quarto-category:not(:first-child) { display: none; }
+}
+.quarto-title-meta {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+  margin-top: 1.25rem;
+  .quarto-title-meta-heading { display: none; }
+  .quarto-title-meta-contents { display: flex; gap: 0.5rem; align-items: baseline; }
+  .quarto-title-meta-contents, .quarto-title-meta-contents p { font-size: $s; color: $graa; margin: 0; }
+  > div + div .quarto-title-meta-contents::before { content: "·"; margin-right: 0.5rem; }
+}
+.quarto-title-meta:not(:has(.quarto-title-meta-contents)) { display: none !important; }
+
+// =============================================================================
+// 4. ARTIKLER: smal tekstkolonne, grafer i centrum, margennoter
+// =============================================================================
+main.content {
+  p, li { font-size: $m; line-height: 1.7; }
+  h2 { font-size: $l; line-height: 1.2; margin: 3.25rem 0 0.9rem; border: none; padding: 0; }
+  h3 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+  ul, ol { padding-left: 1.2rem; }
+}
+
+.quarto-figure, figure { margin: 2.25rem 0; }
+.quarto-figure img, figure img, main img.img-fluid { width: 100%; height: auto; border: none; }
+.figure-caption, figcaption { font-size: $s; color: $graa; }
+
+// Margennoter (metode, kilder, fodnoter). På mobil vises de under teksten.
+.column-margin, .margin-aside, aside, .footnotes, .aside {
+  font-size: $s;
+  line-height: 1.5;
+  color: $graa;
+  p, li { font-size: $s !important; line-height: 1.5 !important; color: $graa; }
+  strong { color: $blaek; font-weight: $fed; }
+}
+.column-margin p:first-child { margin-top: 0.2rem; }
+@media (max-width: 991.98px) { .column-margin { margin: 0.5rem 0 1.5rem; } }
+
+// Pladsholdere til egen tekst: diskret grå kursiv, ingen kasse
+.pladsholder, .pladsholder p { color: $graa-lys !important; font-style: italic; }
+.pladsholder { margin: 1.25rem 0; }
+
+// Stikord til forfatteren: små og grå, uden kasse
+.stikord { margin: 0.5rem 0 1.75rem; }
+.stikord, .stikord p, .stikord li { font-size: $s !important; line-height: 1.55 !important; color: $graa; }
+
+// Redaktionelle noter (slettes før udgivelse)
+.note-til-mig, .note-til-mig p, .note-til-mig li { font-size: $s !important; color: $graa-lys; font-style: italic; }
+
+#quarto-draft-alert, .quarto-draft-banner { background: var(--papir) !important; color: $roed !important; font-size: $s; border-bottom: 1px solid $streg; }
+
+// =============================================================================
+// 5. FORSIDE: tophistorie + "Nyeste artikler"
+// =============================================================================
+.forside #quarto-content { max-width: 1240px; margin: 0 auto; padding: 0 1.5rem; }
+.forside #title-block-header { margin-top: 3rem; }
+.forside #title-block-header .title { font-size: $l; }
+.forside #title-block-header .subtitle { font-size: $m; margin-top: 0.35rem; }
+.tophistorie {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 3rem;
+  align-items: center;
+  padding: 0.5rem 0 3.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $streg;
+  color: $blaek !important;
+  text-decoration: none !important;
+  &:hover .tophistorie-titel { color: $roed; }
+}
+main.content .tophistorie-titel { font-size: $xl; line-height: 1.06; margin: 0.6rem 0 1rem !important; }
+.tophistorie-resume { font-size: 1.2rem; line-height: 1.5; color: $graa; margin: 0 0 1rem; }
+.tophistorie-billede img { width: 100%; height: auto; display: block; }
+@media (max-width: 991.98px) {
+  .tophistorie { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+.sektion-overskrift { font-size: $l !important; margin: 2.5rem 0 0.5rem !important; }
+
+// --- Artikellister (forside og arkiv) ---
+.artikel {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) 11rem;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 1.5rem 0;
+  color: $blaek !important;
+  text-decoration: none !important;
+  & + .artikel { border-top: 1px solid $streg; }
+  &:hover .artikel-titel { color: $roed; }
+}
+.artikel-dato { font-size: $s; color: $graa; padding-top: 0.15rem; font-variant-numeric: tabular-nums; }
+main.content .artikel-titel { font-size: 1.45rem; line-height: 1.15; margin: 0.35rem 0 0 !important; }
+.artikel-resume { font-size: $m; color: $graa; line-height: 1.5; margin: 0.4rem 0 0; }
+.artikel-billede img { width: 100%; height: auto; display: block; }
+.artikel.uden-billede { grid-template-columns: 7.5rem minmax(0, 1fr); }
+@media (max-width: 767.98px) {
+  .artikel, .artikel.uden-billede { grid-template-columns: 1fr; gap: 0.35rem; }
+  .artikel-billede { order: -1; margin-bottom: 0.5rem; }
+}
+
+// Kategorifilter i arkivets margen: almindelig tekst
+.quarto-listing-category-title { font-size: $s; font-weight: $fed; color: $blaek; text-transform: none; letter-spacing: 0; }
+.quarto-listing-category .category { font-size: $s; color: $graa; padding: 0.1rem 0; cursor: pointer; }
+.quarto-listing-category .category.active { color: $roed; }
+.quarto-category-count { color: $graa-lys; }
+.listing-no-matching { font-size: $m; color: $graa-lys; font-style: italic; }
+
+// =============================================================================
+// 6. FOOTER: kolonner (Superliga Data · Om · Metode · Kontakt) + krediteringer
+// =============================================================================
+.nav-footer {
+  display: grid !important;
+  grid-template-columns: 1.2fr 2.4fr;
+  grid-template-areas: "venstre midte" "hoejre hoejre";
+  gap: 1.5rem 3rem;
+  border-top: 1px solid $streg;
+  background: var(--papir);
+  font-size: $s;
+  line-height: 1.75;
+  color: $graa;
+  max-width: 1240px;
+  margin: 5rem auto 0;
+  padding: 2.25rem 1.5rem 2.5rem;
+  min-height: 0;
+  strong { color: $blaek; font-weight: $fed; }
+  a { color: $graa; }
+  a:hover { color: $roed; }
+  .nav-footer-left { grid-area: venstre; text-align: left; }
+  .nav-footer-center { grid-area: midte; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; text-align: left; }
+  .nav-footer-right { grid-area: hoejre; text-align: left; color: $graa-lys; border-top: 1px solid $streg; padding-top: 1.25rem; }
+  .nav-footer-left strong { font-family: var(--overskrift); font-weight: var(--overskrift-vaegt); font-size: 1.15rem; letter-spacing: var(--overskrift-afstand); }
+}
+@media (max-width: 767.98px) {
+  .nav-footer { grid-template-columns: 1fr; grid-template-areas: "venstre" "midte" "hoejre"; padding: 1.75rem 1.1rem 2rem; }
+}
+
+// =============================================================================
+// 7. TABELLER (fx "Superligaen i tal"): kun vandrette hårlinjer
+// =============================================================================
+main table { font-size: $s; font-variant-numeric: tabular-nums; border-collapse: collapse; width: 100%; }
+main table th { font-weight: $fed; color: $graa; border-bottom: 1px solid $blaek; padding: 0.35rem 0.5rem; }
+main table td { border-bottom: 1px solid $streg; padding: 0.35rem 0.5rem; }
+main table > :not(caption) > * > * { box-shadow: none !important; background: transparent !important; }
+
+// =============================================================================
+// 8. SIGNATUR: mørkt topbånd og footer, kompakt menu, kampur, datastrip, rubrikker
+// =============================================================================
+:root {
+  --signatur: #14233F;                 // signaturfarve: mørk marineblå
+  --signatur-tekst: #F4F1E8;           // cremehvid tekst på det mørke bånd
+  --signatur-daempet: rgba(244, 241, 232, 0.62);
+  --kampur: #E08A2E;                   // grafernes orange
+  --hastighed: 220ms;                  // alle overgange: korte og bløde
+}
+
+// --- Topbånd: menuen i signaturfarven ---
+#quarto-header { transform: none !important; }          // menuen skjules ikke ved scroll
+#quarto-header .navbar {
+  background: var(--signatur) !important;
+  border-bottom: none;
+  transition: padding var(--hastighed) ease;
+}
+#quarto-header .navbar-title {
+  color: var(--signatur-tekst);
+  display: inline-block;
+  transform-origin: left center;
+  transition: transform var(--hastighed) ease;
+}
+#quarto-header .nav-link { color: var(--signatur-tekst) !important; font-weight: $normal; }
+#quarto-header .nav-link:hover { color: var(--signatur-tekst) !important; text-decoration: underline; text-underline-offset: 6px; text-decoration-color: var(--kampur); }
+#quarto-header .nav-link.active { color: var(--signatur-tekst) !important; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; text-decoration-color: var(--kampur); }
+
+// Kompakt version efter scroll: smallere bånd, navnet skrumper blødt
+#quarto-header.kompakt .navbar { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+#quarto-header.kompakt .navbar-title { transform: scale(0.82); }
+
+// --- Kampur-læsebjælke (artikler): 0' til 90' ---
+.kampur { position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: rgba(20, 35, 63, 0.10); pointer-events: none; }
+.kampur-fyld { height: 100%; width: calc(var(--andel, 0) * 100%); background: var(--kampur); }
+.kampur-minut {
+  // Minuttallet står i det mørke bånd lige over bjælken og følger dens spids
+  position: absolute;
+  bottom: 7px;
+  left: calc(var(--andel, 0) * 100%);
+  transform: translateX(calc(var(--andel, 0) * -100%));
+  padding: 0 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: $fed;
+  font-variant-numeric: tabular-nums;
+  color: var(--signatur-daempet);
+}
+
+// --- Datastrip under menuen (forsiden) ---
+.datastrip {
+  background: var(--signatur);
+  color: var(--signatur-daempet);
+  font-size: $s;
+  border-top: 1px solid rgba(244, 241, 232, 0.12);
+  margin: 0 calc(50% - 50vw) !important;   // fuld bredde, selvom indholdet er centreret
+}
+body.forside { overflow-x: clip; }          // undgå vandret scroll fra fuld-bredde-båndet
+.forside #quarto-content > main { padding-top: 0; }
+.datastrip p { margin: 0; max-width: 1240px; margin: 0 auto; padding: 0.55rem 1.5rem 0.65rem; font-size: $s !important; color: var(--signatur-daempet); font-variant-numeric: tabular-nums; }
+.datastrip strong { color: var(--signatur-tekst); font-weight: $fed; }
+.datastrip .skil { margin: 0 0.5rem; opacity: 0.5; }
+@media (max-width: 767.98px) { .datastrip p { padding: 0.5rem 1.1rem; line-height: 1.6; } }
+
+// Forsidens intro under datastrip
+.forside-intro { margin: 2.75rem 0 1.5rem; }
+.forside-intro .forside-navn { font-family: var(--overskrift); font-weight: var(--overskrift-vaegt); letter-spacing: var(--overskrift-afstand); font-size: $l; line-height: 1.2; color: $blaek; margin: 0; }
+.forside-intro p:not(.forside-navn) { color: $graa; margin: 0.35rem 0 0; }
+
+// --- Footer i signaturfarven ---
+footer.footer { background: var(--signatur); margin-top: 5rem; }
+.nav-footer {
+  background: transparent !important;
+  border-top: none;
+  margin-top: 0;
+  color: var(--signatur-daempet);
+  strong { color: var(--signatur-tekst); }
+  a { color: var(--signatur-daempet); }
+  a:hover { color: var(--signatur-tekst); }
+  .nav-footer-right { color: var(--signatur-daempet); border-top-color: rgba(244, 241, 232, 0.15); }
+}
+
+// --- Rubrikker: læsetid som kampminut + kategori, fx "7' | Comebacks og føringer" ---
+.rubrik, .quarto-title .quarto-categories .quarto-category:first-child {
+  text-transform: none; letter-spacing: 0; color: $blaek; font-weight: $fed; font-size: $s;
+}
+.rubrik { display: inline-flex; align-items: center; gap: 0.5rem; }
+.rubrik-minut { font-variant-numeric: tabular-nums; color: var(--rubrik-farve); padding-right: 0.5rem; border-right: 1px solid $streg; }
+.rubrik[data-farve="0"] { --rubrik-farve: #2C6FBB; }
+.rubrik[data-farve="1"] { --rubrik-farve: #E08A2E; }
+.rubrik[data-farve="2"] { --rubrik-farve: #C8102E; }
+.rubrik[data-farve="3"] { --rubrik-farve: #3A8F6B; }
+
+// --- Reducer bevægelse: ingen animationer, ændringer sker med det samme ---
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  #quarto-header.kompakt .navbar-title { transform: scale(0.82); }
+}
+// Forsiden har sin egen intro: skjul Quartos tomme titelblok, så datastrip ligger lige under menuen
+.forside #title-block-header { display: none; }
+.forside main.content { margin-top: 0 !important; }
+
+// Grafer som <picture> (bred version på computer, mobilversion på telefon)
+picture.graf, picture.graf img { display: block; width: 100%; height: auto; }
+.column-page-right > picture.graf { margin: 2.25rem 0; }
+
+// Mobil: kampurets minuttal står fast i højre side (ellers dækker det menupunkterne)
+@media (max-width: 767.98px) {
+  .kampur-minut { left: auto; right: 0.6rem; transform: none; }
 }

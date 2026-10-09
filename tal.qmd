@@ -1,0 +1,8 @@
+---
+title: "Superligaen i tal"
+subtitle: "Game states, den alternative tabel, comebacks og scoringstidspunkter. Opdateres efter hver runde."
+---
+
+::: {.pladsholder}
+Siden er under opbygning.
+:::
