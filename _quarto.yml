@@ -68,7 +68,9 @@ lang: da
 format:
   html:
     theme: [default, styles.scss] # neutralt grundtema, overskrevet af vores eget design
-    include-after-body: _partials/signatur.html   # kompakt menu, kampur-læsebjælke, rubrik
+    include-after-body:
+      - _partials/signatur.html     # kompakt menu, kampur-læsebjælke, rubrik
+      - _partials/goatcounter.html  # anonyme besøgstal, kun på den offentlige side
     toc: false                   # margen bruges til noter, ikke indholdsfortegnelse
     reference-location: margin   # fodnoter vises som margennoter
     citation-location: margin

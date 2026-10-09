@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d3fa082f9ab754be13b073ab0d29b11e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4d7c2366d82a903e8fccd62336abe82e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "Ingen resultater",
@@ -617,6 +617,20 @@ Point
     return h % 4;
   }
 })();
+</script>
+<!--
+  Anonyme besøgstal med GoatCounter (ingen cookies, ingen persondata, intet cookie-banner).
+  Scriptet indlæses KUN på den offentlige side (aske1122.github.io). Lokalt, i kladde-profilen
+  og i forhåndsvisninger tælles intet. Statistik: https://superliga-data.goatcounter.com
+-->
+<script>
+  if (location.hostname === "aske1122.github.io") {
+    var gc = document.createElement("script");
+    gc.async = true;
+    gc.src = "https://gc.zgo.at/count.js";
+    gc.setAttribute("data-goatcounter", "https://superliga-data.goatcounter.com/count");
+    document.body.appendChild(gc);
+  }
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

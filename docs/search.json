@@ -189,6 +189,13 @@
     "text": "Kode\n\nAl kode ligger på GitHub: github.com/Aske1122/superliga-data.\n\nHentning med indbygget “budgetvagt”, så de gratis API-grænser aldrig overskrides.\nRensning, kvalitetstjek og analyser (scripts/)."
   },
   {
+    "objectID": "metode.html#besøgstal",
+    "href": "metode.html#besøgstal",
+    "title": "Metode",
+    "section": "Besøgstal",
+    "text": "Besøgstal\n\nSiden måler anonyme besøgstal med GoatCounter: hvilke sider der læses, og hvor meget.\nDer bruges ingen cookies, og der gemmes ingen personoplysninger (hverken IP-adresse eller browser-ID), kun samlede tal."
+  },
+  {
     "objectID": "metode.html#krediteringer-og-licenser",
     "href": "metode.html#krediteringer-og-licenser",
     "title": "Metode",

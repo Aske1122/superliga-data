@@ -1,0 +1,14 @@
+<!--
+  Anonyme besøgstal med GoatCounter (ingen cookies, ingen persondata, intet cookie-banner).
+  Scriptet indlæses KUN på den offentlige side (aske1122.github.io). Lokalt, i kladde-profilen
+  og i forhåndsvisninger tælles intet. Statistik: https://superliga-data.goatcounter.com
+-->
+<script>
+  if (location.hostname === "aske1122.github.io") {
+    var gc = document.createElement("script");
+    gc.async = true;
+    gc.src = "https://gc.zgo.at/count.js";
+    gc.setAttribute("data-goatcounter", "https://superliga-data.goatcounter.com/count");
+    document.body.appendChild(gc);
+  }
+</script>

@@ -69,6 +69,11 @@ Indledning: Stikordene herunder skal omformuleres til din egen tekst.
   - Hentning med indbygget "budgetvagt", så de gratis API-grænser aldrig overskrides.
   - Rensning, kvalitetstjek og analyser (`scripts/`).
 
+## Besøgstal
+
+- Siden måler anonyme besøgstal med [GoatCounter](https://www.goatcounter.com/): hvilke sider der læses, og hvor meget.
+- Der bruges ingen cookies, og der gemmes ingen personoplysninger (hverken IP-adresse eller browser-ID), kun samlede tal.
+
 ## Krediteringer og licenser
 
 - Data: [Sportmonks](https://www.sportmonks.com/) (football API v3). [API-Football](https://www.api-football.com/) bruges til krydstjek.

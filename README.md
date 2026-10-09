@@ -46,7 +46,9 @@ flowchart LR
 | Kvalitet | `scripts/kvalitet.py` | Tjekker hver sæson og hver kamp (se nedenfor). |
 | Analyse | `scripts/analyse.py` | Alle beregninger samlet ét sted, så artiklerne importerer dem i stedet for at gentage koden. |
 | Grafer | `scripts/stil.py` | Fælles grafstil. Hver graf gemmes som SVG til siden, PNG til deling og i en mobilversion. |
-| Website | `index.qmd`, `posts/`, `styles.scss` | Quarto-website. Bygges til `docs/` og publiceres med GitHub Pages. |
+| Website | `index.qmd`, `posts/`, `tal/`, `styles.scss` | Quarto-website. Bygges til `docs/` og publiceres med GitHub Pages. |
+| Automatik | `.github/workflows/opdater-data.yml` | Mandag og torsdag: henter nye kampe, renser, tjekker kvaliteten og publicerer. Stopper og opretter et issue ved fejl. Rådata gemmes krypteret i Actions-cachen. |
+| Datapakke | `scripts/datapakke.py`, `mandag.sh` | Lokalt værktøj: 3–5 observationer fra seneste runde med tal og grafer (idéer, ikke artikler). Gemmes kun i `data/`. |
 
 ## Datakvalitet
 
@@ -64,7 +66,7 @@ Metode og begrænsninger er beskrevet på [metodesiden](https://aske1122.github.
 
 ## Teknologi
 
-Python (pandas, DuckDB, matplotlib) · Quarto · GitHub Pages. Skrifterne Inter og Newsreader ligger lokalt (SIL Open Font License 1.1), så siden ikke sender data til tredjepart.
+Python (pandas, DuckDB, matplotlib) · Quarto · GitHub Pages · GitHub Actions. Anonyme besøgstal med GoatCounter (ingen cookies). Skrifterne Inter og Newsreader ligger lokalt (SIL Open Font License 1.1), så der hentes ingen skrifter fra Google.
 
 ## Kør projektet selv
 
