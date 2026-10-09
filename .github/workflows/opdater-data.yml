@@ -27,14 +27,14 @@ concurrency:
 
 jobs:
   opdater:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04     # låst version (ubuntu-latest skifter automatisk og uden varsel)
     timeout-minutes: 40
     env:
       SPORTMONKS_API_KEY: ${{ secrets.SPORTMONKS_API_KEY }}
       DATA_CACHE_KEY: ${{ secrets.DATA_CACHE_KEY }}
     steps:
       - name: Hent koden
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Tjek at hemmelighederne findes (viser dem aldrig)
         run: |
@@ -42,7 +42,7 @@ jobs:
           [ -n "$DATA_CACHE_KEY" ] || { echo "::error::Hemmeligheden DATA_CACHE_KEY mangler"; exit 1; }
 
       - name: Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
@@ -58,7 +58,7 @@ jobs:
           version: 1.10.19
 
       - name: Hent krypteret data-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: data.tar.enc
           key: data-${{ github.run_id }}
@@ -84,7 +84,7 @@ jobs:
 
       - name: Upload krypteret data-cache
         if: always() && steps.hent.outcome == 'success'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: data.tar.enc
           key: data-${{ github.run_id }}
