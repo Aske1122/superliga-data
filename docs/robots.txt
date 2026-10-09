@@ -1,1 +1,1 @@
-Sitemap: /sitemap.xml
+Sitemap: https://aske1122.github.io/superliga-data/sitemap.xml

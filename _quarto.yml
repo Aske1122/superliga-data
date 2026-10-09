@@ -7,6 +7,7 @@ project:
     - "!STATUS.md"
   resources:
     - /fonts/*-OFL.txt      # skrifternes licenser følger med (krav i SIL OFL 1.1)
+    - /billeder/delingskort.png
   pre-render: scripts/foer_render.py     # beregner artiklernes læsetid
   post-render: scripts/efter_render.py   # fjerner kladdernes billeder fra docs/
 
@@ -16,10 +17,15 @@ execute:
 website:
   title: "Superliga Data"
   description: "Dansk fodbold set gennem data"
-  site-url: ""              # TODO (fase B): GitHub Pages-adressen
+  site-url: "https://aske1122.github.io/superliga-data/"
+  repo-url: "https://github.com/Aske1122/superliga-data"
+  image: billeder/delingskort.png      # standard-delingskort; artikler bruger deres egen hovedgraf
   favicon: favicon.svg
-  open-graph: true
-  twitter-card: true
+  open-graph:                          # delingskort på LinkedIn, Facebook, Messenger
+    locale: da_DK
+    site-name: Superliga Data
+  twitter-card:                        # delingskort på X
+    card-style: summary_large_image
   search: false             # ingen søgeikon i menuen
   navbar:
     title: "Superliga Data"
@@ -50,7 +56,8 @@ website:
       :::
       ::: {.fod-kolonne}
       **Kontakt**<br>
-      [GitHub](https://github.com/Aske1122)
+      [GitHub](https://github.com/Aske1122/superliga-data)<br>
+      [RSS](/index.xml)
       :::
     right: |
       Data: Sportmonks. Skrift: Inter og Newsreader (SIL OFL 1.1).<br>

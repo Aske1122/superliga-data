@@ -63,10 +63,17 @@ ul.task-list li input[type="checkbox"] {
 
 <meta property="og:title" content="Metode – Superliga Data">
 <meta property="og:description" content="Hvor data kommer fra, og hvordan de kontrolleres">
+<meta property="og:image" content="https://aske1122.github.io/superliga-data/billeder/delingskort.png">
 <meta property="og:site_name" content="Superliga Data">
+<meta property="og:locale" content="da_DK">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
 <meta name="twitter:title" content="Metode – Superliga Data">
 <meta name="twitter:description" content="Hvor data kommer fra, og hvordan de kontrolleres">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aske1122.github.io/superliga-data/billeder/delingskort.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="630">
+<meta name="twitter:image-width" content="1200">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -214,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="kode" class="level2">
 <h2 class="anchored" data-anchor-id="kode">Kode</h2>
 <ul>
-<li>Al kode ligger på GitHub: <em>link indsættes</em>.
+<li>Al kode ligger på GitHub: <a href="https://github.com/Aske1122/superliga-data">github.com/Aske1122/superliga-data</a>.
 <ul>
 <li>Hentning med indbygget “budgetvagt”, så de gratis API-grænser aldrig overskrides.</li>
 <li>Rensning, kvalitetstjek og analyser (<code>scripts/</code>).</li>
@@ -395,7 +402,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/aske1122\.github\.io\/superliga-data\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -736,7 +743,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Metode</strong><br> <a href="./metode.html">Metode og data</a><br> <a href="./tal.html">Superligaen i tal</a></p>
 </div>
 <div class="fod-kolonne">
-<p><strong>Kontakt</strong><br> <a href="https://github.com/Aske1122">GitHub</a></p>
+<p><strong>Kontakt</strong><br> <a href="https://github.com/Aske1122/superliga-data">GitHub</a><br> <a href="./index.xml">RSS</a></p>
 </div>
 </div>
     <div class="nav-footer-right">

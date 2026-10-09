@@ -1,45 +1,108 @@
-# Superliga-data
+# Superliga Data
 
-Quarto-website med dataanalyser af Superligaen.
+**Dansk fodbold set gennem data.** Analyser af Superligaen fra 2020/21 til i dag, med fokus på kampforløb: hvornår målene falder, hvem der holder fast i en føring, og hvordan tabellen ville se ud, hvis kampene stoppede tidligere.
 
-## Mapper
-- `scripts/` – datahentning. **Alle API-kald går gennem `scripts/budget_guard.py`.**
-- `data/raw/` – JSON-svar fra API'erne (cache, aldrig på GitHub)
-- `data/clean/` – rensede tabeller (Parquet/DuckDB, aldrig på GitHub)
-- `posts/` – artikler (én mappe pr. artikel med `index.qmd`, `figurer/` og `deling/`)
-- `scripts/analyse.py` – fælles beregninger (game states, alternativ tabel, scoringstidspunkter, comebacks)
-- `scripts/stil.py` – husstilen for alle grafer (se `stiltest.qmd`)
-- `scripts/holdnavne.csv` – oversætter hver kildes holdnavne til vores egne (hold_id + hold)
+🔗 **Siden:** [aske1122.github.io/superliga-data](https://aske1122.github.io/superliga-data/)
 
-## Datakilder
-- **Sportmonks** (hovedkilde, 2020/21–2026/27). Superligaen = liga 271.
-- **API-Football** (reserve/krydstjek, gratis kun 2022–2024). Superligaen = liga 119.
-- `docs/` – det færdige website (genereres af `quarto render`, publiceres via GitHub Pages)
+---
 
-## Kom i gang
-    python3 -m venv .venv
-    .venv/bin/pip install -r requirements.txt
-    cp .env.example .env        # og indsæt nøgler
-    .venv/bin/python scripts/budget_guard.py   # vis dagens API-forbrug
-    .venv/bin/python scripts/hent_sportmonks.py --plan   # vis hvad en hentning vil koste
-    .venv/bin/python scripts/hent_sportmonks.py          # hent nye kampe (spørger om lov)
-    .venv/bin/python scripts/rens.py           # rådata -> data/clean (ingen forespørgsler)
-    .venv/bin/python scripts/kvalitet.py       # datakvalitetstjek
-    .venv/bin/python scripts/analyse.py        # beregn analysetabeller (an_*) i data/clean
-    quarto preview --profile kladde            # se siden INKL. kladder (kun lokalt, bygger til _kladde/)
-    quarto render                              # byg den offentlige side til docs/ (kladder udelades)
+## Hvad projektet viser
 
-## Nye artikler
-1. Kopiér mappen `posts/2026-10-foeringer-der-forsvinder/` som skabelon.
-2. Behold `jupyter: superliga` og `draft: true` i toppen, indtil artiklen er klar.
-3. Grafer laves med `stil.figur(...)` og gemmes med `stil.gem(...)`.
+| Analyse | Spørgsmål |
+|---|---|
+| **Game states** | Hvor mange minutter har hvert hold været foran, uafgjort og bagud? |
+| **Den alternative tabel** | Hvordan ville stillingen se ud efter 15, 30, 45, 60 og 75 minutter? |
+| **Comebacks og føringer** | Hvor mange point hentes fra bagud, og hvor mange tabes fra føring? |
+| **Scoringstidspunkter** | Hvornår scorer og indkasserer holdene, fordelt på 15-minutters intervaller? |
 
-## Første gang på en ny maskine
-    .venv/bin/python -m ipykernel install --sys-prefix --name superliga   # Python-kerne til Quarto
+Alle analyser findes for hver sæson og hvert hold, opdelt i grundspil, slutspil og hele sæsonen. Så kan hold sammenlignes på lige vilkår.
 
-## Design
-- `styles.scss` – hele sidens design (farver, skrifter, forside, kort, artikler). Farverne står øverst.
-- `_skabeloner/forside.ejs` og `_skabeloner/arkiv.ejs` – hvordan artikelkortene ser ud.
-- `_partials/skrifter.html` – skrifttyperne Oswald, Inter og Source Serif 4.
-  **Før siden går online:** de hentes i dag fra Google Fonts. Af hensyn til GDPR bør filerne ligge lokalt i projektet.
-- `scripts/efter_render.py` – kører efter `quarto render` og fjerner kladdernes billeder fra `docs/`.
+## Data
+
+- **Kilde:** [Sportmonks](https://www.sportmonks.com/) football API v3 (gratisplan). [API-Football](https://www.api-football.com/) bruges som reserve og til krydstjek.
+- **Omfang:** 1.212 kampe (Superligaen 2020/21–2026/27) med 3.509 mål, 4.745 kort og 10.808 udskiftninger, alle med minut og hold.
+- **Rådata deles ikke.** Kildernes vilkår tillader ikke videredistribution, så `data/` er udeladt af repoet. Siden viser kun egne beregninger og grafer, og ingen logoer eller spillerfotos.
+
+## Arkitektur
+
+```mermaid
+flowchart LR
+    A[Sportmonks API] -->|budgetvagt| B[data/raw<br>JSON-cache]
+    B --> C[rens.py<br>kildeuafhængigt format]
+    C --> D[(data/clean<br>Parquet + DuckDB)]
+    D --> E[kvalitet.py<br>datakvalitetstjek]
+    D --> F[analyse.py<br>game states m.m.]
+    F --> G[stil.py<br>grafer i husstil]
+    G --> H[Quarto<br>artikler]
+    H --> I[GitHub Pages]
+```
+
+| Del | Fil | Hvad den gør |
+|---|---|---|
+| Budgetvagt | `scripts/budget_guard.py` | Alle API-kald går herigennem: logning, dags- og timeloft med sikkerhedsmargin, pauser, cache og ingen automatiske genforsøg. Gratisgrænserne overskrides aldrig. |
+| Hentning | `scripts/hent_sportmonks.py` | Henter en hel sæson med alle hændelser i ét kald (indlejrede includes) i stedet for ét kald pr. kamp. Hele datagrundlaget kostede 10 API-kald. En færdigspillet kamp hentes aldrig igen. |
+| Rensning | `scripts/rens.py` | Oversætter kildens format til fire egne tabeller (`kampe`, `maal`, `kort`, `udskiftninger`) med en kolonne for datakilden. En ny kilde kræver kun en ny oversætter, ikke nye analyser. |
+| Holdnavne | `scripts/holdnavne.csv` | Fælles holdnavne og forkortelser på tværs af kilder (fx "FC Copenhagen" → FCK). |
+| Kvalitet | `scripts/kvalitet.py` | Tjekker hver sæson og hver kamp (se nedenfor). |
+| Analyse | `scripts/analyse.py` | Alle beregninger samlet ét sted, så artiklerne importerer dem i stedet for at gentage koden. |
+| Grafer | `scripts/stil.py` | Fælles grafstil. Hver graf gemmes som SVG til siden, PNG til deling og i en mobilversion. |
+| Website | `index.qmd`, `posts/`, `styles.scss` | Quarto-website. Bygges til `docs/` og publiceres med GitHub Pages. |
+
+## Datakvalitet
+
+Data kontrolleres, før de bruges:
+
+- **Målene skal stemme med resultatet.** For alle 1.206 ligakampe er målene fra hændelserne lagt sammen og sammenlignet med det officielle resultat efter 90 minutter. Resultat: 0 afvigelser.
+- **Kildefejl er fundet og rettet i rensningen:**
+  - 5 kampe (2024/25) havde mål registreret på det forkerte hold. Holdet udledes i stedet af den løbende stilling (fx 1-0 → 1-1).
+  - Kildens "aktuelle stilling" var inkonsistent ved forlænget spilletid. Stillingen efter 90 minutter tages derfor fra slutfløjtet i 2. halvleg.
+- **Udskiftningernes retning** (ind/ud) er testet mod spillernes øvrige hændelser.
+- **Game states:** For hver kamp skal foran + uafgjort + bagud give 90 minutter, og det ene holds "foran" skal være det andet holds "bagud". Resultat: 0 fejl.
+- **Kampe pr. sæson** sammenlignes med det forventede antal (193 med 12 hold).
+
+Metode og begrænsninger er beskrevet på [metodesiden](https://aske1122.github.io/superliga-data/metode.html).
+
+## Teknologi
+
+Python (pandas, DuckDB, matplotlib) · Quarto · GitHub Pages. Skrifterne Inter og Newsreader ligger lokalt (SIL Open Font License 1.1), så siden ikke sender data til tredjepart.
+
+## Kør projektet selv
+
+Kræver Python 3.11+, [Quarto](https://quarto.org/) og en gratis API-nøgle fra Sportmonks.
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m ipykernel install --sys-prefix --name superliga   # Python-kerne til Quarto
+cp .env.example .env                                  # indsæt SPORTMONKS_API_KEY
+```
+
+```bash
+.venv/bin/python scripts/hent_sportmonks.py --plan   # vis hvor mange API-kald en hentning koster
+.venv/bin/python scripts/hent_sportmonks.py          # hent (spørger om lov først)
+.venv/bin/python scripts/rens.py                     # rådata → egne tabeller
+.venv/bin/python scripts/kvalitet.py                 # datakvalitetstjek
+.venv/bin/python scripts/analyse.py                  # analysetabeller
+quarto render                                        # byg siden til docs/
+```
+
+Se siden lokalt med `quarto preview`. Kladder vises kun med `quarto preview --profile kladde`.
+
+## Mappestruktur
+
+```
+scripts/        hentning, rensning, kvalitet, analyse og grafstil
+posts/          artikler (én mappe pr. artikel med figurer/ og deling/)
+docs/           den byggede side (GitHub Pages)
+fonts/          Inter og Newsreader med licenser
+_skabeloner/    artikellister på forside og arkiv
+_partials/      kompakt menu, kampur-læsebjælke og rubrik (lille, ren JavaScript)
+data/           rådata og rensede tabeller (ikke i repoet)
+```
+
+## Krediteringer
+
+- Data: Sportmonks. API-Football til krydstjek.
+- Skrifter: [Inter](https://rsms.me/inter/) og [Newsreader](https://github.com/productiontype/Newsreader), [SIL Open Font License 1.1](https://openfontlicense.org/).
+- Design inspireret af [Tufte CSS](https://edwardtufte.github.io/tufte-css/) (MIT). Ingen kode er kopieret.
+- Bygget med [Quarto](https://quarto.org/).

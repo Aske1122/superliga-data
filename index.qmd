@@ -1,5 +1,6 @@
 ---
 pagetitle: "Superliga Data · Dansk fodbold set gennem data"
+description: "Analyser af Superligaen: game states, den alternative tabel, comebacks og scoringstidspunkter."
 page-layout: full
 body-classes: forside
 jupyter: superliga          # projektets egen Python-kerne (.venv), bruges til datastrip
@@ -11,6 +12,7 @@ listing:
   template: _skabeloner/forside.ejs
   date-format: "D. MMM YYYY"   # hårdt mellemrum efter punktum, ellers bliver "8." til en nummereret liste
   max-items: 15
+  feed: true                         # RSS-feed (index.xml), så man kan følge siden
 ---
 
 ::: {.datastrip}

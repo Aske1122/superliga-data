@@ -65,7 +65,7 @@ Indledning: Stikordene herunder skal omformuleres til din egen tekst.
 
 ## Kode
 
-- Al kode ligger på GitHub: *link indsættes*.
+- Al kode ligger på GitHub: [github.com/Aske1122/superliga-data](https://github.com/Aske1122/superliga-data).
   - Hentning med indbygget "budgetvagt", så de gratis API-grænser aldrig overskrides.
   - Rensning, kvalitetstjek og analyser (`scripts/`).
 

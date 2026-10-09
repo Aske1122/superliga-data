@@ -39,3 +39,7 @@ if output.name == "docs":
             if mappe.is_dir():
                 shutil.rmtree(mappe)
                 print(f"  kladde-oprydning: fjernede {mappe.relative_to(ROOT)}")
+
+# GitHub Pages: .nojekyll betyder "vis filerne præcis som de er" (ingen Jekyll-behandling)
+if output.name == "docs":
+    (output / ".nojekyll").touch()
