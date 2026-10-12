@@ -93,6 +93,69 @@ def laes_maal() -> pd.DataFrame:
     return maal.sort_values(["kamp_id", "tidspunkt", "tillaegsminut", "_samlet"])
 
 
+def rundestatus(saeson: str | None = None) -> dict:
+    """
+    Hvor langt er sæsonen? Bygger på kampprogrammet (tabellen 'program'), så en halv runde
+    aldrig ser færdig ud. Returnerer fx:
+        {"saeson": "2026/27", "afsluttet": False, "seneste_faerdige": 9,
+         "aktuel": 10, "spillet": 5, "i_alt": 6, "udsatte": [{"runde": 3, "kamp": "AGF–OB"}]}
+    'aktuel' er None, når der ikke er en halvt spillet runde.
+    En runde er færdig, når alle dens kampe er spillet eller udsat. Udsatte kampe vises for sig.
+    """
+    kampe = laes_kampe()
+    saeson = saeson or kampe.saeson.max()
+    try:
+        prog = _hent(f"SELECT * FROM program WHERE saeson = '{saeson}'")
+    except duckdb.Error:
+        prog = pd.DataFrame()
+    if prog.empty:                                         # afsluttet sæson: alle kampe er spillet
+        n = int(kampe[kampe.saeson == saeson].runde.max())
+        return {"saeson": saeson, "afsluttet": True, "seneste_faerdige": n, "aktuel": None,
+                "spillet": None, "i_alt": None, "udsatte": []}
+    prog = prog[(prog.fase != "playoff") & (prog.status != "aflyst")]
+    pr = prog.groupby("runde").agg(i_alt=("kamp_id", "count"),
+                                   spillet=("status", lambda x: int((x == "spillet").sum())),
+                                   udsat=("status", lambda x: int((x == "udsat").sum())))
+    pr["faerdig"] = (pr.spillet + pr.udsat == pr.i_alt) & (pr.spillet > 0)
+    i_gang = pr[(pr.spillet > 0) & ~pr.faerdig]
+    faerdige = pr[pr.faerdig]
+    aktuel = int(i_gang.index.min()) if len(i_gang) else None
+    seneste = int(faerdige.index[faerdige.index < aktuel].max()) if aktuel and (faerdige.index < aktuel).any() \
+        else int(faerdige.index.max()) if len(faerdige) and not aktuel else 0
+    graense = aktuel or seneste
+    udsatte = [{"runde": int(r.runde), "kamp": f"{r.hjemmehold}–{r.udehold}"}
+               for r in prog[(prog.status == "udsat") & (prog.runde <= graense)].itertuples()]
+    return {"saeson": saeson, "afsluttet": False, "seneste_faerdige": seneste, "aktuel": aktuel,
+            "spillet": int(pr.loc[aktuel, "spillet"]) if aktuel else None,
+            "i_alt": int(pr.loc[aktuel, "i_alt"]) if aktuel else None, "udsatte": udsatte}
+
+
+def rundestatus_tekst(st: dict) -> str:
+    """Kort status til datastrip og 'Superligaen i tal', fx 'Runde 10 · 5 af 6 kampe spillet'."""
+    if st["afsluttet"]:
+        tekst = f"Sæsonen er afsluttet ({st['seneste_faerdige']} runder)"
+    elif st["aktuel"]:
+        tekst = f"Runde {st['aktuel']} · {st['spillet']} af {st['i_alt']} kampe spillet"
+    elif st["seneste_faerdige"]:
+        tekst = f"Runde {st['seneste_faerdige']} færdigspillet"
+    else:
+        tekst = f"Sæsonen {st['saeson']} er ikke startet"
+    for u in st["udsatte"]:                                # fx "· udsat: AGF–OB (runde 3)"
+        tekst += f" · udsat: {u['kamp']} (runde {u['runde']})"
+    return tekst
+
+
+def periode_tekst(st: dict) -> str:
+    """Til grafernes undertitler: præcis hvilke kampe tallene bygger på."""
+    s = st["saeson"]
+    if st["afsluttet"]:
+        return f"Superligaen {s}, hele sæsonen"
+    if st["aktuel"]:
+        foer = f"runde 1–{st['seneste_faerdige']} + " if st["seneste_faerdige"] else ""
+        return f"Superligaen {s}, {foer}{st['spillet']} af {st['i_alt']} kampe i runde {st['aktuel']}"
+    return f"Superligaen {s} efter runde {st['seneste_faerdige']}"
+
+
 # ---------------------------------------------------------------------------
 # 2. Kerneberegning: én række pr. hold pr. kamp
 # ---------------------------------------------------------------------------

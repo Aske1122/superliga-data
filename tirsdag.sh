@@ -1,9 +1,11 @@
 #!/bin/bash
-# Mandagens rutine: hent nyeste kampe (budgetvagten spørger om lov), rens, tjek kvaliteten,
+# Tirsdagens rutine (efter weekendens runde, inkl. mandagskampen): hent nyeste kampe (budgetvagten spørger om lov), rens, tjek kvaliteten,
 # beregn analyserne, lav datapakken og åbn den i browseren.
 # Datapakken gemmes kun lokalt i data/datapakker/ og kommer aldrig i repoet.
 #
-# Kør fra Terminal:  ./mandag.sh
+# Datapakken handler som standard om den seneste FÆRDIGSPILLEDE runde.
+#
+# Kør fra Terminal:  ./tirsdag.sh
 set -e
 cd "$(dirname "$0")"
 echo "1/5  Henter nye kampe fra Sportmonks (svar 'ja', når budgetvagten spørger)"

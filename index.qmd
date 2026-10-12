@@ -26,7 +26,9 @@ import analyse, stil, talgrafer
 
 kh = analyse.kamp_hold()
 saeson = kh.saeson.max()
-runde = talgrafer.runde(kh, saeson)
+rs = analyse.rundestatus(saeson)                             # rundestatus (halve runder, udsatte kampe)
+runde = rs["aktuel"] or rs["seneste_faerdige"]               # runden, pointerne handler om
+halv = rs["aktuel"] is not None                              # er runden kun delvist spillet?
 
 # 1) Førende hold og afstand til nummer 2
 st = analyse.stilling(kh, saeson)
@@ -40,14 +42,18 @@ cb = analyse.comebacks(kh).query("saeson == @saeson and fase_gruppe == 'hele_sae
 mest = cb[cb.point_tabt == cb.point_tabt.max()]
 smidt = f"<strong>{' og '.join(mest.hold)}</strong> har smidt flest point fra føring ({int(mest.point_tabt.iloc[0])})"
 
-# 3) Rundens målrigeste kamp (seneste runde = de seneste 6 kampe)
-kampe = analyse.laes_kampe().query("saeson == @saeson").sort_values("kickoff_utc").tail(6)
-k = kampe.assign(maal=kampe.hjemme_maal + kampe.ude_maal).sort_values("maal", ascending=False).iloc[0]
-maalrig = f"Rundens målrigeste kamp: <strong>{k.hjemmehold}–{k.udehold} {k.hjemme_maal}-{k.ude_maal}</strong>"
+# 3) Målrigeste kamp i runden (rundens kampe findes efter rundenummer, ikke dato)
+kampe = analyse.laes_kampe().query("saeson == @saeson and runde == @runde")
+maalrig = ""
+if len(kampe):                                              # (ingen kampe endnu, fx ved sæsonstart)
+    k = kampe.assign(maal=kampe.hjemme_maal + kampe.ude_maal).sort_values(["maal", "kickoff_utc"], ascending=[False, True]).iloc[0]
+    maalrig = (f"Målrigeste kamp i runde {runde} indtil nu" if halv else "Rundens målrigeste kamp") + \
+              f": <strong>{k.hjemmehold}–{k.udehold} {k.hjemme_maal}-{k.ude_maal}</strong>"
 
 skil = '<span class="skil">·</span>'
-print(f'<p class="datapointer"><span class="runde">Runde {runde}</span>{foerer}{skil}{smidt}{skil}{maalrig}'
-      f'{skil}<a href="tal/index.html">Superligaen i tal →</a></p>')
+etiket = analyse.rundestatus_tekst(rs)                     # fx "Runde 10 · 5 af 6 kampe spillet"
+dele = [foerer, smidt] + ([maalrig] if maalrig else []) + ['<a href="tal/index.html">Superligaen i tal →</a>']
+print(f'<p class="datapointer"><span class="runde">{etiket}</span>{skil.join(dele)}</p>')
 ```
 
 ```{=html}
@@ -65,7 +71,7 @@ print(f'<p class="datapointer"><span class="runde">Runde {runde}</span>{foerer}{
 #| output: asis
 # --- Indtil der er udgivne artikler: to grafer fra "Superligaen i tal" (skjules af CSS, når der er artikler) ---
 print(f'<h2 class="sektion-overskrift">Superligaen i tal</h2>')
-print(f'<p class="tal-status">Sæson {saeson} · opdateret efter runde {runde} · '
+print(f'<p class="tal-status">Sæson {saeson} · {analyse.rundestatus_tekst(rs)} · '
       f'<a href="tal/index.html">Alle tal og tidligere sæsoner →</a></p>')
 for navn, alt in [("gamestates", "Andel af spilletiden foran, uafgjort og bagud for hvert hold."),
                   ("comebacks", "Point hentet fra bagud og tabt fra føring for hvert hold.")]:

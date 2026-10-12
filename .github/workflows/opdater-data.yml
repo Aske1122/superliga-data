@@ -1,4 +1,4 @@
-# Automatisk dataopdatering efter hver spillerunde.
+# Automatisk dataopdatering hver morgen (Superligaen spiller fredag–mandag og nogle gange midt i ugen).
 #
 # Hvad den gør:
 #   1. Henter krypterede rådata fra GitHub Actions' cache (så kun nye kampe hentes).
@@ -13,8 +13,10 @@ name: Opdater data
 
 on:
   schedule:
-    - cron: "0 4 * * 1"     # mandag kl. 06 dansk sommertid (kl. 05 om vinteren)
-    - cron: "0 4 * * 4"     # torsdag kl. 06 dansk sommertid (kl. 05 om vinteren)
+    # Hver morgen kl. 04 UTC = kl. 06 dansk sommertid / kl. 05 vintertid. Superligaen spiller
+    # fredag–mandag og nogle gange midt i ugen. Der publiceres kun, når der er nyt.
+    # NB: GitHub kan starte planlagte kørsler forsinket (set: flere timer) ved høj belastning.
+    - cron: "0 4 * * *"
   workflow_dispatch:        # manuel kørsel fra fanen "Actions"
 
 permissions:
@@ -106,7 +108,7 @@ jobs:
 
       - name: Publicér (commit og push, kun hvis noget er ændret)
         run: |
-          RUNDE=$(.venv/bin/python -c "import sys; sys.path.insert(0,'scripts'); import analyse, talgrafer; kh=analyse.kamp_hold(); print(talgrafer.runde(kh, kh.saeson.max()))")
+          STATUS=$(.venv/bin/python -c "import sys; sys.path.insert(0,'scripts'); import analyse; print(analyse.rundestatus_tekst(analyse.rundestatus()))")
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs _freeze tal posts index.qmd
@@ -117,7 +119,7 @@ jobs:
             git reset -q && git checkout -q -- docs/index.xml docs/sitemap.xml
             echo "Ingen ændringer, intet at publicere."
           else
-            git commit -m "Automatisk opdatering efter runde $RUNDE"
+            git commit -m "Automatisk opdatering: $STATUS"
             git push
           fi
 

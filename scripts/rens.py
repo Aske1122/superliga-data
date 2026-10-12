@@ -171,6 +171,44 @@ def fra_sportmonks(holdnavne: dict) -> dict[str, list[dict]]:
     return {"kampe": kampe, "maal": maal, "kort": kort, "udskiftninger": skift}
 
 
+# Kampprogrammets status (Sportmonks' statusnavne). Alt andet regnes som "i_gang".
+STATUS_NAVN = {"FT": "spillet", "AET": "spillet", "FT_PEN": "spillet",
+               "NS": "planlagt", "TBA": "planlagt",
+               "POSTPONED": "udsat", "DELAYED": "udsat", "SUSPENDED": "udsat", "INTERRUPTED": "udsat",
+               "CANCELLED": "aflyst", "ABANDONED": "aflyst", "DELETED": "aflyst"}
+STATUS_ID = {5: "spillet", 7: "spillet", 8: "spillet", 1: "planlagt"}   # hvis navnene mangler i cachen
+
+
+def kampprogram(holdnavne: dict) -> pd.DataFrame:
+    """
+    Den igangværende sæsons fulde kampprogram (også kampe, der ikke er spillet endnu) med status.
+    Bruges til at vise halve runder ("4 af 6 kampe spillet") og udsatte kampe.
+    Læser det seneste kampprogram fra cachen (hentes frisk ved hver dataopdatering).
+    """
+    filer = [f for f in (RAW / "sportmonks").glob("seasons_*__include=stages_fixtures*.json")
+             if "participants" not in f.name]
+    if not filer:
+        return pd.DataFrame()
+    nyeste_saeson = max(int(f.name.split("_")[1]) for f in filer)
+    fil = max((f for f in filer if f.name.startswith(f"seasons_{nyeste_saeson}_")), key=lambda f: f.stat().st_mtime)
+    data = json.loads(fil.read_text(encoding="utf-8"))["data"]
+    aar = data["name"].split("/")                                   # "2026/2027" -> "2026/27"
+    saeson = f"{aar[0]}/{aar[1][-2:]}"
+    stages = {st["id"]: st["name"] for st in data.get("stages") or []}
+    rows = []
+    for fx in data["fixtures"]:
+        navn_h, navn_u = fx["name"].split(" vs ")
+        h = holdnavne.get(("sportmonks", navn_h), (navn_h, navn_h))
+        u = holdnavne.get(("sportmonks", navn_u), (navn_u, navn_u))
+        state = (fx.get("state") or {}).get("developer_name")
+        status = STATUS_NAVN.get(state, "i_gang") if state else STATUS_ID.get(fx["state_id"], "i_gang")
+        rows.append({"kamp_id": f"sportmonks:{fx['id']}", "saeson": saeson,
+                     "fase": FASER.get(stages.get(fx.get("stage_id")), "playoff"),
+                     "kilde_runde_id": fx.get("round_id"), "kickoff_utc": pd.Timestamp(fx["starting_at"], tz="UTC"),
+                     "hjemme_id": h[0], "hjemmehold": h[1], "ude_id": u[0], "udehold": u[1], "status": status})
+    return pd.DataFrame(rows)
+
+
 def tilfoej_runde(kampe: pd.DataFrame) -> pd.DataFrame:
     """
     Rundenummer pr. kamp (1, 2, 3 ...), som Superligaen tæller dem.
@@ -203,10 +241,20 @@ def main() -> None:
     db_path = CLEAN / "superliga.duckdb"
     db_path.unlink(missing_ok=True)
     con = duckdb.connect(str(db_path))
+    # Kampprogram for den igangværende sæson. Rundenumrene beregnes ud fra HELE programmet
+    # (også uspillede kampe), så en udsat kamp altid tæller i sin oprindelige runde.
+    program = kampprogram(holdnavne)
+    kampe_df = pd.DataFrame(tabeller["kampe"])
+    noegle = ["saeson", "fase", "kilde_runde_id", "kickoff_utc", "kamp_id"]
+    alle = pd.concat([kampe_df[noegle], program[noegle] if len(program) else None]).drop_duplicates("kamp_id")
+    runder = tilfoej_runde(alle)[["kamp_id", "runde"]]
+    tabeller["kampe"] = kampe_df.merge(runder, on="kamp_id")
+    if len(program):
+        tabeller["program"] = program.merge(runder, on="kamp_id")
+
     for navn, rows in tabeller.items():
         df = pd.DataFrame(rows)
         if navn == "kampe":
-            df = tilfoej_runde(df)
             # Kontrol: ingen hold må spille to gange i samme runde
             dobbelt = (pd.concat([df[["saeson", "runde", "hjemme_id"]].rename(columns={"hjemme_id": "h"}),
                                   df[["saeson", "runde", "ude_id"]].rename(columns={"ude_id": "h"})])

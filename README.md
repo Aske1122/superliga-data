@@ -48,7 +48,7 @@ flowchart LR
 | Grafer | `scripts/stil.py` | Fælles grafstil. Hver graf gemmes som SVG til siden, PNG til deling og i en mobilversion. |
 | Website | `index.qmd`, `posts/`, `tal/`, `styles.scss` | Quarto-website. Bygges til `docs/` og publiceres med GitHub Pages. |
 | Automatik | `.github/workflows/opdater-data.yml` | Mandag og torsdag: henter nye kampe, renser, tjekker kvaliteten og publicerer. Stopper og opretter et issue ved fejl. Rådata gemmes krypteret i Actions-cachen. |
-| Datapakke | `scripts/datapakke.py`, `mandag.sh` | Lokalt værktøj: 3–5 observationer fra seneste runde med tal og grafer (idéer, ikke artikler). Gemmes kun i `data/`. |
+| Datapakke | `scripts/datapakke.py`, `tirsdag.sh` | Lokalt værktøj: 3–5 observationer fra seneste runde med tal og grafer (idéer, ikke artikler). Gemmes kun i `data/`. |
 
 ## Datakvalitet
 

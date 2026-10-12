@@ -39,7 +39,8 @@ def season_full_call(season_id: int) -> tuple:
 
 
 def schedule_call(season_id: int) -> tuple:
-    return (f"/seasons/{season_id}", {"include": "stages;fixtures"}, True)  # True = hent frisk
+    # Kampprogrammet med status pr. kamp (spillet, planlagt, udsat ...). True = hent frisk hver gang
+    return (f"/seasons/{season_id}", {"include": "stages;fixtures.state"}, True)
 
 
 def multi_calls(ids: list[int]) -> list[tuple]:

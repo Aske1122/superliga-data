@@ -6,7 +6,6 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-10-09T14:41:42.757175</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -39,9 +38,9 @@ L 57.024 291.6
 z
 " style="fill: none"/>
    </g>
-   <g clip-path="url(#p2a080a71c2)">
+   <g clip-path="url(#pf886bbf418)">
     <image xlink:href="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAPcAAADvCAYAAAAuCUKlAAAEQUlEQVR4nO3csWrdZRzH4TfmtMFEgyABoYLSrZkcimsnB3dvwity9yLq4OhU4pCl2QwNGKicQkva1B4bE++hIHn/H57nCl4O/8/5bd+t16+e34zJnZy/HbM7vLd7209IODp9c9tPyPjoth8A/D/EDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oaored/nU+/oba3sz1mt4Sdt6M/5t8ne/Rgf8xu/fpqLIHLDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oYocUPUaizAs/W7Mbv1xfsxuyVs0R3s3xmzO3uxGUvgckOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQtfrl+NWY3cH+/FNv64urMbvvv/lszO7k/O8xu8vN9VgClxuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGqK0nT09vxuRO/px/V2sJ1q/fj9k9erA/ZvdsvRlL4HJDlLghStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcELVawh7UEra/du/O/z/5w7ef3/YTEh4fvxxLMP8XCXwQcUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghanX2Yv4NtYNP74zZHeyvxuyWsEW3vpj/jXs722MJXG6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RG09eXp6Mya3hOmdo9M3Y3ZLmKtagq8PdsYSuNwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RK12787f9/riasxub2f7tp+QsITf8XJzPZZg/rKBDyJuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0Stzl5sxuwe3t8bs/v99HLM7nLz75jdyfnbMbvDe7tjCVxuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6JWYwGWsE92+OXHY3aXm+sxu7f/zP/Gx8cvxxK43BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdErXZ3tsfsvjqY/40//fp8zO7H774Ys3t4/5Mxu59/W48lcLkhStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuGE3/AX2cdg59gSytAAAAAElFTkSuQmCC" id="imagee2bcb7fabd" transform="scale(1 -1) translate(0 -179.25)" x="57" y="-112.5" width="185.25" height="179.25"/>
+iVBORw0KGgoAAAANSUhEUgAAAPcAAADvCAYAAAAuCUKlAAAEQUlEQVR4nO3csWrdZRzH4TfmtMFEgyABoYLSrZkcimsnB3dvwity9yLq4OhU4pCl2QwNGKicQkva1B4bE++hIHn/H57nCl4O/8/5bd+t16+e34zJnZy/HbM7vLd7209IODp9c9tPyPjoth8A/D/EDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oaored/nU+/oba3sz1mt4Sdt6M/5t8ne/Rgf8xu/fpqLIHLDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oYocUPUaizAs/W7Mbv1xfsxuyVs0R3s3xmzO3uxGUvgckOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQtfrl+NWY3cH+/FNv64urMbvvv/lszO7k/O8xu8vN9VgClxuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGqK0nT09vxuRO/px/V2sJ1q/fj9k9erA/ZvdsvRlL4HJDlLghStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcELVawh7UEra/du/O/z/5w7ef3/YTEh4fvxxLMP8XCXwQcUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghanX2Yv4NtYNP74zZHeyvxuyWsEW3vpj/jXs722MJXG6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RG09eXp6Mya3hOmdo9M3Y3ZLmKtagq8PdsYSuNwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RK12787f9/riasxub2f7tp+QsITf8XJzPZZg/rKBDyJuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0Stzl5sxuwe3t8bs/v99HLM7nLz75jdyfnbMbvDe7tjCVxuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6JWYwGWsE92+OXHY3aXm+sxu7f/zP/Gx8cvxxK43BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuiBI3RIkbosQNUeKGKHFDlLghStwQJW6IEjdErXZ3tsfsvjqY/40//fp8zO7H774Ys3t4/5Mxu59/W48lcLkhStwQJW6IEjdEiRuixA1R4oYocUOUuCFK3BAlbogSN0SJG6LEDVHihihxQ5S4IUrcECVuGE3/AX2cdg59gSytAAAAAElFTkSuQmCC" id="imagee0d5cf37b4" transform="scale(1 -1) translate(0 -179.25)" x="57" y="-112.5" width="185.25" height="179.25"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -2670,7 +2669,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p2a080a71c2">
+  <clipPath id="pf886bbf418">
    <rect x="57.024" y="112.53" width="184.896" height="179.07"/>
   </clipPath>
  </defs>

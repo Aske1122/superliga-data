@@ -20,7 +20,7 @@
 | **Forside** | Pointer fra seneste runde under menuen. Indtil der er artikler, vises to grafer fra "Superligaen i tal". |
 | **Superligaen i tal** | Igangværende sæson plus arkivside for hver tidligere sæson. Opdateres automatisk. |
 | **Automatik** | GitHub Action mandag og torsdag kl. 06 (sommertid) / 05 (vintertid). Den er testet: den første kørsel brugte 9 API-kald, de følgende 1 kald hver. |
-| **Datapakke** | `./mandag.sh` henter data og laver og åbner pakken. Eksempel: `data/datapakker/2026-27-runde-09/`. |
+| **Datapakke** | `./tirsdag.sh` henter data og laver og åbner pakken. Eksempel: `data/datapakker/2026-27-runde-09/`. |
 | **Besøgstal** | GoatCounter-scriptet ligger på siden og tæller kun på den offentlige adresse. Kontoen mangler (se nedenfor). |
 | **Licenser** | Kode: MIT. Tekster og grafer: CC BY 4.0. Skrifter: OFL. |
 | **Krydstjek** | 576 af 576 ligakampe (2022/23–2024/25) har samme resultat og pausestilling som hos API-Football. 25 af 25 kampe har samme mål med minut og hold, inklusive de 5 kampe med rettede kildefejl. Beskrevet på metodesiden. |
@@ -41,7 +41,7 @@ Rådata kommer aldrig i repoet. API-nøglen og krypteringsnøglen ligger som Git
 ## Det skal du gøre fremover
 
 - **Nu:** opret GoatCounter-kontoen (se nedenfor).
-- **Mandag morgen:** kør `./mandag.sh` i Terminal fra projektmappen. Svar "ja", når budgetvagten spørger. Datapakken åbner i browseren.
+- **Tirsdag morgen:** kør `./tirsdag.sh` i Terminal fra projektmappen. Svar "ja", når budgetvagten spørger. Datapakken åbner i browseren.
 - **Når du har skrevet en artikel:**
   1. Skriv din tekst i pladsholderne og slet stikord og noter til dig selv.
   2. Fjern `draft: true` i toppen.

@@ -27,8 +27,7 @@ def side(s: str) -> str:
 ```{python}
 #| output: asis
 # --- Status og sæsonvalg øverst ---
-status = (f"Sæson {saeson} · opdateret efter runde {talgrafer.runde(kh, saeson)}" if er_igang
-          else f"Sæson {saeson} · afsluttet")
+status = f"Sæson {saeson} · {analyse.rundestatus_tekst(analyse.rundestatus(saeson))}"
 links = " · ".join(f"<strong>{s}</strong>" if s == saeson else f'<a href="{side(s)}">{s}</a>' for s in saesoner)
 print(f'<p class="tal-status">{status}</p>\n<p class="tal-saesoner">Sæson: {links}</p>')
 ```

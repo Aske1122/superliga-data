@@ -31,14 +31,13 @@ def slug(saeson: str) -> str:
 
 
 def runde(kh, saeson: str) -> int:
-    """Antal spillede runder = flest kampe spillet af et hold i sæsonen."""
-    return int(kh[kh.saeson == saeson].groupby("hold_id").size().max())
+    """Seneste FÆRDIGSPILLEDE runde (en halvt spillet runde tæller ikke med)."""
+    return analyse.rundestatus(saeson)["seneste_faerdige"]
 
 
 def periode_tekst(kh, saeson: str, igangvaerende: bool) -> str:
-    """Fx 'Superligaen 2026/27 efter runde 9' eller 'Superligaen 2024/25, hele sæsonen'."""
-    return (f"Superligaen {saeson} efter runde {runde(kh, saeson)}" if igangvaerende
-            else f"Superligaen {saeson}, hele sæsonen")
+    """Fx 'Superligaen 2026/27, runde 1–9 + 5 af 6 kampe i runde 10' eller '..., hele sæsonen'."""
+    return analyse.periode_tekst(analyse.rundestatus(saeson))
 
 
 def _hele(df, saeson: str):

@@ -1,13 +1,15 @@
 """
-Mandagens datapakke: 3–5 observationer fra seneste runde og sæsonen indtil nu, med tal og grafer.
+Ugens datapakke: 3–5 observationer fra den seneste FÆRDIGSPILLEDE runde og sæsonen indtil da,
+med tal og grafer.
 Det er IDÉER til artikler, ikke artikler. Pakken gemmes kun lokalt i data/datapakker/ (aldrig i repoet).
 
 Kør:
-    .venv/bin/python scripts/datapakke.py            # lav pakken for seneste runde
+    .venv/bin/python scripts/datapakke.py            # seneste færdigspillede runde
+    .venv/bin/python scripts/datapakke.py --runde 8  # en bestemt runde
     .venv/bin/python scripts/datapakke.py --aabn     # ... og åbn den i browseren
 
-Hele mandagsrutinen (hent nye kampe, rens, tjek, analysér, lav og åbn pakken):
-    ./mandag.sh
+Hele tirsdagsrutinen (hent nye kampe, rens, tjek, analysér, lav og åbn pakken):
+    ./tirsdag.sh
 
 Sender ingen API-forespørgsler. Bruger kun data/clean.
 """
@@ -32,7 +34,6 @@ import stil     # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 UD = ROOT / "data" / "datapakker"
-KAMPE_PR_RUNDE = 6            # 12 hold = 6 kampe pr. runde (også i slutspillet: 3 + 3)
 
 
 # ---------------------------------------------------------------------------
@@ -49,17 +50,25 @@ def tabel(kh: pd.DataFrame) -> pd.DataFrame:
     return t
 
 
-def hent_data():
-    kh_alle = analyse.kamp_hold()
-    saeson = kh_alle.saeson.max()
+def hent_data(runde: int | None = None):
+    """
+    Data for pakken: den valgte runde (standard: seneste færdigspillede) og alt FØR og TIL OG MED den.
+    Kampe fra en senere, halvt spillet runde er ikke med, så pakken altid handler om en hel runde.
+    """
+    saeson = analyse.laes_kampe().saeson.max()
+    st = analyse.rundestatus(saeson)
+    runde_nr = runde or st["seneste_faerdige"]
+    if not runde_nr:
+        sys.exit("Ingen færdigspillet runde i sæsonen endnu.")
+    kh_alle = analyse.kamp_hold(til=(saeson, runde_nr))          # intet efter den valgte runde
     kh = kh_alle[kh_alle.saeson == saeson]
-    kampe = analyse.laes_kampe().query("saeson == @saeson").sort_values("kickoff_utc")
-    runde_kampe = kampe.tail(KAMPE_PR_RUNDE)
+    kampe = analyse.laes_kampe(til=(saeson, runde_nr)).query("saeson == @saeson")
+    runde_kampe = kampe[kampe.runde == runde_nr].sort_values("kickoff_utc")
     runde_ids = set(runde_kampe.kamp_id)
-    runde_nr = int(kh.groupby("hold_id").size().max())
-    foer = tabel(kh[~kh.kamp_id.isin(runde_ids)])
+    foer = tabel(kh[kh.runde < runde_nr])
     efter = tabel(kh)
-    return kh_alle, kh, saeson, runde_nr, runde_kampe, runde_ids, foer, efter
+    udsatte = [u for u in st["udsatte"] if u["runde"] <= runde_nr]
+    return kh_alle, kh, saeson, runde_nr, runde_kampe, runde_ids, foer, efter, udsatte
 
 
 # ---------------------------------------------------------------------------
@@ -224,7 +233,7 @@ def billede_html(sti: Path) -> str:
     return f'<img src="data:image/png;base64,{data}" alt="">'
 
 
-def skriv_html(saeson, runde_nr, runde_kampe, observationer, mappe: Path) -> Path:
+def skriv_html(saeson, runde_nr, runde_kampe, observationer, mappe: Path, udsatte=()) -> Path:
     res = "".join(f"<li>{html.escape(k.hjemmehold)}–{html.escape(k.udehold)} {k.hjemme_maal}-{k.ude_maal}</li>"
                   for k in runde_kampe.itertuples())
     blokke = []
@@ -245,6 +254,7 @@ def skriv_html(saeson, runde_nr, runde_kampe, observationer, mappe: Path) -> Pat
 <h1>Datapakke: Superligaen {saeson}, runde {runde_nr}</h1>
 <p class="meta">Lavet {date.today():%d-%m-%Y}. Idéer til artikler, ikke færdige tekster. Kun til eget brug (data/).</p>
 <h2>Rundens resultater</h2><ul>{res}</ul>
+{"".join(f"<p class='meta'>Udsat: {html.escape(u['kamp'])} (runde {u['runde']})</p>" for u in udsatte)}
 {''.join(blokke)}
 </body></html>"""
     sti = mappe / "datapakke.html"
@@ -255,9 +265,10 @@ def skriv_html(saeson, runde_nr, runde_kampe, observationer, mappe: Path) -> Pat
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--aabn", action="store_true", help="åbn pakken i browseren bagefter")
+    parser.add_argument("--runde", type=int, default=None, help="runde (standard: seneste færdigspillede)")
     args = parser.parse_args()
 
-    kh_alle, kh, saeson, runde_nr, runde_kampe, runde_ids, foer, efter = hent_data()
+    kh_alle, kh, saeson, runde_nr, runde_kampe, runde_ids, foer, efter, udsatte = hent_data(args.runde)
     mappe = UD / f"{saeson.replace('/', '-')}-runde-{runde_nr:02d}"
     mappe.mkdir(parents=True, exist_ok=True)
 
@@ -270,7 +281,7 @@ def main() -> None:
     ]
     # Tabellen først (kontekst), derefter de øvrige efter "interessanthed" (vægt), højst 5 i alt
     observationer = [kandidater[0]] + sorted(kandidater[1:], key=lambda o: o["vaegt"], reverse=True)[:4]
-    sti = skriv_html(saeson, runde_nr, runde_kampe, observationer, mappe)
+    sti = skriv_html(saeson, runde_nr, runde_kampe, observationer, mappe, udsatte)
     print(f"Datapakke: {sti.relative_to(ROOT)} ({len(observationer)} observationer)")
     if args.aabn:
         subprocess.run(["open", str(sti)], check=False)
