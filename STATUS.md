@@ -19,17 +19,18 @@
 | **Design** | Tufte-inspireret med Inter og Newsreader (lokale, OFL), marineblåt topbånd, kampur-læsebjælke, rubrik med kampminut og mobilversion af alle grafer. |
 | **Forside** | Pointer fra seneste runde under menuen. Indtil der er artikler, vises to grafer fra "Superligaen i tal". |
 | **Superligaen i tal** | Igangværende sæson plus arkivside for hver tidligere sæson. Opdateres automatisk. |
-| **Automatik** | GitHub Action mandag og torsdag kl. 06 (sommertid) / 05 (vintertid). Den er testet: den første kørsel brugte 9 API-kald, de følgende 1 kald hver. |
+| **Automatik** | GitHub Action hver morgen kl. 06 (sommertid) / 05 (vintertid). Publicerer kun ved nyt. Den er testet: den første kørsel brugte 9 API-kald, de følgende 1 kald hver. |
 | **Datapakke** | `./tirsdag.sh` henter data og laver og åbner pakken. Eksempel: `data/datapakker/2026-27-runde-09/`. |
 | **Besøgstal** | GoatCounter-scriptet ligger på siden og tæller kun på den offentlige adresse. Kontoen mangler (se nedenfor). |
 | **Licenser** | Kode: MIT. Tekster og grafer: CC BY 4.0. Skrifter: OFL. |
 | **Krydstjek** | 576 af 576 ligakampe (2022/23–2024/25) har samme resultat og pausestilling som hos API-Football. 25 af 25 kampe har samme mål med minut og hold, inklusive de 5 kampe med rettede kildefejl. Beskrevet på metodesiden. |
+| **Halve runder** | Datastrip og "Superligaen i tal" viser fx "Runde 10 · 5 af 6 kampe spillet" og udsatte kampe. Datapakken handler om seneste færdigspillede runde. |
 | **Frosne artikler** | En artikel angiver `data-saeson` og `data-til-runde`, og dens tal bygger kun på data til og med den runde. Silkeborg-artiklen er frosset til runde 9. |
 | **Artikel** | "Silkeborgs forsvundne føringer" er en kladde med 3 grafer, stikord og metodenoter. Din tekst mangler. |
 
 ## Sådan virker automatikken
 
-1. Mandag og torsdag morgen starter GitHub Action "Opdater data".
+1. Hver morgen starter GitHub Action "Opdater data" (GitHub kan starte den nogle timer forsinket).
 2. Den henter de krypterede rådata fra cachen og derefter kun de nye kampe fra Sportmonks via budgetvagten (højst 12 kald).
 3. Den renser data og kører datakvalitetstjek og analysekontrol.
    - **Fejler noget, stopper den.** Siden opdateres ikke, og der oprettes et issue på GitHub (du får en e-mail).
